@@ -34,15 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */    
     private function addCollectionMacros()
     {
-        Collection::macro('mapWithSiblings', function ($callback) {
-            $keys = array_keys($this->items);
-            $items = array_map(function($item, $key) use($callback) {
-                $siblings = $this->items;
-                unset($siblings[$key]);
-                return $callback($item, collect($siblings));
-            }, $this->items, $keys);
-            
-            return new static(array_combine($keys, $items));
-        });
+        // add stuff here later
     }
 }
