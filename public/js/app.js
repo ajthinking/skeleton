@@ -1935,7 +1935,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      buttonStyle: "ml-2 text-xs border p-1 rounded shadow bg-white text-black px-2"
+    };
+  },
   computed: {
     objectModel: {
       get: function get() {
@@ -1952,6 +1958,14 @@ __webpack_require__.r(__webpack_exports__);
       set: function set(value) {
         this.$store.commit('updateMessage', value);
       }
+    }
+  },
+  methods: {
+    addUserSystem: function addUserSystem() {
+      this.objectModel += "User\nemail\nname\npassword\n"; // resizable textarea does not register the changes since it uses the 'input' event
+      // resort to forceUpdate
+
+      this.$refs.resizableTextarea.forceRerender();
     }
   }
 });
@@ -1987,6 +2001,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2043,6 +2064,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({//
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    resizeTextarea: function resizeTextarea(event) {
+      event.target.style.height = 'auto';
+      event.target.style.height = event.target.scrollHeight + 'px';
+    },
+    forceRerender: function forceRerender() {
+      var _this = this;
+
+      console.log(this.$el.scrollHeight);
+      this.$nextTick(function () {
+        _this.$el.style.height = 'auto';
+        _this.$el.style.height = _this.$el.scrollHeight + 'px';
+      });
+    }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    this.$nextTick(function () {
+      _this2.$el.setAttribute('style', 'height:' + _this2.$el.scrollHeight + 'px;overflow-y:hidden;');
+    });
+    this.$el.addEventListener('input', this.resizeTextarea);
+  },
+  beforeDestroy: function beforeDestroy() {
+    this.$el.removeEventListener('input', this.resizeTextarea);
+  },
+  render: function render() {
+    return this.$slots["default"][0];
+  }
 });
 
 /***/ }),
@@ -22527,75 +22591,62 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("textarea", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.objectModel,
-          expression: "objectModel"
-        }
-      ],
-      staticClass: "w-full bg-grey-lighter rounded p-2 h-64",
-      domProps: { value: _vm.objectModel },
-      on: {
-        input: function($event) {
-          if ($event.target.composing) {
-            return
-          }
-          _vm.objectModel = $event.target.value
-        }
-      }
-    }),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+  return _c(
+    "div",
+    [
+      _c(
+        "resizable-textarea",
+        { ref: "resizableTextarea", staticClass: "mt-4" },
+        [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.objectModel,
+                expression: "objectModel"
+              }
+            ],
+            staticClass: "w-full bg-grey-lighter rounded p-2",
+            attrs: { placeholder: "Enter your object model here..." },
+            domProps: { value: _vm.objectModel },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.objectModel = $event.target.value
+              }
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "mt-1" }, [
+        _c(
+          "button",
+          {
+            class: _vm.buttonStyle,
+            on: {
+              click: function($event) {
+                return _vm.addUserSystem()
+              }
+            }
+          },
+          [_vm._v("+ user system")]
+        ),
+        _vm._v(" "),
+        _c("button", { class: _vm.buttonStyle }, [_vm._v("- clear")]),
+        _vm._v(" "),
+        _c("button", { class: _vm.buttonStyle }, [_vm._v("+ sample app")]),
+        _vm._v(" "),
+        _c("button", { class: _vm.buttonStyle }, [_vm._v("syntax")])
+      ])
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-1" }, [
-      _c(
-        "button",
-        {
-          staticClass:
-            "ml-2 text-xs border p-1 rounded shadow bg-white text-black px-2"
-        },
-        [_vm._v("+ user system")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass:
-            "ml-2 text-xs border p-1 rounded shadow bg-white text-black px-2"
-        },
-        [_vm._v("- clear")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass:
-            "ml-2 text-xs border p-1 rounded shadow bg-white text-black px-2"
-        },
-        [_vm._v("+ sample app")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass:
-            "ml-2 text-xs border p-1 rounded shadow bg-white text-black px-2"
-        },
-        [_vm._v("syntax")]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -22655,7 +22706,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("The templates tab")])])
+    return _c("div", [
+      _c("select", [
+        _c("option", [_vm._v("User")]),
+        _vm._v(" "),
+        _c("option", [_vm._v("Model")]),
+        _vm._v(" "),
+        _c("option", [_vm._v("ModelController")]),
+        _vm._v(" "),
+        _c("option", [_vm._v("ModelAPIController")]),
+        _vm._v(" "),
+        _c("option", [_vm._v("CreateMigration")]),
+        _vm._v(" "),
+        _c("option", [_vm._v("AddRelationship")])
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -35921,7 +35986,8 @@ var map = {
 	"./components/WorkspaceTabs/Design/SettingsTab.vue": "./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue",
 	"./components/WorkspaceTabs/Design/TemplatesTab.vue": "./resources/js/components/WorkspaceTabs/Design/TemplatesTab.vue",
 	"./components/WorkspaceTabs/DesignTab.vue": "./resources/js/components/WorkspaceTabs/DesignTab.vue",
-	"./components/WorkspaceTabs/ReviewTab.vue": "./resources/js/components/WorkspaceTabs/ReviewTab.vue"
+	"./components/WorkspaceTabs/ReviewTab.vue": "./resources/js/components/WorkspaceTabs/ReviewTab.vue",
+	"./components/utilities/ResizableTextarea.vue": "./resources/js/components/utilities/ResizableTextarea.vue"
 };
 
 
@@ -36727,6 +36793,56 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/utilities/ResizableTextarea.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/utilities/ResizableTextarea.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResizableTextarea.vue?vue&type=script&lang=js& */ "./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  _ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/utilities/ResizableTextarea.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ResizableTextarea.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/store/index.js":
 /*!*************************************!*\
   !*** ./resources/js/store/index.js ***!
@@ -36750,7 +36866,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     design: {
       activeTab: "Object model",
-      objectModel: "User"
+      objectModel: ""
     },
     review: {//
     },

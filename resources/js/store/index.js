@@ -11,7 +11,7 @@ export default new Vuex.Store({
         },
         design: {
             activeTab: "Object model",
-            objectModel: "User"
+            objectModel: ""
         },
         review: {
             //
