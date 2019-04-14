@@ -9,7 +9,7 @@
     export default {
         computed: {
             activeTab() {
-                return this.$store.state.activeWorkspaceTab
+                return this.$store.state.workspace.activeTab
             },
 
             activeTabComponent() {

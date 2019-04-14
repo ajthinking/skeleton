@@ -1809,7 +1809,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     activeTab: function activeTab() {
-      return this.$store.state.activeWorkspaceTab;
+      return this.$store.state.workspace.activeTab;
     },
     activeTabComponent: function activeTabComponent() {
       return this.activeTab.toLowerCase() + "-tab";
@@ -22410,7 +22410,10 @@ var render = function() {
           on: {
             click: function($event) {
               _vm.activeTab = tab
-              _vm.$store.dispatch("navigateWorkspace", tab)
+              _vm.$store.dispatch("navigate", {
+                namespace: "workspace",
+                tab: tab
+              })
             }
           }
         },
@@ -22492,7 +22495,7 @@ var render = function() {
           on: {
             click: function($event) {
               _vm.activeTab = tab
-              _vm.$store.dispatch("navigateDesign", tab)
+              _vm.$store.dispatch("navigate", { namespace: "design", tab: tab })
             }
           }
         },
@@ -36742,7 +36745,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    activeWorkspaceTab: "Design",
+    workspace: {
+      activeTab: "Design"
+    },
     design: {
       activeTab: "Object model",
       objectModel: "User"
@@ -36753,22 +36758,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     }
   },
   mutations: {
-    navigateWorkspace: function navigateWorkspace(state, tab) {
-      state.activeWorkspaceTab = tab;
-    },
-    navigateDesign: function navigateDesign(state, tab) {
-      state.design.activeTab = tab;
+    navigate: function navigate(state, _ref) {
+      var namespace = _ref.namespace,
+          tab = _ref.tab;
+      state[namespace].activeTab = tab;
     },
     setObjectModel: function setObjectModel(state, content) {
       state.design.objectModel = content;
     }
   },
   actions: {
-    navigateWorkspace: function navigateWorkspace(context, tab) {
-      context.commit('navigateWorkspace', tab);
-    },
-    navigateDesign: function navigateDesign(context, tab) {
-      context.commit('navigateDesign', tab);
+    navigate: function navigate(context, payload) {
+      context.commit('navigate', payload);
     }
   }
 }));

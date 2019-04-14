@@ -2,7 +2,7 @@
     <div class="flex h-12 mx-auto border">
         <div v-for="tab in availableTabs" :key="tab"
             :class="style(tab)"
-            @click="activeTab = tab; $store.dispatch('navigateDesign', tab)"
+            @click="activeTab = tab; $store.dispatch('navigate', {namespace: 'design', tab})"
         >
             {{ tab }}
         </div>     
