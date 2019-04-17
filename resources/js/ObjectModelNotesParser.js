@@ -14,14 +14,20 @@ export default class ObjectModelNoteParser {
     }
 
     clean() {
-        // trim preciding newlines
-        this.text = this.text.replace(/^\n+/,"")
-        // trim trailing newlines
-        this.text = this.text.replace(/\n+$/, "");
-        // remove exessive newlines
-        this.text = this.text.replace(/\n\s+\n/, "\n\n");
-        // remove comments
-        this.text = this.text.replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "");
+        this.text = this.text
+            // trim preciding line space
+            .replace(/[^\S\r\n]/gm,"")        
+            // trim trailing line space
+            replace(/[\t]+$/gm,"")        
+            // trim preciding newlines
+            .replace(/^\n+/,"")
+            // trim trailing newlines
+            .replace(/\n+$/, "")
+            // remove exessive newlines
+            .replace(/\n\s+\n/, "\n\n")
+            // remove comments
+            .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "")
+        
         return this;
     }
 
