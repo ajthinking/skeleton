@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Parser from '../ObjectModelNotesParser'
+import ObjectModelCollection from '../ObjectModelCollection'
 
 Vue.use(Vuex)
 Vue.config.debug = true
@@ -11,7 +13,7 @@ export default new Vuex.Store({
         },
         design: {
             activeTab: "Object model",
-            objectModel: ""
+            objectModelNotes: ""
         },
         review: {
             //
@@ -26,13 +28,26 @@ export default new Vuex.Store({
             state[namespace].activeTab = tab
         },
 
-        setObjectModel(state, content) {
-            state.design.objectModel = content
+        setObjectModelNotes(state, content) {
+            state.design.objectModelNotes = content
         },
     },
     actions: {
         navigate(context, payload) {
             context.commit('navigate', payload)
-        }
+        },
+
+        setObjectModelNotes(context, objectModelNotes) {
+            context.commit('setObjectModelNotes', objectModelNotes)
+            context.dispatch('compile', objectModelNotes)
+        },
+        
+        compile(context, objectModelNotes) {
+            console.log(
+                ObjectModelCollection.fromSegments(
+                    Parser.parse(objectModelNotes).segment()
+                )
+            )
+        } 
     }
 })

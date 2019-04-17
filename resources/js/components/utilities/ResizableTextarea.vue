@@ -7,7 +7,6 @@ export default {
         },
 
         forceRerender() {
-            console.log(this.$el.scrollHeight)
             this.$nextTick(() => {
                 this.$el.style.height = 'auto'
                 this.$el.style.height = (this.$el.scrollHeight) + 'px'

@@ -1,7 +1,7 @@
 <template>
     <div>
         <resizable-textarea class="mt-4" ref="resizableTextarea">
-            <textarea placeholder="Enter your object model here..." v-model="objectModel" class="w-full bg-grey-lighter rounded p-2"></textarea>
+            <textarea placeholder="Enter your object model here..." v-model="objectModelNotes" class="w-full bg-grey-lighter rounded p-2 text-sm"></textarea>
         </resizable-textarea>
         <div class="mt-1">
             <button @click="addUserSystem()" :class="buttonStyle">+ user system</button>
@@ -21,19 +21,19 @@
         },
 
         computed: {
-            objectModel: {
+            objectModelNotes: {
                 get() {
-                    return this.$store.state.design.objectModel            
+                    return this.$store.state.design.objectModelNotes            
                 },
 
                 set(value) {
-                    this.$store.commit('setObjectModel', value)
+                    this.$store.dispatch('setObjectModelNotes', value)
                 }
             },
 
             message: {
                 get () {
-                return this.$store.state.obj.message
+                    return this.$store.state.obj.message
                 },
                 set (value) {
                 this.$store.commit('updateMessage', value)
@@ -43,7 +43,7 @@
 
         methods: {
             addUserSystem() {
-                this.objectModel += "User\nemail\nname\npassword\n"
+                this.objectModelNotes += "User\nname\nemail\npassword\nrememberToken\n\npassword_resets\nemail\ntoken\n"
 
                 // resizable textarea does not register the changes since it uses the 'input' event
                 // resort to forceUpdate
