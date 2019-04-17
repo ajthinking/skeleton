@@ -16,7 +16,17 @@ export default new Vuex.Store({
             objectModelNotes: ""
         },
         review: {
-            //
+            files: [
+                {
+                    path: "app/User.php",
+                    content: "Some modelfile content"
+                },
+                {
+                    path: "app/Https/Controllers/UserController.php",
+                    content: "Some controller file content"
+                }
+            ],
+            activeTab: "app/User.php"
         },
         build: {
             //

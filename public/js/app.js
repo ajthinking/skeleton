@@ -2055,7 +2055,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    activeFileContent: function activeFileContent() {
+      var _this = this;
+
+      var activeFile = this.$store.state.review.files.find(function (file) {
+        return _this.isActiveFile(file);
+      });
+      return activeFile ? activeFile.content : "";
+    }
+  },
+  methods: {
+    isActiveFile: function isActiveFile(file) {
+      return file.path == this.$store.state.review.activeTab;
+    },
+    style: function style(file) {
+      var class_ = "px-2 py-1 " + (this.isActiveFile(file) ? "bg-grey-light" : "bg-grey-lighter hover:bg-white");
+      return class_;
+    }
+  }
 });
 
 /***/ }),
@@ -25722,7 +25752,11 @@ var staticRenderFns = [
         staticClass:
           "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
       },
-      [_c("h1", [_vm._v("The build tab")])]
+      [
+        _c("button", { staticClass: "border bg-white p-2 rounded" }, [
+          _vm._v("Build!")
+        ])
+      ]
     )
   }
 ]
@@ -25980,23 +26014,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    {
+      staticClass:
+        "flex h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto text-sm"
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "flex flex-col bg-grey-light text-xs border" },
+        _vm._l(_vm.$store.state.review.files, function(file) {
+          return _c(
+            "div",
+            {
+              key: file.path,
+              class: _vm.style(file),
+              on: {
+                click: function($event) {
+                  _vm.tab = file.path
+                  _vm.$store.dispatch("navigate", {
+                    namespace: "review",
+                    tab: _vm.tab
+                  })
+                }
+              }
+            },
+            [_vm._v("\n            " + _vm._s(file.path) + "\n        ")]
+          )
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "flex flex-1 bg-grey-lighter p-2" }, [
+        _vm._v("\n        " + _vm._s(_vm.activeFileContent) + "\n    ")
+      ])
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
-      },
-      [_c("h1", [_vm._v("REVIEW TAB")])]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -39344,21 +39400,20 @@ function () {
     key: "clean",
     value: function clean() {
       this.text = this.text // trim preciding line space
-      .replace(/[^\S\r\n]/gm, ""); // trim trailing line space
-
-      replace(/[\t]+$/gm, "") // trim preciding newlines
+      .replace(/[^\S\r\n]/gm, "") // trim trailing line space
+      .replace(/[\t]+$/gm, "") // trim preciding newlines
       .replace(/^\n+/, "") // trim trailing newlines
       .replace(/\n+$/, "") // remove exessive newlines
       .replace(/\n\s+\n/, "\n\n") // remove comments
       .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "");
       return this;
     }
+    /* returns an array with items of type ObjectModelEntity */
+
   }, {
     key: "segment",
     value: function segment() {
-      if (!this.text) return [];
-      var parts = this.text.split(/\n\s*\n/);
-      return this.text.split(/\n\s*\n/).map(function (chunk) {
+      return !this.text ? [] : this.text.split(/\n\s*\n/).map(function (chunk) {
         return _ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"].fromText(chunk);
       });
     }
@@ -40241,7 +40296,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       activeTab: "Object model",
       objectModelNotes: ""
     },
-    review: {//
+    review: {
+      files: [{
+        path: "app/User.php",
+        content: "Some modelfile content"
+      }, {
+        path: "app/Https/Controllers/UserController.php",
+        content: "Some controller file content"
+      }],
+      activeTab: "app/User.php"
     },
     build: {//
     }

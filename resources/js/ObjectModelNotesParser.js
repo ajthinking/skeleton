@@ -18,7 +18,7 @@ export default class ObjectModelNoteParser {
             // trim preciding line space
             .replace(/[^\S\r\n]/gm,"")        
             // trim trailing line space
-            replace(/[\t]+$/gm,"")        
+            .replace(/[\t]+$/gm,"")        
             // trim preciding newlines
             .replace(/^\n+/,"")
             // trim trailing newlines
@@ -31,9 +31,9 @@ export default class ObjectModelNoteParser {
         return this;
     }
 
+    /* returns an array with items of type ObjectModelEntity */
     segment() {
-        if(!this.text) return [];
-        var parts = this.text.split(/\n\s*\n/);
-        return this.text.split(/\n\s*\n/).map((chunk) => ObjectModelEntity.fromText(chunk));        
+        return !this.text ? [] : this.text.split(/\n\s*\n/).map((chunk) => ObjectModelEntity.fromText(chunk))        
+
     }        
 }
