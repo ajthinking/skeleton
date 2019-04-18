@@ -66664,7 +66664,7 @@ function () {
 
       return [{
         path: "app/Model.php",
-        content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].Controller
+        content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].Model
       }];
     }
   }], [{
@@ -66883,7 +66883,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["AppHttpControllers"], ["App\\Http\\Controllers"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n    RELATIONSHIPS\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n    RELATIONSHIPS\n}"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -66916,11 +66916,9 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   "User": String.raw(_templateObject()),
-  "Controller": String.raw(_templateObject2())
+  "Controller": String.raw(_templateObject2()),
+  "Model": String.raw(_templateObject3())
 });
-{
-  namespace: String.raw(_templateObject3());
-}
 
 /***/ }),
 

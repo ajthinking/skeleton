@@ -52,12 +52,34 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-}`
-}
+}`,
 
+    "Model": String.raw
+`<?php
 
+namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 
+class MODEL extends Model
 {
-    namespace: String.raw`App\Http\Controllers`
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        FILLABLE
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        HIDDEN
+    ];
+    RELATIONSHIPS
+}`,
 }

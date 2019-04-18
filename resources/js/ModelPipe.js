@@ -18,7 +18,7 @@ export default class ModelPipe {
         
         return [{
             path: "app/Model.php",
-            content: Templates.Controller
+            content: Templates.Model
         }]
     }
 }
