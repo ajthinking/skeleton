@@ -2,44 +2,49 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Parser from '../ObjectModelNotesParser'
 import ObjectModelCollection from '../ObjectModelCollection'
+import Templates from '../Templates'
 
 Vue.use(Vuex)
 Vue.config.debug = true
 
 export default new Vuex.Store({
     state: {
-        workspace: {
-            activeTab: "Design"
+        // Keep track of active tabs in each section
+        navigation: {
+            workspace: "Design",
+            design: "Object model",
+            review: "app/User.php",
         },
-        design: {
-            activeTab: "Object model",
-            objectModelNotes: ""
-        },
+        availablePipes: [
+            "Models",
+            "Users",
+            "Controllers",
+            "Migrations",
+            "APIControllers",
+        ],
+
+        objectModelNotes: "",
+
         review: {
             files: [
                 {
                     path: "app/User.php",
-                    content: "Some modelfile content"
+                    content: Templates.User
                 },
                 {
                     path: "app/Https/Controllers/UserController.php",
-                    content: "Some controller file content"
+                    content: Templates.Controller
                 }
-            ],
-            activeTab: "app/User.php"
-        },
-        build: {
-            //
-        },
-
+            ]
+        }
     },
     mutations: {
         navigate(state, {namespace, tab}) {
-            state[namespace].activeTab = tab
+            state.navigation[namespace] = tab
         },
 
         setObjectModelNotes(state, content) {
-            state.design.objectModelNotes = content
+            state.objectModelNotes = content
         },
     },
     actions: {

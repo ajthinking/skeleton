@@ -5,8 +5,8 @@
         </resizable-textarea>
         <div class="mt-1">
             <button @click="addUserSystem()" :class="buttonStyle">+ user system</button>
-            <button :class="buttonStyle">- clear</button>
             <button :class="buttonStyle">+ sample app</button>
+            <button :class="buttonStyle">+ random app</button>
             <button :class="buttonStyle">syntax</button>
         </div>
     </div>
@@ -23,7 +23,7 @@
         computed: {
             objectModelNotes: {
                 get() {
-                    return this.$store.state.design.objectModelNotes            
+                    return this.$store.state.objectModelNotes            
                 },
 
                 set(value) {

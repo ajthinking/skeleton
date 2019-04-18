@@ -9,11 +9,11 @@
     export default {
         computed: {
             activeTab() {
-                return this.$store.state.design.activeTab
+                return this.$store.state.navigation.design
             },
 
             activeTabComponent() {
-                return this.activeTab.toLowerCase().replace(" ","-") + "-tab"
+                return this.activeTab.toLowerCase().replace(/\s/g,"-") + "-tab"
             },
         }            
     }

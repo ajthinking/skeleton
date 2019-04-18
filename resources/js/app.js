@@ -10,6 +10,12 @@ require('./bootstrap');
 window.Vue = require('vue');
 import store from './store'
 
+// Tell Vue.js to use vue-highlightjs
+import VueHighlightJS from 'vue-highlightjs'
+Vue.use(VueHighlightJS)
+
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

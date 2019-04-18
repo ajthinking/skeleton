@@ -34,7 +34,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Skeleton\\": "Skeleton/"
         },
         "classmap": [
             "database/seeds",

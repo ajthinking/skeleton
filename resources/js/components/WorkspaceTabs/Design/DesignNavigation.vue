@@ -13,7 +13,7 @@
     export default {
         data: function() {
             return {
-                availableTabs: ["Object model", "templates", "settings"],
+                availableTabs: ["Object model", "Object model diagram", "settings", "templates"],
                 activeTab: "Object model",
             }
         },
