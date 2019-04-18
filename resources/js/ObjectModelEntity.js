@@ -13,4 +13,8 @@ export default class ObjectModelEntity {
         // a Model is indicated by capital first letter
         return this.heading[0] == this.heading[0].toUpperCase()
     }
+
+    isUserModel() {
+        return this.heading == "User"
+    }
 }

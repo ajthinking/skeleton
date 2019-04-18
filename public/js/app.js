@@ -2121,7 +2121,7 @@ __webpack_require__.r(__webpack_exports__);
     activeFileContent: function activeFileContent() {
       var _this = this;
 
-      var activeFile = this.$store.state.review.files.find(function (file) {
+      var activeFile = this.$store.state.reviewFiles.find(function (file) {
         return _this.isActiveFile(file);
       });
       return activeFile ? activeFile.content : "";
@@ -53160,7 +53160,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm._l(_vm.$store.state.availablePipes, function(pipe) {
-        return _c("div", { key: pipe }, [
+        return _c("div", { key: pipe.make().name() }, [
           _c("input", {
             attrs: {
               type: "checkbox",
@@ -53169,7 +53169,7 @@ var render = function() {
               checked: ""
             }
           }),
-          _vm._v(" " + _vm._s(pipe)),
+          _vm._v(" " + _vm._s(pipe.make().name())),
           _c("br")
         ])
       })
@@ -53284,7 +53284,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "flex flex-col bg-grey-lighter text-xs border" },
-      _vm._l(_vm.$store.state.review.files, function(file) {
+      _vm._l(_vm.$store.state.reviewFiles, function(file) {
         return _c(
           "div",
           {
@@ -66552,6 +66552,135 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 
 /***/ }),
 
+/***/ "./resources/js/LaravelFileFactory.js":
+/*!********************************************!*\
+  !*** ./resources/js/LaravelFileFactory.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LaravelFileFactory; });
+/* harmony import */ var _UserPipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserPipe */ "./resources/js/UserPipe.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/ModelPipe.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var LaravelFileFactory =
+/*#__PURE__*/
+function () {
+  function LaravelFileFactory(objectModelCollection) {
+    _classCallCheck(this, LaravelFileFactory);
+
+    this.omc = objectModelCollection;
+  }
+
+  _createClass(LaravelFileFactory, [{
+    key: "withPipes",
+    value: function withPipes(pipes) {
+      this.pipes = pipes;
+      return this;
+    }
+  }, {
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var _this = this;
+
+      return this.pipes.map(function (pipe) {
+        return pipe.make().calculateFiles(_this.omc);
+      }).reduce(function (pipeFileList, allFiles) {
+        return allFiles.concat(pipeFileList);
+      }, []);
+    }
+  }, {
+    key: "user",
+    value: function user() {
+      return "file";
+    }
+  }], [{
+    key: "pipes",
+    value: function pipes() {
+      return [_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _ModelPipe__WEBPACK_IMPORTED_MODULE_2__["default"]];
+    }
+  }, {
+    key: "from",
+    value: function from(objectModelCollection) {
+      return new this(objectModelCollection);
+    }
+  }]);
+
+  return LaravelFileFactory;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/ModelPipe.js":
+/*!***********************************!*\
+  !*** ./resources/js/ModelPipe.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelPipe; });
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Templates */ "./resources/js/Templates.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ModelPipe =
+/*#__PURE__*/
+function () {
+  function ModelPipe() {
+    _classCallCheck(this, ModelPipe);
+  }
+
+  _createClass(ModelPipe, [{
+    key: "name",
+    value: function name() {
+      return this.constructor.name;
+    }
+  }, {
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
+      omc.modelsExceptUser(); // get fillable, hidden
+      // relationships etc here
+      // for now just fake it and return a User
+
+      return [{
+        path: "app/Model.php",
+        content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].Controller
+      }];
+    }
+  }], [{
+    key: "make",
+    value: function make() {
+      return new ModelPipe();
+    }
+  }]);
+
+  return ModelPipe;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/ObjectModelCollection.js":
 /*!***********************************************!*\
   !*** ./resources/js/ObjectModelCollection.js ***!
@@ -66585,10 +66714,29 @@ function () {
   }
 
   _createClass(ObjectModelCollection, [{
+    key: "hasUserModel",
+    value: function hasUserModel() {
+      return this.userModel().count() > 0;
+    }
+  }, {
+    key: "userModel",
+    value: function userModel() {
+      return this.segments.filter(function (segment) {
+        return segment.isUserModel();
+      });
+    }
+  }, {
     key: "models",
     value: function models() {
       return this.segments.filter(function (segment) {
         return segment.hasModel();
+      });
+    }
+  }, {
+    key: "modelsExceptUser",
+    value: function modelsExceptUser() {
+      return this.models().filter(function (model) {
+        return !model.isUserModel();
       });
     }
   }], [{
@@ -66637,6 +66785,11 @@ function () {
     value: function hasModel() {
       // a Model is indicated by capital first letter
       return this.heading[0] == this.heading[0].toUpperCase();
+    }
+  }, {
+    key: "isUserModel",
+    value: function isUserModel() {
+      return this.heading == "User";
     }
   }], [{
     key: "fromText",
@@ -66768,6 +66921,71 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 {
   namespace: String.raw(_templateObject3());
 }
+
+/***/ }),
+
+/***/ "./resources/js/UserPipe.js":
+/*!**********************************!*\
+  !*** ./resources/js/UserPipe.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserPipe; });
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Templates */ "./resources/js/Templates.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var UserPipe =
+/*#__PURE__*/
+function () {
+  function UserPipe() {
+    _classCallCheck(this, UserPipe);
+  }
+
+  _createClass(UserPipe, [{
+    key: "name",
+    value: function name() {
+      return this.constructor.name;
+    }
+  }, {
+    key: "accepts",
+    value: function accepts() {
+      return "userModel";
+    }
+  }, {
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
+      //console.log(omc, omc.hasUserModel())
+      if (!omc.hasUserModel()) return ["WHAAAAT"];
+      omc.userModel(); // get fillable, hidden
+      // relationships etc here
+      // for now just fake it and return a User
+
+      return [{
+        path: "app/User.php",
+        content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].User
+      }];
+    }
+  }], [{
+    key: "make",
+    value: function make() {
+      return new UserPipe();
+    }
+  }]);
+
+  return UserPipe;
+}();
+
+
 
 /***/ }),
 
@@ -67691,6 +67909,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ObjectModelNotesParser */ "./resources/js/ObjectModelNotesParser.js");
 /* harmony import */ var _ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ObjectModelCollection */ "./resources/js/ObjectModelCollection.js");
 /* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
+/* harmony import */ var _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../LaravelFileFactory */ "./resources/js/LaravelFileFactory.js");
+/* harmony import */ var _UserPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../UserPipe */ "./resources/js/UserPipe.js");
+
+
 
 
 
@@ -67706,11 +67928,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       design: "Object model",
       review: "app/User.php"
     },
-    availablePipes: ["Models", "Users", "Controllers", "Migrations", "APIControllers"],
+    availablePipes: _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"].pipes(),
     objectModelNotes: "",
-    review: {
-      files: []
-    }
+    reviewFiles: []
   },
   mutations: {
     navigate: function navigate(state, _ref) {
@@ -67720,6 +67940,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     setObjectModelNotes: function setObjectModelNotes(state, content) {
       state.objectModelNotes = content;
+    },
+    setReviewFiles: function setReviewFiles(state, files) {
+      state.reviewFiles = files;
     }
   },
   actions: {
@@ -67731,10 +67954,17 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       context.dispatch('compile', objectModelNotes);
     },
     compile: function compile(context, objectModelNotes) {
-      console.log(_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromSegments(_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment()));
+      var files = _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"].from(_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromSegments(_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
+      context.commit('setReviewFiles', files);
     }
   }
-}));
+})); // tinkering ...
+
+/*
+
+data.ENV_FILE_FACTORY ? data.ENV_FILE_FACTORY : LaravelFileFactory
+
+*/
 
 /***/ }),
 

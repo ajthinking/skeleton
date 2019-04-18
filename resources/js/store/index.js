@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import Parser from '../ObjectModelNotesParser'
 import ObjectModelCollection from '../ObjectModelCollection'
 import Templates from '../Templates'
+import LaravelFileFactory from '../LaravelFileFactory'
+import UserPipe from '../UserPipe'
 
 Vue.use(Vuex)
 Vue.config.debug = true
@@ -15,19 +17,11 @@ export default new Vuex.Store({
             design: "Object model",
             review: "app/User.php",
         },
-        availablePipes: [
-            "Models",
-            "Users",
-            "Controllers",
-            "Migrations",
-            "APIControllers",
-        ],
+        availablePipes: LaravelFileFactory.pipes(),
 
         objectModelNotes: "",
 
-        review: {
-            files: []
-        }
+        reviewFiles: []
     },
     mutations: {
         navigate(state, {namespace, tab}) {
@@ -37,6 +31,10 @@ export default new Vuex.Store({
         setObjectModelNotes(state, content) {
             state.objectModelNotes = content
         },
+
+        setReviewFiles(state, files) {
+            state.reviewFiles = files
+        },        
     },
     actions: {
         navigate(context, payload) {
@@ -49,11 +47,23 @@ export default new Vuex.Store({
         },
         
         compile(context, objectModelNotes) {
-            console.log(
+            let files = LaravelFileFactory.from(
                 ObjectModelCollection.fromSegments(
                     Parser.parse(objectModelNotes).segment()
-                )
-            )
+                )                   
+            ).withPipes(
+                context.state.availablePipes
+            ).calculateFiles()
+
+            context.commit('setReviewFiles', files)
+        
         } 
     }
 })
+
+// tinkering ...
+/*
+
+data.ENV_FILE_FACTORY ? data.ENV_FILE_FACTORY : LaravelFileFactory
+
+*/

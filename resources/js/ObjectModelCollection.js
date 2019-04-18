@@ -10,7 +10,19 @@ export default class ObjectModelCollection {
         return new this(segments)
     }
 
+    hasUserModel() {
+        return this.userModel().count() > 0
+    }
+
+    userModel() {
+        return this.segments.filter(segment => segment.isUserModel())
+    }
+
     models() {
         return this.segments.filter(segment => segment.hasModel())
+    }
+
+    modelsExceptUser() {
+        return this.models().filter(model => !model.isUserModel())
     }
 }

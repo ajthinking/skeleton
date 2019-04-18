@@ -1,7 +1,7 @@
 <template>
     <div class="flex mx-auto text-sm">
         <div class="flex flex-col bg-grey-lighter text-xs border">
-            <div v-for="file in $store.state.review.files"
+            <div v-for="file in $store.state.reviewFiles"
                 :key="file.path"
                 :class="style(file) + 'flex'"
                 @click="tab = file.path; $store.dispatch('navigate', {namespace: 'review', tab})"
@@ -24,7 +24,7 @@
     export default {
         computed: {
             activeFileContent() {
-                let activeFile = this.$store.state.review.files.find(
+                let activeFile = this.$store.state.reviewFiles.find(
                     file => this.isActiveFile(file)
                 )
 
