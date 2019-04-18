@@ -26,16 +26,7 @@ export default new Vuex.Store({
         objectModelNotes: "",
 
         review: {
-            files: [
-                {
-                    path: "app/User.php",
-                    content: Templates.User
-                },
-                {
-                    path: "app/Https/Controllers/UserController.php",
-                    content: Templates.Controller
-                }
-            ]
+            files: []
         }
     },
     mutations: {

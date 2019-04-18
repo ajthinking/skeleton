@@ -1891,7 +1891,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      availableTabs: ["Object model", "Object model diagram", "settings", "templates"],
+      availableTabs: ["Object model",
+      /* "Object model diagram", */
+      "settings", "templates"],
       activeTab: "Object model"
     };
   },
@@ -67707,13 +67709,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     availablePipes: ["Models", "Users", "Controllers", "Migrations", "APIControllers"],
     objectModelNotes: "",
     review: {
-      files: [{
-        path: "app/User.php",
-        content: _Templates__WEBPACK_IMPORTED_MODULE_4__["default"].User
-      }, {
-        path: "app/Https/Controllers/UserController.php",
-        content: _Templates__WEBPACK_IMPORTED_MODULE_4__["default"].Controller
-      }]
+      files: []
     }
   },
   mutations: {
