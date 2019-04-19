@@ -66873,6 +66873,71 @@ function () {
 
 /***/ }),
 
+/***/ "./resources/js/Template.js":
+/*!**********************************!*\
+  !*** ./resources/js/Template.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Template; });
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/ModelPipe.js");
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Templates */ "./resources/js/Templates.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var Template =
+/*#__PURE__*/
+function () {
+  function Template(text) {
+    _classCallCheck(this, Template);
+
+    this.originalText = text;
+    this.text = text;
+  }
+
+  _createClass(Template, [{
+    key: "replace",
+    value: function replace(replacementPairs) {
+      var _this = this;
+
+      Object.keys(replacementPairs).forEach(function (marker) {
+        if (marker.endsWith("_BLOCK")) return _this.blockReplace(marker, replacementPairs[marker]);
+
+        _this.inlineReplace(marker, replacementPairs[marker]);
+      });
+      return this.text;
+    }
+  }, {
+    key: "inlineReplace",
+    value: function inlineReplace(marker, text) {
+      this.text = this.text.replace(new RegExp(marker, "g"), text);
+    }
+  }, {
+    key: "blockReplace",
+    value: function blockReplace(marker, text) {}
+  }], [{
+    key: "for",
+    value: function _for(templateName) {
+      return new this(_Templates__WEBPACK_IMPORTED_MODULE_1__["default"][templateName]);
+    }
+  }]);
+
+  return Template;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/Templates.js":
 /*!***********************************!*\
   !*** ./resources/js/Templates.js ***!
@@ -66883,7 +66948,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n    RELATIONSHIPS\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n    RELATIONSHIPS\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n    RELATIONSHIP_METHODS_BLOCK\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n    RELATIONSHIP_METHODS_BLOCK\n}"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -66903,7 +66968,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        'password', 'remember_token',\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        'email_verified_at' => 'datetime',\n    ];\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        'password', 'remember_token',\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        'email_verified_at' => 'datetime',\n    ];\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n}"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -66932,7 +66997,7 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserPipe; });
-/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Templates */ "./resources/js/Templates.js");
+/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Template */ "./resources/js/Template.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -66970,7 +67035,10 @@ function () {
 
       return [{
         path: "app/User.php",
-        content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].User
+        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
+          FILLABLE: "'name', 'email'",
+          HIDDEN: "'password', 'token'"
+        })
       }];
     }
   }], [{

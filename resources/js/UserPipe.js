@@ -1,4 +1,4 @@
-import Templates from './Templates'
+import Template from './Template'
 
 export default class UserPipe {
     constructor() {
@@ -28,7 +28,10 @@ export default class UserPipe {
         
         return [{
             path: "app/User.php",
-            content: Templates.User
+            content: Template.for('User').replace({
+                FILLABLE: "'name', 'email'",
+                HIDDEN: "'password', 'token'",
+            })
         }]
     }
 }
