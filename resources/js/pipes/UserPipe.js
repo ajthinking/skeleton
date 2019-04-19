@@ -24,10 +24,7 @@ export default class UserPipe extends ModelPipe {
             content: Template.for('User').replace({
                 //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
                 //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-                //RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods(),
-                TEST_TOP_BLOCK: "",
-                TEST_MIDDLE_BLOCK: "",
-                TEST_BOTTOM_BLOCK: this.relationshipMethods(),
+                RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods(),
             })
         }]
     }

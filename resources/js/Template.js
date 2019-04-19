@@ -15,6 +15,7 @@ export default class Template {
 
     replace(replacementPairs) {
         Object.keys(replacementPairs).forEach(marker => {
+            if(!this.text.includes(marker)) return;
             if(marker.endsWith("_BLOCK")) return this.blockReplace(marker, replacementPairs[marker]);
             this.inlineReplace(marker, replacementPairs[marker])
         })
@@ -57,7 +58,5 @@ export default class Template {
             new RegExp(regex, "gm"),
             (!!spacingAbove && !!spacingBelow) ? "\n" : ""
         )
-
-
     }
 }

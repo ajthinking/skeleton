@@ -63820,6 +63820,7 @@ function () {
       var _this = this;
 
       Object.keys(replacementPairs).forEach(function (marker) {
+        if (!_this.text.includes(marker)) return;
         if (marker.endsWith("_BLOCK")) return _this.blockReplace(marker, replacementPairs[marker]);
 
         _this.inlineReplace(marker, replacementPairs[marker]);
@@ -64909,10 +64910,7 @@ function (_ModelPipe) {
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
           //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
           //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-          //RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods(),
-          TEST_TOP_BLOCK: "",
-          TEST_MIDDLE_BLOCK: "",
-          TEST_BOTTOM_BLOCK: this.relationshipMethods()
+          RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods()
         })
       }];
     }
