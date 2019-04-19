@@ -9,7 +9,7 @@ export default class LaravelFileFactory {
     static pipes() {
         return [
             UserPipe,
-            ModelPipe,
+            //ModelPipe,
         ]
     }
 

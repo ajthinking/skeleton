@@ -21,4 +21,12 @@ export default class ModelPipe {
             content: Templates.Model
         }]
     }
+
+    relationshipMethods() {
+        // One To One
+        // One To Many
+        // Many To Many
+
+        return Templates.MULTIPLE_RELATIONSHIPS
+    }
 }

@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    TEST_TOP_BLOCK
+
     use Notifiable;
 
     /**
@@ -30,6 +32,8 @@ class User extends Authenticatable
         HIDDEN
     ];
 
+    TEST_MIDDLE_BLOCK
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -38,7 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         CASTS
     ];
-    RELATIONSHIP_METHODS_BLOCK
+
+    TEST_BOTTOM_BLOCK
 }`,
     "Controller": String.raw
 `<?php
@@ -64,7 +69,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MODEL extends Model
 {
-    BEGGINING_BLOCK
+    BEGGINING_BLOCK // IF EMPTY DELETE LINE+BELOW SPACING
 
     /**
      * The attributes that are mass assignable.
@@ -75,7 +80,7 @@ class MODEL extends Model
         FILLABLE
     ];
 
-    MIDDLE_BLOCK
+    MIDDLE_BLOCK // IF EMPTY DELETE ABOVE SPACING + LINE + BELOW SPACING
 
     /**
      * The attributes that should be hidden for arrays.
@@ -86,7 +91,7 @@ class MODEL extends Model
         HIDDEN
     ];
 
-    ENDING_BLOCK
+    ENDING_BLOCK // IF EMPY DELETE ABOVE SPACING + LINE + BELOW SPACING
 }`,
     "SOME_RELATIONSHIP": String.raw
 `public function METHOD_NAME()
@@ -95,11 +100,17 @@ class MODEL extends Model
 }`,
 
 "MULTIPLE_RELATIONSHIPS": String.raw
-`public function METHOD_NAME()
+`/**
+* Some relationship method.
+*/
+public function METHOD_NAME()
 {
    return $this->hasMany('App\CLASS_NAME');
 }
 
+/**
+ * Some relationship method.
+ */
 public function SOME_OTHER_METHOD_NAME()
 {
    return $this->hasManyOrSome('App\CLASS_NAME_2');

@@ -12,7 +12,7 @@ export default class UserPipe extends ModelPipe {
 
     calculateFiles(omc = ObjectModelCollection) {
         //console.log(omc, omc.hasUserModel())
-        if(!omc.hasUserModel()) return ["WHAAAAT"];
+        if(!omc.hasUserModel()) return [];
         
         omc.userModel()
         // get fillable, hidden
@@ -24,7 +24,10 @@ export default class UserPipe extends ModelPipe {
             content: Template.for('User').replace({
                 //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
                 //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-                //RELATIONSHIP_METHODS_BLOCK: this.relationship_methods(), // placed in super class ModelPipe
+                //RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods(),
+                TEST_TOP_BLOCK: "",
+                TEST_MIDDLE_BLOCK: "",
+                TEST_BOTTOM_BLOCK: this.relationshipMethods(),
             })
         }]
     }

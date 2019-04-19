@@ -63575,7 +63575,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"]];
     }
   }, {
     key: "from",
@@ -63834,6 +63834,7 @@ function () {
   }, {
     key: "blockReplace",
     value: function blockReplace(marker, text) {
+      if (text == "") return this.removeBlock(marker);
       var matches = RegExp('([ ]*)(' + marker + ')').exec(this.text);
       var tabsBeforeItem = matches[1].length / 4;
       var fullMarker = matches[0];
@@ -63847,6 +63848,15 @@ function () {
 
         return " ".repeat(tabs * 4) + line;
       }).join('\n');
+    }
+  }, {
+    key: "removeBlock",
+    value: function removeBlock(marker) {
+      var regex = '^([\\n])*[ ]*' + marker + '[\\n]([\\n]+)?';
+      var matches = RegExp(regex, "gm").exec(this.text);
+      var spacingAbove = matches[1];
+      var spacingBelow = matches[2];
+      this.text = this.text.replace(new RegExp(regex, "gm"), !!spacingAbove && !!spacingBelow ? "\n" : "");
     }
   }], [{
     key: "for",
@@ -63872,7 +63882,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 function _templateObject5() {
-  var data = _taggedTemplateLiteral(["public function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}\n\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('AppCLASS_NAME_2');\n}"], ["public function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}\n\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('App\\CLASS_NAME_2');\n}"]);
+  var data = _taggedTemplateLiteral(["/**\n* Some relationship method.\n*/\npublic function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('AppCLASS_NAME_2');\n}"], ["/**\n* Some relationship method.\n*/\npublic function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('App\\CLASS_NAME_2');\n}"]);
 
   _templateObject5 = function _templateObject5() {
     return data;
@@ -63892,7 +63902,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    BEGGINING_BLOCK\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    MIDDLE_BLOCK\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ENDING_BLOCK\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    BEGGINING_BLOCK\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    MIDDLE_BLOCK\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ENDING_BLOCK\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    BEGGINING_BLOCK // IF EMPTY DELETE LINE+BELOW SPACING\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    MIDDLE_BLOCK // IF EMPTY DELETE ABOVE SPACING + LINE + BELOW SPACING\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ENDING_BLOCK // IF EMPY DELETE ABOVE SPACING + LINE + BELOW SPACING\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    BEGGINING_BLOCK // IF EMPTY DELETE LINE+BELOW SPACING\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    MIDDLE_BLOCK // IF EMPTY DELETE ABOVE SPACING + LINE + BELOW SPACING\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ENDING_BLOCK // IF EMPY DELETE ABOVE SPACING + LINE + BELOW SPACING\n}"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -63912,7 +63922,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n    RELATIONSHIP_METHODS_BLOCK\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n    RELATIONSHIP_METHODS_BLOCK\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    TEST_TOP_BLOCK\n\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    TEST_MIDDLE_BLOCK\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n\n    TEST_BOTTOM_BLOCK\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    TEST_TOP_BLOCK\n\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    TEST_MIDDLE_BLOCK\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n\n    TEST_BOTTOM_BLOCK\n}"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -64813,6 +64823,14 @@ function () {
         content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].Model
       }];
     }
+  }, {
+    key: "relationshipMethods",
+    value: function relationshipMethods() {
+      // One To One
+      // One To Many
+      // Many To Many
+      return _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].MULTIPLE_RELATIONSHIPS;
+    }
   }], [{
     key: "make",
     value: function make() {
@@ -64881,16 +64899,20 @@ function (_ModelPipe) {
     value: function calculateFiles() {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       //console.log(omc, omc.hasUserModel())
-      if (!omc.hasUserModel()) return ["WHAAAAT"];
+      if (!omc.hasUserModel()) return [];
       omc.userModel(); // get fillable, hidden
       // relationships etc here
       // for now just fake it and return a User
 
       return [{
         path: "app/User.php",
-        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({//FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
+        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
+          //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
           //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-          //RELATIONSHIP_METHODS_BLOCK: this.relationship_methods(), // placed in super class ModelPipe
+          //RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods(),
+          TEST_TOP_BLOCK: "",
+          TEST_MIDDLE_BLOCK: "",
+          TEST_BOTTOM_BLOCK: this.relationshipMethods()
         })
       }];
     }

@@ -27,6 +27,8 @@ export default class Template {
     }
 
     blockReplace(marker, text) {
+        if(text == "") return this.removeBlock(marker)
+
         var matches = RegExp('([ ]*)(' + marker + ')').exec(this.text)
         var tabsBeforeItem = matches[1].length/4;
         var fullMarker = matches[0];
@@ -42,5 +44,20 @@ export default class Template {
             if(line == "") return line; // No extra indentation for empty lines
             return " ".repeat(tabs*4) + line
         }).join('\n')
+    }
+
+    removeBlock(marker) {
+        var regex = '^([\\n])*[ ]*' + marker + '[\\n]([\\n]+)?';
+        var matches = RegExp(regex, "gm").exec(this.text)
+
+        let spacingAbove = matches[1]
+        let spacingBelow = matches[2]
+        
+        this.text = this.text.replace(
+            new RegExp(regex, "gm"),
+            (!!spacingAbove && !!spacingBelow) ? "\n" : ""
+        )
+
+
     }
 }
