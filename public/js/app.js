@@ -63520,6 +63520,42 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 
 /***/ }),
 
+/***/ "./resources/js/Collection.js":
+/*!************************************!*\
+  !*** ./resources/js/Collection.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+collect_js__WEBPACK_IMPORTED_MODULE_0___default()().macro("mapWithRemaining", function (callback) {
+  var _this = this;
+
+  var keys = Object.keys(this.items);
+  var items = this.items.map(function (item, key) {
+    var remaining = _toConsumableArray(_this.items);
+
+    remaining.splice(remaining.indexOf(item), 1);
+    return callback(item, remaining);
+  });
+  return collect_js__WEBPACK_IMPORTED_MODULE_0___default()(items);
+});
+/* harmony default export */ __webpack_exports__["default"] = (collect_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+
+/***/ }),
+
 /***/ "./resources/js/LaravelFileFactory.js":
 /*!********************************************!*\
   !*** ./resources/js/LaravelFileFactory.js ***!
@@ -63601,8 +63637,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelCollection; });
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Collection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Collection.js */ "./resources/js/Collection.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -63619,7 +63654,7 @@ function () {
 
     _classCallCheck(this, ObjectModelCollection);
 
-    this.segments = collect_js__WEBPACK_IMPORTED_MODULE_0___default()(segments);
+    this.segments = Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(segments);
     this.Model = modelDefinition;
   }
 
@@ -63648,6 +63683,21 @@ function () {
       return this.models().filter(function (model) {
         return !model.isUserModel();
       });
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      return this.segments.map(callback);
+    }
+  }, {
+    key: "filter",
+    value: function filter(callback) {
+      return this.segments.filter(callback);
+    }
+  }, {
+    key: "find",
+    value: function find(callback) {
+      return this.segments.find(callback);
     }
   }], [{
     key: "fromSegments",
@@ -64831,6 +64881,10 @@ function () {
       // One To Many
       // Many To Many
       return _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].MULTIPLE_RELATIONSHIPS;
+    }
+  }, {
+    key: "hasManyRelationships",
+    value: function hasManyRelationships() {// extend the ObjectModelCollection with REMAINING-iterations
     }
   }], [{
     key: "make",

@@ -29,4 +29,8 @@ export default class ModelPipe {
 
         return Templates.MULTIPLE_RELATIONSHIPS
     }
+
+    hasManyRelationships() {
+        // extend the ObjectModelCollection with REMAINING-iterations
+    }
 }

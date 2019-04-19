@@ -1,4 +1,4 @@
-import collect from 'collect.js'
+import collect from './Collection.js'
 
 export default class ObjectModelCollection {
     constructor(segments, modelDefinition = "LaravelModel") {
@@ -25,4 +25,18 @@ export default class ObjectModelCollection {
     modelsExceptUser() {
         return this.models().filter(model => !model.isUserModel())
     }
+
+    map(callback) {
+        return this.segments.map(callback)
+    }
+
+    filter(callback) {
+        return this.segments.filter(callback)
+    }
+    
+    find(callback) {
+        return this.segments.find(callback)
+    }
+    
+    
 }
