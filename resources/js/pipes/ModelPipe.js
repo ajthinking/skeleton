@@ -11,6 +11,7 @@ export default class ModelPipe {
     }
 
     calculateFiles(omc = ObjectModelCollection) {
+
         omc.modelsExceptUser()
         // get fillable, hidden
         // relationships etc here
@@ -30,7 +31,12 @@ export default class ModelPipe {
         return Templates.MULTIPLE_RELATIONSHIPS
     }
 
-    hasManyRelationships() {
-        // extend the ObjectModelCollection with REMAINING-iterations
+    hasManyRelationships(omc) {
+        let items = omc.segments.mapWithRemaining((item, remainging) => {
+            item.candidates = remainging
+            return item
+        })
+
+        console.log(omc)
     }
 }

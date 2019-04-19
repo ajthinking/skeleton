@@ -64884,7 +64884,12 @@ function () {
     }
   }, {
     key: "hasManyRelationships",
-    value: function hasManyRelationships() {// extend the ObjectModelCollection with REMAINING-iterations
+    value: function hasManyRelationships(omc) {
+      var items = omc.segments.mapWithRemaining(function (item, remainging) {
+        item.candidates = remainging;
+        return item;
+      });
+      console.log(omc);
     }
   }], [{
     key: "make",
@@ -64953,7 +64958,8 @@ function (_ModelPipe) {
     key: "calculateFiles",
     value: function calculateFiles() {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
-      //console.log(omc, omc.hasUserModel())
+      this.hasManyRelationships(omc); //console.log(omc, omc.hasUserModel())
+
       if (!omc.hasUserModel()) return [];
       omc.userModel(); // get fillable, hidden
       // relationships etc here

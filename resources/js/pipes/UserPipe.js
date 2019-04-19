@@ -11,6 +11,9 @@ export default class UserPipe extends ModelPipe {
     }
 
     calculateFiles(omc = ObjectModelCollection) {
+
+        this.hasManyRelationships(omc)
+
         //console.log(omc, omc.hasUserModel())
         if(!omc.hasUserModel()) return [];
         
