@@ -64,6 +64,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class MODEL extends Model
 {
+    BEGGINING_BLOCK
+
     /**
      * The attributes that are mass assignable.
      *
@@ -73,6 +75,8 @@ class MODEL extends Model
         FILLABLE
     ];
 
+    MIDDLE_BLOCK
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -81,7 +85,8 @@ class MODEL extends Model
     protected $hidden = [
         HIDDEN
     ];
-    RELATIONSHIP_METHODS_BLOCK
+
+    ENDING_BLOCK
 }`,
     "SOME_RELATIONSHIP": String.raw
 `public function METHOD_NAME()

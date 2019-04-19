@@ -4,7 +4,7 @@ import Parser from '../ObjectModelNotesParser'
 import ObjectModelCollection from '../ObjectModelCollection'
 import Templates from '../Templates'
 import LaravelFileFactory from '../LaravelFileFactory'
-import UserPipe from '../UserPipe'
+import UserPipe from '../pipes/UserPipe'
 
 Vue.use(Vuex)
 Vue.config.debug = true

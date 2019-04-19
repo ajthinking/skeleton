@@ -1,21 +1,13 @@
-import Template from './Template'
-import Templates from './Templates';
+import Template from '../Template'
+import ModelPipe from './ModelPipe';
 
-export default class UserPipe {
-    constructor() {
-
-    }
-
+export default class UserPipe extends ModelPipe {
     static make() {
         return new UserPipe()
     }
     
     name() {
         return this.constructor.name
-    }
-
-    accepts() {
-        return "userModel"
     }
 
     calculateFiles(omc = ObjectModelCollection) {
@@ -30,9 +22,9 @@ export default class UserPipe {
         return [{
             path: "app/User.php",
             content: Template.for('User').replace({
-                FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
-                HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-                RELATIONSHIP_METHODS_BLOCK: this.relationship_methods(), // placed in super class ModelPipe
+                //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
+                //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
+                //RELATIONSHIP_METHODS_BLOCK: this.relationship_methods(), // placed in super class ModelPipe
             })
         }]
     }

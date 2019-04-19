@@ -1,4 +1,4 @@
-import ModelPipe from "./ModelPipe"
+import ModelPipe from "./pipes/ModelPipe"
 import Templates from "./Templates"
 
 export default class Template {

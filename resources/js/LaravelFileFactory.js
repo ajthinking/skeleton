@@ -1,5 +1,5 @@
-import UserPipe from './UserPipe'
-import ModelPipe from './ModelPipe'
+import UserPipe from './pipes/UserPipe'
+import ModelPipe from './pipes/ModelPipe'
 
 export default class LaravelFileFactory {
     constructor(objectModelCollection) {
