@@ -23,12 +23,23 @@ export default class Template {
     }
 
     inlineReplace(marker, text) {
-        this.text = this.text.replace(new RegExp(marker,"g"), text);
+        this.text = this.text.replace(new RegExp(marker, "g"), text);
     }
 
     blockReplace(marker, text) {
+        var matches = RegExp('([ ]*)(' + marker + ')').exec(this.text)
+        var tabsBeforeItem = matches[1].length/4;
+        var fullMarker = matches[0];
 
+        this.text = this.text.replace(
+            new RegExp(fullMarker, "g"),
+            this.indent(text, tabsBeforeItem)
+        )
     }
 
-
+    indent(text, tabs) {
+        return text.split('\n').map(line => {
+            return " ".repeat(tabs*4) + line
+        }).join('\n')
+    }
 }

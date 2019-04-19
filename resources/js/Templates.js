@@ -38,6 +38,7 @@ class User extends Authenticatable
     protected $casts = [
         CASTS
     ];
+    RELATIONSHIP_METHODS_BLOCK
 }`,
     "Controller": String.raw
 `<?php
@@ -82,4 +83,9 @@ class MODEL extends Model
     ];
     RELATIONSHIP_METHODS_BLOCK
 }`,
+    "SOME_RELATIONSHIP": String.raw
+`public function METHOD_NAME()
+{
+   return $this->hasMany('App\CLASS_NAME');
+}`
 }

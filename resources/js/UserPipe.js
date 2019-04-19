@@ -1,4 +1,5 @@
 import Template from './Template'
+import Templates from './Templates';
 
 export default class UserPipe {
     constructor() {
@@ -31,6 +32,7 @@ export default class UserPipe {
             content: Template.for('User').replace({
                 FILLABLE: "'name', 'email'",
                 HIDDEN: "'password', 'token'",
+                RELATIONSHIP_METHODS_BLOCK: Templates.SOME_RELATIONSHIP
             })
         }]
     }
