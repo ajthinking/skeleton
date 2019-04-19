@@ -87,5 +87,16 @@ class MODEL extends Model
 `public function METHOD_NAME()
 {
    return $this->hasMany('App\CLASS_NAME');
+}`,
+
+"MULTIPLE_RELATIONSHIPS": String.raw
+`public function METHOD_NAME()
+{
+   return $this->hasMany('App\CLASS_NAME');
+}
+
+public function SOME_OTHER_METHOD_NAME()
+{
+   return $this->hasManyOrSome('App\CLASS_NAME_2');
 }`
 }

@@ -39,6 +39,7 @@ export default class Template {
 
     indent(text, tabs) {
         return text.split('\n').map(line => {
+            if(line == "") return line; // No extra indentation for empty lines
             return " ".repeat(tabs*4) + line
         }).join('\n')
     }

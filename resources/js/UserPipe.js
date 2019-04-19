@@ -32,7 +32,7 @@ export default class UserPipe {
             content: Template.for('User').replace({
                 FILLABLE: "'name', 'email'",
                 HIDDEN: "'password', 'token'",
-                RELATIONSHIP_METHODS_BLOCK: Templates.SOME_RELATIONSHIP
+                RELATIONSHIP_METHODS_BLOCK: Templates.MULTIPLE_RELATIONSHIPS
             })
         }]
     }

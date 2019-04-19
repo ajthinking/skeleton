@@ -66933,6 +66933,8 @@ function () {
     key: "indent",
     value: function indent(text, tabs) {
       return text.split('\n').map(function (line) {
+        if (line == "") return line; // No extra indentation for empty lines
+
         return " ".repeat(tabs * 4) + line;
       }).join('\n');
     }
@@ -66959,6 +66961,16 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _templateObject5() {
+  var data = _taggedTemplateLiteral(["public function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}\n\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('AppCLASS_NAME_2');\n}"], ["public function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}\n\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('App\\CLASS_NAME_2');\n}"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject4() {
   var data = _taggedTemplateLiteral(["public function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}"], ["public function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}"]);
 
@@ -67005,7 +67017,8 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
   "User": String.raw(_templateObject()),
   "Controller": String.raw(_templateObject2()),
   "Model": String.raw(_templateObject3()),
-  "SOME_RELATIONSHIP": String.raw(_templateObject4())
+  "SOME_RELATIONSHIP": String.raw(_templateObject4()),
+  "MULTIPLE_RELATIONSHIPS": String.raw(_templateObject5())
 });
 
 /***/ }),
@@ -67063,7 +67076,7 @@ function () {
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
           FILLABLE: "'name', 'email'",
           HIDDEN: "'password', 'token'",
-          RELATIONSHIP_METHODS_BLOCK: _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].SOME_RELATIONSHIP
+          RELATIONSHIP_METHODS_BLOCK: _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS
         })
       }];
     }
