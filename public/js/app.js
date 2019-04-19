@@ -67074,9 +67074,12 @@ function () {
       return [{
         path: "app/User.php",
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
-          FILLABLE: "'name', 'email'",
-          HIDDEN: "'password', 'token'",
-          RELATIONSHIP_METHODS_BLOCK: _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS
+          FILLABLE: this.fillable_attributes(),
+          // placed in super class ModelPipe
+          HIDDEN: this.hidden_attributes(),
+          // placed in super class ModelPipe
+          RELATIONSHIP_METHODS_BLOCK: this.relationship_methods() // placed in super class ModelPipe
+
         })
       }];
     }

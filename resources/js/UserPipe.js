@@ -30,9 +30,9 @@ export default class UserPipe {
         return [{
             path: "app/User.php",
             content: Template.for('User').replace({
-                FILLABLE: "'name', 'email'",
-                HIDDEN: "'password', 'token'",
-                RELATIONSHIP_METHODS_BLOCK: Templates.MULTIPLE_RELATIONSHIPS
+                FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
+                HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
+                RELATIONSHIP_METHODS_BLOCK: this.relationship_methods(), // placed in super class ModelPipe
             })
         }]
     }
