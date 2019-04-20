@@ -17,6 +17,7 @@ export default class ModelPipe {
                 path: "app/" + model.className() + ".php",
                 content: Template.for('Model').replace({
                     ___CLASS_NAME___: model.className(),
+                    ___HIDDEN___: this.hidden(model),
                     ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
                 })
             }
@@ -24,10 +25,6 @@ export default class ModelPipe {
     }
 
     relationshipMethods() {
-        // One To One
-        // One To Many
-        // Many To Many
-
         return Templates.MULTIPLE_RELATIONSHIPS
     }
 
@@ -38,5 +35,11 @@ export default class ModelPipe {
         })
 
         console.log(omc)
+    }
+
+    hidden(model) {
+        return model.attributes.map(attribute => {
+            return "'" + attribute + "'"
+        }).join(", ")
     }
 }

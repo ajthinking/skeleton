@@ -23,10 +23,6 @@ export default class LaravelFileFactory {
     }
 
     calculateFiles() {
-        console.log(this.pipes.map(pipe => {
-            return pipe.make().calculateFiles(this.omc)
-        }))
-
         return this.pipes.map(pipe => {
             return pipe.make().calculateFiles(this.omc)
         }).reduce((pipeFileList, allFiles) => {

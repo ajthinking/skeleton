@@ -1863,7 +1863,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  //
+  methods: {
+    build: function build() {// Send request
+    }
+  }
 });
 
 /***/ }),
@@ -50461,27 +50466,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    {
+      staticClass:
+        "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
+    },
+    [
+      _c(
+        "button",
+        {
+          staticClass: "border bg-white p-2 rounded",
+          on: {
+            click: function($event) {
+              return _vm.build()
+            }
+          }
+        },
+        [_vm._v("Build!")]
+      )
+    ]
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
-      },
-      [
-        _c("button", { staticClass: "border bg-white p-2 rounded" }, [
-          _vm._v("Build!")
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -64090,9 +64097,6 @@ function () {
     value: function calculateFiles() {
       var _this = this;
 
-      console.log(this.pipes.map(function (pipe) {
-        return pipe.make().calculateFiles(_this.omc);
-      }));
       return this.pipes.map(function (pipe) {
         return pipe.make().calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
@@ -64454,7 +64458,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -65367,12 +65371,15 @@ function () {
   }, {
     key: "calculateFiles",
     value: function calculateFiles() {
+      var _this = this;
+
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       return omc.modelsExceptUser().map(function (model) {
         return {
           path: "app/" + model.className() + ".php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Model').replace({
             ___CLASS_NAME___: model.className(),
+            ___HIDDEN___: _this.hidden(model),
             ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
 
           })
@@ -65382,9 +65389,6 @@ function () {
   }, {
     key: "relationshipMethods",
     value: function relationshipMethods() {
-      // One To One
-      // One To Many
-      // Many To Many
       return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
     }
   }, {
@@ -65395,6 +65399,13 @@ function () {
         return item;
       });
       console.log(omc);
+    }
+  }, {
+    key: "hidden",
+    value: function hidden(model) {
+      return model.attributes.map(function (attribute) {
+        return "'" + attribute + "'";
+      }).join(", ");
     }
   }], [{
     key: "make",
@@ -65464,6 +65475,7 @@ function (_ModelPipe) {
     value: function calculateFiles() {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       if (!omc.hasUserModel()) return [];
+      var user = omc.userModel();
       return [{
         path: "app/User.php",
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({

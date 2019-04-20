@@ -71,7 +71,7 @@ class ___CLASS_NAME___ extends Model
      * @var array
      */
     protected $fillable = [
-        FILLABLE
+        ___FILLABLE___
     ];
 
     /**
@@ -80,7 +80,7 @@ class ___CLASS_NAME___ extends Model
      * @var array
      */
     protected $hidden = [
-        HIDDEN
+        ___HIDDEN___
     ];
 
     ___RELATIONSHIP_METHODS_BLOCK___
