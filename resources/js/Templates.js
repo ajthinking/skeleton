@@ -93,8 +93,8 @@ class ___CLASS_NAME___ extends Model
 
 "MULTIPLE_RELATIONSHIPS": String.raw
 `/**
-* Some relationship method.
-*/
+ * Some relationship method.
+ */
 public function METHOD_NAME()
 {
    return $this->hasMany('App\CLASS_NAME');
@@ -106,5 +106,37 @@ public function METHOD_NAME()
 public function SOME_OTHER_METHOD_NAME()
 {
    return $this->hasManyOrSome('App\CLASS_NAME_2');
-}`
+}`,
+"Migration": String.raw
+`<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class Create___TABLE___Table extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('___TABLE___', function (Blueprint $table) {
+            ___COLUMNS_BLOCK___
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('___TABLE___');
+    }
+}`,
+
 }

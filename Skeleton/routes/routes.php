@@ -4,7 +4,6 @@ Route::get('/skeleton', function () {
     return view('skeleton::spa');
 });
 
-
 Route::prefix('skeleton/api')->group(function () {
     Route::post('/build', function () {
         $files = json_decode(request()->getContent())->reviewFiles;

@@ -3,10 +3,19 @@ export default class ObjectModelEntity {
         this.parts = chunk.split('\n')
         this.heading = this.parts[0]
         this.attributes = this.parts.slice(1)
+
+        this.addDefaultColumns()
+        
     }
 
     static fromText(chunk) {
         return new this(chunk)
+    }
+
+    addDefaultColumns() {
+        this.attributes = ['id', 'created_at', 'updated_at']
+            .filter(column => !this.attributes.includes(column))
+            .concat(this.attributes)
     }
 
     className() {

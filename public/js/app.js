@@ -2027,7 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addUserSystem: function addUserSystem() {
-      this.objectModelNotes += "User\nname\nemail\npassword\nrememberToken\n\npassword_resets\nemail\ntoken\n"; // resizable textarea does not register the changes since it uses the 'input' event
+      this.objectModelNotes += "User\nname\nemail\npassword\nrememberToken\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"; // resizable textarea does not register the changes since it uses the 'input' event
       // resort to forceUpdate
 
       this.$refs.resizableTextarea.forceRerender();
@@ -2164,7 +2164,7 @@ __webpack_require__.r(__webpack_exports__);
       return file.path == this.$store.state.navigation.review;
     },
     style: function style(file) {
-      var class_ = "px-2 py-2 " + (this.isActiveFile(file) ? "bg-grey-light" : "bg-grey-lighter hover:bg-white");
+      var class_ = "px-2 py-2 " + (this.isActiveFile(file) ? "bg-grey-light bg-grey-darker" : "bg-grey-lighter hover:bg-white");
       return class_;
     }
   }
@@ -64865,6 +64865,68 @@ collect_js__WEBPACK_IMPORTED_MODULE_0___default()().macro("mapWithRemaining", fu
 
 /***/ }),
 
+/***/ "./resources/js/ExpressFileFactory.js":
+/*!********************************************!*\
+  !*** ./resources/js/ExpressFileFactory.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ExpressFileFactory; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var ExpressFileFactory =
+/*#__PURE__*/
+function () {
+  function ExpressFileFactory(objectModelCollection) {
+    _classCallCheck(this, ExpressFileFactory);
+
+    this.omc = objectModelCollection;
+  }
+
+  _createClass(ExpressFileFactory, [{
+    key: "withPipes",
+    value: function withPipes(pipes) {
+      this.pipes = pipes;
+      return this;
+    }
+  }, {
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var _this = this;
+
+      return this.pipes.map(function (pipe) {
+        return pipe.make().calculateFiles(_this.omc);
+      }).reduce(function (pipeFileList, allFiles) {
+        return allFiles.concat(pipeFileList);
+      }, []);
+    }
+  }], [{
+    key: "pipes",
+    value: function pipes() {
+      return [//
+      ];
+    }
+  }, {
+    key: "from",
+    value: function from(objectModelCollection) {
+      return new this(objectModelCollection);
+    }
+  }]);
+
+  return ExpressFileFactory;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/LaravelFileFactory.js":
 /*!********************************************!*\
   !*** ./resources/js/LaravelFileFactory.js ***!
@@ -64877,11 +64939,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LaravelFileFactory; });
 /* harmony import */ var _pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pipes/UserPipe */ "./resources/js/pipes/UserPipe.js");
 /* harmony import */ var _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pipes/ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pipes/MigrationPipe */ "./resources/js/pipes/MigrationPipe.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_3__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
 
 
 
@@ -64906,21 +64973,16 @@ function () {
     value: function calculateFiles() {
       var _this = this;
 
-      return this.pipes.map(function (pipe) {
+      return collect_js__WEBPACK_IMPORTED_MODULE_3___default()(this.pipes.map(function (pipe) {
         return pipe.make().calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
         return allFiles.concat(pipeFileList);
-      }, []);
-    }
-  }, {
-    key: "user",
-    value: function user() {
-      return "file";
+      }, [])).sortBy('path').toArray();
     }
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"]];
     }
   }, {
     key: "from",
@@ -65008,6 +65070,11 @@ function () {
     value: function find(callback) {
       return this.entities.find(callback);
     }
+  }, {
+    key: "all",
+    value: function all() {
+      return this.entities;
+    }
   }], [{
     key: "fromEntities",
     value: function fromEntities(entities) {
@@ -65047,9 +65114,19 @@ function () {
     this.parts = chunk.split('\n');
     this.heading = this.parts[0];
     this.attributes = this.parts.slice(1);
+    this.addDefaultColumns();
   }
 
   _createClass(ObjectModelEntity, [{
+    key: "addDefaultColumns",
+    value: function addDefaultColumns() {
+      var _this = this;
+
+      this.attributes = ['id', 'created_at', 'updated_at'].filter(function (column) {
+        return !_this.attributes.includes(column);
+      }).concat(this.attributes);
+    }
+  }, {
     key: "className",
     value: function className() {
       return this.heading;
@@ -65249,7 +65326,7 @@ function () {
 
       Object.keys(replacementPairs).forEach(function (marker) {
         if (!_this.text.includes(marker)) return;
-        if (marker.endsWith("_BLOCK")) return _this.blockReplace(marker, replacementPairs[marker]);
+        if (marker.endsWith("_BLOCK___")) return _this.blockReplace(marker, replacementPairs[marker]);
 
         _this.inlineReplace(marker, replacementPairs[marker]);
       });
@@ -65310,8 +65387,18 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _templateObject6() {
+  var data = _taggedTemplateLiteral(["<?php\n\nuse IlluminateSupportFacadesSchema;\nuse IlluminateDatabaseSchemaBlueprint;\nuse IlluminateDatabaseMigrationsMigration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"], ["<?php\n\nuse Illuminate\\Support\\Facades\\Schema;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Database\\Migrations\\Migration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"]);
+
+  _templateObject6 = function _templateObject6() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject5() {
-  var data = _taggedTemplateLiteral(["/**\n* Some relationship method.\n*/\npublic function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('AppCLASS_NAME_2');\n}"], ["/**\n* Some relationship method.\n*/\npublic function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('App\\CLASS_NAME_2');\n}"]);
+  var data = _taggedTemplateLiteral(["/**\n * Some relationship method.\n */\npublic function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('AppCLASS_NAME_2');\n}"], ["/**\n * Some relationship method.\n */\npublic function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('App\\CLASS_NAME_2');\n}"]);
 
   _templateObject5 = function _templateObject5() {
     return data;
@@ -65367,7 +65454,8 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
   "Controller": String.raw(_templateObject2()),
   "Model": String.raw(_templateObject3()),
   "SOME_RELATIONSHIP": String.raw(_templateObject4()),
-  "MULTIPLE_RELATIONSHIPS": String.raw(_templateObject5())
+  "MULTIPLE_RELATIONSHIPS": String.raw(_templateObject5()),
+  "Migration": String.raw(_templateObject6())
 });
 
 /***/ }),
@@ -66223,10 +66311,6 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -66249,13 +66333,6 @@ function (_ObjectModelEntity) {
 
     return _possibleConstructorReturn(this, _getPrototypeOf(ModelEntity).apply(this, arguments));
   }
-
-  _createClass(ModelEntity, [{
-    key: "className",
-    value: function className() {
-      return this.heading;
-    }
-  }]);
 
   return ModelEntity;
 }(_ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
@@ -66365,104 +66442,63 @@ function (_ModelEntity) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/ModelPipe.js":
-/*!*****************************************!*\
-  !*** ./resources/js/pipes/ModelPipe.js ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-var ModelPipe =
-/*#__PURE__*/
-function () {
-  function ModelPipe() {
-    _classCallCheck(this, ModelPipe);
-  }
-
-  _createClass(ModelPipe, [{
-    key: "name",
-    value: function name() {
-      return this.constructor.name;
-    }
-  }, {
-    key: "calculateFiles",
-    value: function calculateFiles() {
-      var _this = this;
-
-      var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
-      return omc.modelsExceptUser().map(function (model) {
-        return {
-          path: "app/" + model.className() + ".php",
-          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Model').replace({
-            ___CLASS_NAME___: model.className(),
-            ___HIDDEN___: _this.hidden(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
-
-          })
-        };
-      }).toArray();
-    }
-  }, {
-    key: "relationshipMethods",
-    value: function relationshipMethods() {
-      return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
-    }
-  }, {
-    key: "hasManyRelationships",
-    value: function hasManyRelationships(omc) {
-      var items = omc.entities.mapWithRemaining(function (item, remainging) {
-        item.candidates = remainging;
-        return item;
-      });
-      console.log(omc);
-    }
-  }, {
-    key: "hidden",
-    value: function hidden(model) {
-      return model.attributes.map(function (attribute) {
-        return "'" + attribute + "'";
-      }).join(", ");
-    }
-  }], [{
-    key: "make",
-    value: function make() {
-      return new ModelPipe();
-    }
-  }]);
-
-  return ModelPipe;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/pipes/UserPipe.js":
+/***/ "./resources/js/pipes/BasePipe.js":
 /*!****************************************!*\
-  !*** ./resources/js/pipes/UserPipe.js ***!
+  !*** ./resources/js/pipes/BasePipe.js ***!
   \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserPipe; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BasePipe; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var BasePipe =
+/*#__PURE__*/
+function () {
+  function BasePipe() {
+    _classCallCheck(this, BasePipe);
+  }
+
+  _createClass(BasePipe, [{
+    key: "name",
+    value: function name() {
+      return this.constructor.name;
+    }
+  }], [{
+    key: "make",
+    value: function make() {
+      return new this();
+    }
+  }]);
+
+  return BasePipe;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pipes/MigrationPipe.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pipes/MigrationPipe.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MigrationPipe; });
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
+/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
+/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
+/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_3__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66484,6 +66520,194 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
+var MigrationPipe =
+/*#__PURE__*/
+function (_BasePipe) {
+  _inherits(MigrationPipe, _BasePipe);
+
+  function MigrationPipe() {
+    _classCallCheck(this, MigrationPipe);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MigrationPipe).apply(this, arguments));
+  }
+
+  _createClass(MigrationPipe, [{
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var _this = this;
+
+      var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
+      return omc.all().map(function (entity) {
+        return {
+          path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
+          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
+            ___TABLE___: pluralize__WEBPACK_IMPORTED_MODULE_3___default()(entity.heading),
+            ___COLUMNS_BLOCK___: _this.columns(entity)
+          })
+        };
+      }).toArray();
+    }
+  }, {
+    key: "columns",
+    value: function columns(entity) {
+      return entity.attributes.map(function (attribute) {
+        return "$table->string('" + attribute + "');";
+      }).join("\n");
+    }
+  }]);
+
+  return MigrationPipe;
+}(_BasePipe__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pipes/ModelPipe.js":
+/*!*****************************************!*\
+  !*** ./resources/js/pipes/ModelPipe.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelPipe; });
+/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
+/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var ModelPipe =
+/*#__PURE__*/
+function (_BasePipe) {
+  _inherits(ModelPipe, _BasePipe);
+
+  function ModelPipe() {
+    _classCallCheck(this, ModelPipe);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ModelPipe).apply(this, arguments));
+  }
+
+  _createClass(ModelPipe, [{
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var _this = this;
+
+      var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
+      return omc.modelsExceptUser().map(function (model) {
+        return {
+          path: "app/" + model.className() + ".php",
+          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Model').replace({
+            ___CLASS_NAME___: _this.className(model),
+            ___HIDDEN___: _this.hiddenAttributes(model),
+            ___FILLABLE___: _this.fillableAttributes(model),
+            ___CASTS___: "//",
+            ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
+
+          })
+        };
+      }).toArray();
+    }
+  }, {
+    key: "relationshipMethods",
+    value: function relationshipMethods() {
+      return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
+    }
+  }, {
+    key: "hasManyRelationships",
+    value: function hasManyRelationships(omc) {
+      var items = omc.entities.mapWithRemaining(function (item, remainging) {
+        item.candidates = remainging;
+        return item;
+      });
+      console.log(omc);
+    }
+  }, {
+    key: "hiddenAttributes",
+    value: function hiddenAttributes(model) {
+      return model.attributes.filter(function (attribute) {
+        return ['password', 'remember_token'].includes(attribute);
+      });
+    }
+  }, {
+    key: "fillableAttributes",
+    value: function fillableAttributes(model) {
+      return model.attributes.filter(function (attribute) {
+        return !['id', 'updated_at', 'created_at'].includes(attribute);
+      });
+    }
+  }, {
+    key: "className",
+    value: function className(model) {
+      return model.heading;
+    }
+  }]);
+
+  return ModelPipe;
+}(_BasePipe__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pipes/UserPipe.js":
+/*!****************************************!*\
+  !*** ./resources/js/pipes/UserPipe.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserPipe; });
+/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
 var UserPipe =
 /*#__PURE__*/
 function (_ModelPipe) {
@@ -66496,11 +66720,6 @@ function (_ModelPipe) {
   }
 
   _createClass(UserPipe, [{
-    key: "name",
-    value: function name() {
-      return this.constructor.name;
-    }
-  }, {
     key: "calculateFiles",
     value: function calculateFiles() {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
@@ -66509,17 +66728,17 @@ function (_ModelPipe) {
       return [{
         path: "app/User.php",
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
-          //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
-          //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-          ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),
-
+          ___HIDDEN___: "//",
+          ___FILLABLE___: "//",
+          ___CASTS___: "//",
+          ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods()
         })
       }];
     }
-  }], [{
-    key: "make",
-    value: function make() {
-      return new UserPipe();
+  }, {
+    key: "relationshipMethods",
+    value: function relationshipMethods() {
+      return _Templates__WEBPACK_IMPORTED_MODULE_2__["default"].MULTIPLE_RELATIONSHIPS;
     }
   }]);
 
@@ -66546,9 +66765,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ObjectModelCollection */ "./resources/js/ObjectModelCollection.js");
 /* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
 /* harmony import */ var _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../LaravelFileFactory */ "./resources/js/LaravelFileFactory.js");
-/* harmony import */ var _pipes_UserPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pipes/UserPipe */ "./resources/js/pipes/UserPipe.js");
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _ExpressFileFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ExpressFileFactory */ "./resources/js/ExpressFileFactory.js");
+/* harmony import */ var _pipes_UserPipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pipes/UserPipe */ "./resources/js/pipes/UserPipe.js");
 
 
 
@@ -66558,7 +66776,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true; // how set this via config?
+
+var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"];
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     // Keep track of active tabs in each section
@@ -66567,7 +66787,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       design: "Object model",
       review: "app/User.php"
     },
-    availablePipes: _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"].pipes(),
+    availablePipes: FileFactory.pipes(),
     objectModelNotes: "",
     reviewFiles: []
   },
@@ -66593,17 +66813,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       context.dispatch('compile', objectModelNotes);
     },
     compile: function compile(context, objectModelNotes) {
-      var files = _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"].from(_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
+      var files = FileFactory.from(_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
       context.commit('setReviewFiles', files);
     }
   }
-})); // tinkering ...
-
-/*
-
-data.ENV_FILE_FACTORY ? data.ENV_FILE_FACTORY : LaravelFileFactory
-
-*/
+}));
 
 /***/ }),
 

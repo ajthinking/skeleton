@@ -4,11 +4,14 @@ import Parser from '../ObjectModelNotesParser'
 import ObjectModelCollection from '../ObjectModelCollection'
 import Templates from '../Templates'
 import LaravelFileFactory from '../LaravelFileFactory'
+import ExpressFileFactory from '../ExpressFileFactory'
 import UserPipe from '../pipes/UserPipe'
-import pluralize from 'pluralize'
 
 Vue.use(Vuex)
 Vue.config.debug = true
+
+// how set this via config?
+let FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : LaravelFileFactory
 
 export default new Vuex.Store({
     state: {
@@ -18,7 +21,7 @@ export default new Vuex.Store({
             design: "Object model",
             review: "app/User.php",
         },
-        availablePipes: LaravelFileFactory.pipes(),
+        availablePipes: FileFactory.pipes(),
 
         objectModelNotes: "",
 
@@ -48,7 +51,7 @@ export default new Vuex.Store({
         },
         
         compile(context, objectModelNotes) {
-            let files = LaravelFileFactory.from(
+            let files = FileFactory.from(
                 ObjectModelCollection.fromEntities(
                     Parser.parse(objectModelNotes).segment()
                 )                   
@@ -61,10 +64,3 @@ export default new Vuex.Store({
         } 
     }
 })
-
-// tinkering ...
-/*
-
-data.ENV_FILE_FACTORY ? data.ENV_FILE_FACTORY : LaravelFileFactory
-
-*/

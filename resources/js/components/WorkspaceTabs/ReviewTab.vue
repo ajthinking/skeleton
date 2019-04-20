@@ -39,7 +39,7 @@
 
             style(file) {
                 let class_ = "px-2 py-2 " +
-                (this.isActiveFile(file) ? "bg-grey-light" : "bg-grey-lighter hover:bg-white")
+                (this.isActiveFile(file) ? "bg-grey-light bg-grey-darker" : "bg-grey-lighter hover:bg-white")
                 return class_
             },
         },                          

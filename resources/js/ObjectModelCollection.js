@@ -37,6 +37,10 @@ export default class ObjectModelCollection {
     find(callback) {
         return this.entities.find(callback)
     }
+
+    all() {
+        return this.entities
+    }
     
     
 }

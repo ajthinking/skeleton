@@ -1,18 +1,11 @@
-import UserPipe from './pipes/UserPipe'
-import ModelPipe from './pipes/ModelPipe'
-import MigrationPipe from './pipes/MigrationPipe'
-import collect from 'collect.js'
-
-export default class LaravelFileFactory {
+export default class ExpressFileFactory {
     constructor(objectModelCollection) {
         this.omc = objectModelCollection
     }
 
     static pipes() {
         return [
-            UserPipe,
-            ModelPipe,
-            MigrationPipe
+            //
         ]
     }
 
@@ -26,10 +19,10 @@ export default class LaravelFileFactory {
     }
 
     calculateFiles() {
-        return collect(this.pipes.map(pipe => {
+        return this.pipes.map(pipe => {
             return pipe.make().calculateFiles(this.omc)
         }).reduce((pipeFileList, allFiles) => {
             return allFiles.concat(pipeFileList)
-        }, [])).sortBy('path').toArray();
+        }, []);
     }
 }
