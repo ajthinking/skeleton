@@ -1883,8 +1883,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  //
+  data: function data() {
+    return {
+      isBuilding: false,
+      message: false
+    };
+  },
   methods: {
     build: function build() {
       var _this = this;
@@ -1917,8 +1924,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 5:
                 content = _context.sent;
                 console.log(content);
+                _this.message = content.message;
 
-              case 7:
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -51268,18 +51276,24 @@ var render = function() {
         "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
     },
     [
-      _c(
-        "button",
-        {
-          staticClass: "border bg-white p-2 rounded",
-          on: {
-            click: function($event) {
-              return _vm.build()
-            }
-          }
-        },
-        [_vm._v("Build!")]
-      )
+      !_vm.isBuilding
+        ? _c(
+            "button",
+            {
+              staticClass: "border bg-white p-2 rounded",
+              on: {
+                click: function($event) {
+                  return _vm.build()
+                }
+              }
+            },
+            [_vm._v("Build!")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isBuilding ? _c("div", [_vm._v("LOADING")]) : _vm._e(),
+      _vm._v(" "),
+      _vm.message ? _c("h3", [_vm._v(_vm._s(_vm.message))]) : _vm._e()
     ]
   )
 }

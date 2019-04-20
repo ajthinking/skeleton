@@ -13,7 +13,9 @@ Route::prefix('skeleton/api')->group(function () {
             Storage::disk('Sandbox')->put($workspace . "/" . $file->path, $file->content);
         });
 
-        return ["OKAY"];
+        return response([
+            "message" => "Successfully stored files!"
+        ], 200);
     });
 });
 
