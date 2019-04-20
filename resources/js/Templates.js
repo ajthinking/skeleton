@@ -10,8 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    TEST_TOP_BLOCK
-
     use Notifiable;
 
     /**
@@ -20,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        FILLABLE
+        ___FILLABLE___
     ];
 
     /**
@@ -29,10 +27,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        HIDDEN
+        ___HIDDEN___
     ];
-
-    TEST_MIDDLE_BLOCK
 
     /**
      * The attributes that should be cast to native types.
@@ -40,10 +36,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        CASTS
+        ___CASTS___
     ];
 
-    TEST_BOTTOM_BLOCK
+    ___RELATIONSHIP_METHODS_BLOCK___
 }`,
     "Controller": String.raw
 `<?php
@@ -69,8 +65,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MODEL extends Model
 {
-    BEGGINING_BLOCK // IF EMPTY DELETE LINE+BELOW SPACING
-
     /**
      * The attributes that are mass assignable.
      *
@@ -79,8 +73,6 @@ class MODEL extends Model
     protected $fillable = [
         FILLABLE
     ];
-
-    MIDDLE_BLOCK // IF EMPTY DELETE ABOVE SPACING + LINE + BELOW SPACING
 
     /**
      * The attributes that should be hidden for arrays.
@@ -91,7 +83,7 @@ class MODEL extends Model
         HIDDEN
     ];
 
-    ENDING_BLOCK // IF EMPY DELETE ABOVE SPACING + LINE + BELOW SPACING
+    ___RELATIONSHIP_METHODS_BLOCK___
 }`,
     "SOME_RELATIONSHIP": String.raw
 `public function METHOD_NAME()

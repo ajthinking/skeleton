@@ -64446,7 +64446,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    BEGGINING_BLOCK // IF EMPTY DELETE LINE+BELOW SPACING\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    MIDDLE_BLOCK // IF EMPTY DELETE ABOVE SPACING + LINE + BELOW SPACING\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ENDING_BLOCK // IF EMPY DELETE ABOVE SPACING + LINE + BELOW SPACING\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    BEGGINING_BLOCK // IF EMPTY DELETE LINE+BELOW SPACING\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    MIDDLE_BLOCK // IF EMPTY DELETE ABOVE SPACING + LINE + BELOW SPACING\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ENDING_BLOCK // IF EMPY DELETE ABOVE SPACING + LINE + BELOW SPACING\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -64466,7 +64466,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    TEST_TOP_BLOCK\n\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    TEST_MIDDLE_BLOCK\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n\n    TEST_BOTTOM_BLOCK\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    TEST_TOP_BLOCK\n\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    TEST_MIDDLE_BLOCK\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        CASTS\n    ];\n\n    TEST_BOTTOM_BLOCK\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        ___CASTS___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        ___CASTS___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -65453,17 +65453,17 @@ function (_ModelPipe) {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       this.hasManyRelationships(omc); //console.log(omc, omc.hasUserModel())
 
-      if (!omc.hasUserModel()) return [];
-      omc.userModel(); // get fillable, hidden
+      if (!omc.hasUserModel()) return []; // get fillable, hidden
       // relationships etc here
       // for now just fake it and return a User
 
       return [{
         path: "app/User.php",
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
+          ___CLASS___: omc.userModel().className(),
           //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
           //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-          RELATIONSHIP_METHODS_BLOCK: this.relationshipMethods()
+          ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods()
         })
       }];
     }
