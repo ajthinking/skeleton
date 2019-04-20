@@ -63,7 +63,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class MODEL extends Model
+class ___CLASS_NAME___ extends Model
 {
     /**
      * The attributes that are mass assignable.

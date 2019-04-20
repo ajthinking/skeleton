@@ -17,4 +17,8 @@ export default class ObjectModelEntity {
     isUserModel() {
         return this.heading == "User"
     }
+
+    className() {
+        return this.heading
+    }
 }

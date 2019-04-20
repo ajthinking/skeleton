@@ -1,3 +1,4 @@
+import Template from '../Template'
 import Templates from '../Templates'
 
 export default class ModelPipe {
@@ -11,16 +12,15 @@ export default class ModelPipe {
     }
 
     calculateFiles(omc = ObjectModelCollection) {
-
-        omc.modelsExceptUser()
-        // get fillable, hidden
-        // relationships etc here
-        // for now just fake it and return a User
-        
-        return [{
-            path: "app/Model.php",
-            content: Templates.Model
-        }]
+        return omc.modelsExceptUser().map(model => {
+            return {
+                path: "app/" + model.className() + ".php",
+                content: Template.for('Model').replace({
+                    ___CLASS_NAME___: model.className(),
+                    ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
+                })
+            }
+        }).toArray()
     }
 
     relationshipMethods() {

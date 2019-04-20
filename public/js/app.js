@@ -64090,6 +64090,9 @@ function () {
     value: function calculateFiles() {
       var _this = this;
 
+      console.log(this.pipes.map(function (pipe) {
+        return pipe.make().calculateFiles(_this.omc);
+      }));
       return this.pipes.map(function (pipe) {
         return pipe.make().calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
@@ -64104,7 +64107,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
     }
   }, {
     key: "from",
@@ -64243,6 +64246,11 @@ function () {
     key: "isUserModel",
     value: function isUserModel() {
       return this.heading == "User";
+    }
+  }, {
+    key: "className",
+    value: function className() {
+      return this.heading;
     }
   }], [{
     key: "fromText",
@@ -64446,7 +64454,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass MODEL extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        FILLABLE\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        HIDDEN\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -65333,12 +65341,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelPipe; });
-/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
+/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
+/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -65358,14 +65368,16 @@ function () {
     key: "calculateFiles",
     value: function calculateFiles() {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
-      omc.modelsExceptUser(); // get fillable, hidden
-      // relationships etc here
-      // for now just fake it and return a User
+      return omc.modelsExceptUser().map(function (model) {
+        return {
+          path: "app/" + model.className() + ".php",
+          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Model').replace({
+            ___CLASS_NAME___: model.className(),
+            ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
 
-      return [{
-        path: "app/Model.php",
-        content: _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].Model
-      }];
+          })
+        };
+      }).toArray();
     }
   }, {
     key: "relationshipMethods",
@@ -65373,7 +65385,7 @@ function () {
       // One To One
       // One To Many
       // Many To Many
-      return _Templates__WEBPACK_IMPORTED_MODULE_0__["default"].MULTIPLE_RELATIONSHIPS;
+      return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
     }
   }, {
     key: "hasManyRelationships",
@@ -65451,19 +65463,14 @@ function (_ModelPipe) {
     key: "calculateFiles",
     value: function calculateFiles() {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
-      this.hasManyRelationships(omc); //console.log(omc, omc.hasUserModel())
-
-      if (!omc.hasUserModel()) return []; // get fillable, hidden
-      // relationships etc here
-      // for now just fake it and return a User
-
+      if (!omc.hasUserModel()) return [];
       return [{
         path: "app/User.php",
         content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
-          ___CLASS___: omc.userModel().className(),
           //FILLABLE: this.fillable_attributes(), // placed in super class ModelPipe
           //HIDDEN: this.hidden_attributes(), // placed in super class ModelPipe
-          ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods()
+          ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),
+
         })
       }];
     }
