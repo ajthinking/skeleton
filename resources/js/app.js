@@ -14,6 +14,9 @@ import store from './store'
 import VueHighlightJS from 'vue-highlightjs'
 Vue.use(VueHighlightJS)
 
+import VueTree from 'sl-vue-tree'
+Vue.component('sl-vue-tree', VueTree)
+
 
 
 /**
