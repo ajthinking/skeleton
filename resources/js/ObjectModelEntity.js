@@ -9,16 +9,19 @@ export default class ObjectModelEntity {
         return new this(chunk)
     }
 
-    hasModel() {
-        // a Model is indicated by capital first letter
-        return this.heading[0] == this.heading[0].toUpperCase()
-    }
-
-    isUserModel() {
-        return this.heading == "User"
-    }
-
     className() {
         return this.heading
     }
+
+    isUserEntity() {
+        return this.constructor.name == "UserEntity"
+    }
+
+    isModelEntity() {
+        return this.constructor.name == "ModelEntity"
+    }
+    
+    isTableEntity() {
+        return this.constructor.name == "TableEntity"
+    }    
 }

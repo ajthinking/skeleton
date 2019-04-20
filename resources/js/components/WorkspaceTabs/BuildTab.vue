@@ -10,7 +10,21 @@
 
         methods: {
             build() {
-                // Send request
+                (async () => {
+                    const rawResponse = await fetch('https://skeleton.test/skeleton/api/build', {
+                        method: 'POST',
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            reviewFiles: this.$store.state.reviewFiles
+                        })
+                    });
+                    const content = await rawResponse.json();
+
+                    console.log(content);
+                })();
             }
         }
     }

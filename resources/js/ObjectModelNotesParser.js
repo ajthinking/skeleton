@@ -1,4 +1,4 @@
-import ObjectModelEntity from './ObjectModelEntity'
+import ObjectModelEntityFactory from './ObjectModelEntityFactory'
 
 export default class ObjectModelNoteParser {
     constructor(text) {
@@ -33,7 +33,6 @@ export default class ObjectModelNoteParser {
 
     /* returns an array with items of type ObjectModelEntity */
     segment() {
-        return !this.text ? [] : this.text.split(/\n\s*\n/).map((chunk) => ObjectModelEntity.fromText(chunk))        
-
+        return !this.text ? [] : this.text.split(/\n\s*\n/).map((chunk) => ObjectModelEntityFactory.fromText(chunk))
     }        
 }

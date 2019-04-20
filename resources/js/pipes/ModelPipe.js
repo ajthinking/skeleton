@@ -29,7 +29,7 @@ export default class ModelPipe {
     }
 
     hasManyRelationships(omc) {
-        let items = omc.segments.mapWithRemaining((item, remainging) => {
+        let items = omc.entities.mapWithRemaining((item, remainging) => {
             item.candidates = remainging
             return item
         })

@@ -1,13 +1,13 @@
 import collect from './Collection.js'
 
 export default class ObjectModelCollection {
-    constructor(segments, modelDefinition = "LaravelModel") {
-        this.segments = collect(segments)
+    constructor(entities, modelDefinition = "LaravelModel") {
+        this.entities = collect(entities)
         this.Model = modelDefinition
     }
 
-    static fromSegments(segments) {
-        return new this(segments)
+    static fromEntities(entities) {
+        return new this(entities)
     }
 
     hasUserModel() {
@@ -15,27 +15,27 @@ export default class ObjectModelCollection {
     }
 
     userModel() {
-        return this.segments.filter(segment => segment.isUserModel())
+        return this.entities.filter(entitiy => entitiy.isUserEntity())
     }
 
     models() {
-        return this.segments.filter(segment => segment.hasModel())
+        return this.entities.filter(entitiy => entitiy.isModelEntity())
     }
 
     modelsExceptUser() {
-        return this.models().filter(model => !model.isUserModel())
+        return this.models().filter(model => !model.isUserEntity())
     }
 
     map(callback) {
-        return this.segments.map(callback)
+        return this.entities.map(callback)
     }
 
     filter(callback) {
-        return this.segments.filter(callback)
+        return this.entities.filter(callback)
     }
     
     find(callback) {
-        return this.segments.find(callback)
+        return this.entities.find(callback)
     }
     
     

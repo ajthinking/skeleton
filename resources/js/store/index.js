@@ -49,7 +49,7 @@ export default new Vuex.Store({
         
         compile(context, objectModelNotes) {
             let files = LaravelFileFactory.from(
-                ObjectModelCollection.fromSegments(
+                ObjectModelCollection.fromEntities(
                     Parser.parse(objectModelNotes).segment()
                 )                   
             ).withPipes(
