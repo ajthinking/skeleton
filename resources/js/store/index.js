@@ -5,6 +5,7 @@ import ObjectModelCollection from '../ObjectModelCollection'
 import Templates from '../Templates'
 import LaravelFileFactory from '../LaravelFileFactory'
 import UserPipe from '../pipes/UserPipe'
+import pluralize from 'pluralize'
 
 Vue.use(Vuex)
 Vue.config.debug = true
