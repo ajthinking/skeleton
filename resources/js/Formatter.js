@@ -9,4 +9,8 @@ export default class Formatter {
     static snakeCase(word) {
         return changeCase.snake(word)
     }
+
+    static camelCase(word) {
+        return changeCase.camel(word)
+    }    
 }

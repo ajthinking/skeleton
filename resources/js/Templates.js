@@ -1,4 +1,5 @@
 export default {
+/******************************************************************* */
     "User": String.raw
 `<?php
 
@@ -41,6 +42,7 @@ class User extends Authenticatable
 
     ___RELATIONSHIP_METHODS_BLOCK___
 }`,
+/******************************************************************* */
     "Controller": String.raw
 `<?php
 
@@ -55,7 +57,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }`,
-
+/******************************************************************* */
     "Model": String.raw
 `<?php
 
@@ -85,28 +87,7 @@ class ___CLASS_NAME___ extends Model
 
     ___RELATIONSHIP_METHODS_BLOCK___
 }`,
-    "SOME_RELATIONSHIP": String.raw
-`public function METHOD_NAME()
-{
-   return $this->hasMany('App\CLASS_NAME');
-}`,
 
-"MULTIPLE_RELATIONSHIPS": String.raw
-`/**
- * Some relationship method.
- */
-public function METHOD_NAME()
-{
-   return $this->hasMany('App\CLASS_NAME');
-}
-
-/**
- * Some relationship method.
- */
-public function SOME_OTHER_METHOD_NAME()
-{
-   return $this->hasManyOrSome('App\CLASS_NAME_2');
-}`,
 "Migration": String.raw
 `<?php
 
@@ -138,5 +119,20 @@ class Create___TABLE___Table extends Migration
         Schema::dropIfExists('___TABLE___');
     }
 }`,
-
+"HasManyRelationship": String.raw
+`/**
+ * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.
+ */
+public function ___METHOD_NAME___()
+{
+    return $this->hasMany('App\___TARGET_CLASS___');
+}`,
+"BelongsToRelationship": String.raw
+`/**
+ * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.
+ */
+public function ___METHOD_NAME___()
+{
+    return $this->belongsTo('App\___TARGET_CLASS___');
+}`
 }

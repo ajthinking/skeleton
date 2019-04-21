@@ -12,7 +12,7 @@ export default class UserPipe extends ModelPipe {
                 ___HIDDEN___: this.hiddenAttributes(user),
                 ___FILLABLE___: this.fillableAttributes(user),
                 ___CASTS___: this.casts(user),
-                ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(),
+                ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(user),
             })
         }]
     }

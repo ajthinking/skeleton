@@ -1,6 +1,7 @@
 import Template from '../Template'
 import Templates from '../Templates'
 import BasePipe from './BasePipe'
+import F from '../Formatter'
 
 export default class ModelPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {
@@ -12,7 +13,7 @@ export default class ModelPipe extends BasePipe {
                     ___HIDDEN___: this.hiddenAttributes(model),
                     ___FILLABLE___: this.fillableAttributes(model),
                     ___CASTS___: this.casts(model),
-                    ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(model),                
+                    ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),                
                 })
             }
         }).toArray()
@@ -45,6 +46,28 @@ export default class ModelPipe extends BasePipe {
     }
     
     relationshipMethods(model) {
-        return ""
+        return [
+            model.hasManyRelationships.map(target => {
+                return Template.for('HasManyRelationship').replace({
+                    ___TARGET_CLASS___: target.className(),                    
+                    ___TARGET_CLASS_PLURAL___: F.pluralize(target.className()),
+                    ___THIS_CLASS___: model.className(),
+                    ___METHOD_NAME___: F.pluralize(
+                        F.camelCase(
+                            target.className()
+                        )
+                    ),
+
+                })
+            }).join("\n"),
+
+            model.belongsToRelationships.map(target => {
+                return Template.for('BelongsToRelationship').replace({
+                    ___TARGET_CLASS___: target.className(),
+                    ___THIS_CLASS___: model.className(),
+                    ___METHOD_NAME___: F.camelCase(target.className()),
+                })
+            }).join("/n"),
+        ].filter(candidate => (candidate != "")).join("\n")
     }
 }

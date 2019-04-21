@@ -65,8 +65,5 @@ export default class ObjectModelCollection {
                     && model.attributes.includes(candidate.asForeignKey())
             })            
         })
-        console.log(this)
-        return ""
-    }
-    
+    }    
 }

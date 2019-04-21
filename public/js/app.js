@@ -65624,6 +65624,11 @@ function () {
     value: function snakeCase(word) {
       return changeCase.snake(word);
     }
+  }, {
+    key: "camelCase",
+    value: function camelCase(word) {
+      return changeCase.camel(word);
+    }
   }]);
 
   return Formatter;
@@ -65804,8 +65809,6 @@ function () {
           return !candidate.attributes.includes(model.asForeignKey()) && model.attributes.includes(candidate.asForeignKey());
         });
       });
-      console.log(this);
-      return "";
     }
   }], [{
     key: "fromEntities",
@@ -66128,7 +66131,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 function _templateObject6() {
-  var data = _taggedTemplateLiteral(["<?php\n\nuse IlluminateSupportFacadesSchema;\nuse IlluminateDatabaseSchemaBlueprint;\nuse IlluminateDatabaseMigrationsMigration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"], ["<?php\n\nuse Illuminate\\Support\\Facades\\Schema;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Database\\Migrations\\Migration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"]);
+  var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsTo('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsTo('App\\___TARGET_CLASS___');\n}"]);
 
   _templateObject6 = function _templateObject6() {
     return data;
@@ -66138,7 +66141,7 @@ function _templateObject6() {
 }
 
 function _templateObject5() {
-  var data = _taggedTemplateLiteral(["/**\n * Some relationship method.\n */\npublic function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('AppCLASS_NAME_2');\n}"], ["/**\n * Some relationship method.\n */\npublic function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}\n\n/**\n * Some relationship method.\n */\npublic function SOME_OTHER_METHOD_NAME()\n{\n   return $this->hasManyOrSome('App\\CLASS_NAME_2');\n}"]);
+  var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->hasMany('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->hasMany('App\\___TARGET_CLASS___');\n}"]);
 
   _templateObject5 = function _templateObject5() {
     return data;
@@ -66148,7 +66151,7 @@ function _templateObject5() {
 }
 
 function _templateObject4() {
-  var data = _taggedTemplateLiteral(["public function METHOD_NAME()\n{\n   return $this->hasMany('AppCLASS_NAME');\n}"], ["public function METHOD_NAME()\n{\n   return $this->hasMany('App\\CLASS_NAME');\n}"]);
+  var data = _taggedTemplateLiteral(["<?php\n\nuse IlluminateSupportFacadesSchema;\nuse IlluminateDatabaseSchemaBlueprint;\nuse IlluminateDatabaseMigrationsMigration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"], ["<?php\n\nuse Illuminate\\Support\\Facades\\Schema;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Database\\Migrations\\Migration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"]);
 
   _templateObject4 = function _templateObject4() {
     return data;
@@ -66190,12 +66193,17 @@ function _templateObject() {
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  /******************************************************************* */
   "User": String.raw(_templateObject()),
+
+  /******************************************************************* */
   "Controller": String.raw(_templateObject2()),
+
+  /******************************************************************* */
   "Model": String.raw(_templateObject3()),
-  "SOME_RELATIONSHIP": String.raw(_templateObject4()),
-  "MULTIPLE_RELATIONSHIPS": String.raw(_templateObject5()),
-  "Migration": String.raw(_templateObject6())
+  "Migration": String.raw(_templateObject4()),
+  "HasManyRelationship": String.raw(_templateObject5()),
+  "BelongsToRelationship": String.raw(_templateObject6())
 });
 
 /***/ }),
@@ -67328,6 +67336,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
 /* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
 /* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
+/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Formatter */ "./resources/js/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67345,6 +67354,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -67375,8 +67385,7 @@ function (_BasePipe) {
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
             ___CASTS___: _this.casts(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(model),                
-
+            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
           })
         };
       }).toArray();
@@ -67410,7 +67419,22 @@ function (_BasePipe) {
   }, {
     key: "relationshipMethods",
     value: function relationshipMethods(model) {
-      return "";
+      return [model.hasManyRelationships.map(function (target) {
+        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('HasManyRelationship').replace({
+          ___TARGET_CLASS___: target.className(),
+          ___TARGET_CLASS_PLURAL___: _Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].pluralize(target.className()),
+          ___THIS_CLASS___: model.className(),
+          ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].pluralize(_Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(target.className()))
+        });
+      }).join("\n"), model.belongsToRelationships.map(function (target) {
+        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToRelationship').replace({
+          ___TARGET_CLASS___: target.className(),
+          ___THIS_CLASS___: model.className(),
+          ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(target.className())
+        });
+      }).join("/n")].filter(function (candidate) {
+        return candidate != "";
+      }).join("\n");
     }
   }]);
 
@@ -67479,7 +67503,7 @@ function (_ModelPipe) {
           ___HIDDEN___: this.hiddenAttributes(user),
           ___FILLABLE___: this.fillableAttributes(user),
           ___CASTS___: this.casts(user),
-          ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods()
+          ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(user)
         })
       }];
     }
