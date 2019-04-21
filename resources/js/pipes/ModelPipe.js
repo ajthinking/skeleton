@@ -68,6 +68,22 @@ export default class ModelPipe extends BasePipe {
                     ___METHOD_NAME___: F.camelCase(target.className()),
                 })
             }).join("/n"),
-        ].filter(candidate => (candidate != "")).join("\n")
+
+            model.belongsToManyRelationships.map(target => {
+                console.log("inne här")
+                return Template.for('BelongsToManyRelationship').replace({
+                    ___TARGET_CLASS___: target.className(),                    
+                    ___TARGET_CLASS_PLURAL___: F.pluralize(target.className()),
+                    ___THIS_CLASS___: model.className(),
+                    ___METHOD_NAME___: F.pluralize(
+                        F.camelCase(
+                            target.className()
+                        )
+                    ),
+
+                })
+            }).join("\n"),
+
+        ].filter(candidate => (candidate != "")).join("\n\n")
     }
 }

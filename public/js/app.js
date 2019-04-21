@@ -66187,6 +66187,16 @@ function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _templateObject7() {
+  var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsToMany('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsToMany('App\\___TARGET_CLASS___');\n}"]);
+
+  _templateObject7 = function _templateObject7() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject6() {
   var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsTo('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsTo('App\\___TARGET_CLASS___');\n}"]);
 
@@ -66260,7 +66270,8 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
   "Model": String.raw(_templateObject3()),
   "Migration": String.raw(_templateObject4()),
   "HasManyRelationship": String.raw(_templateObject5()),
-  "BelongsToRelationship": String.raw(_templateObject6())
+  "BelongsToRelationship": String.raw(_templateObject6()),
+  "BelongsToManyRelationship": String.raw(_templateObject7())
 });
 
 /***/ }),
@@ -67489,9 +67500,17 @@ function (_BasePipe) {
           ___THIS_CLASS___: model.className(),
           ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(target.className())
         });
-      }).join("/n")].filter(function (candidate) {
+      }).join("/n"), model.belongsToManyRelationships.map(function (target) {
+        console.log("inne här");
+        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToManyRelationship').replace({
+          ___TARGET_CLASS___: target.className(),
+          ___TARGET_CLASS_PLURAL___: _Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].pluralize(target.className()),
+          ___THIS_CLASS___: model.className(),
+          ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].pluralize(_Formatter__WEBPACK_IMPORTED_MODULE_3__["default"].camelCase(target.className()))
+        });
+      }).join("\n")].filter(function (candidate) {
         return candidate != "";
-      }).join("\n");
+      }).join("\n\n");
     }
   }]);
 

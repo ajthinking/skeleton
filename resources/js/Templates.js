@@ -134,5 +134,15 @@ public function ___METHOD_NAME___()
 public function ___METHOD_NAME___()
 {
     return $this->belongsTo('App\___TARGET_CLASS___');
+}`,
+"BelongsToManyRelationship": String.raw
+`/**
+ * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.
+ */
+public function ___METHOD_NAME___()
+{
+    return $this->belongsToMany('App\___TARGET_CLASS___');
 }`
+
+
 }
