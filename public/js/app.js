@@ -2049,7 +2049,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addUserSystem: function addUserSystem() {
-      this.objectModelNotes += "User\nname\nemail\npassword\nrememberToken\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"; // resizable textarea does not register the changes since it uses the 'input' event
+      this.objectModelNotes += "User\nname\nemail\nemail_verified_at\npassword\nremember_token\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"; // resizable textarea does not register the changes since it uses the 'input' event
       // resort to forceUpdate
 
       this.$refs.resizableTextarea.forceRerender();
@@ -66660,8 +66660,7 @@ function (_BasePipe) {
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
             ___CASTS___: _this.casts(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
-
+            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods()
           })
         };
       }).toArray();
@@ -66692,7 +66691,7 @@ function (_BasePipe) {
     key: "fillableAttributes",
     value: function fillableAttributes(model) {
       return this.horisontalStringList(model.attributes.filter(function (attribute) {
-        return !['id', 'updated_at', 'created_at'].includes(attribute);
+        return !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(attribute);
       }), "//" // default value
       );
     }
@@ -66705,6 +66704,11 @@ function (_BasePipe) {
     key: "className",
     value: function className(model) {
       return model.heading;
+    }
+  }, {
+    key: "relationshipMethods",
+    value: function relationshipMethods() {
+      return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
     }
   }]);
 
@@ -66776,11 +66780,6 @@ function (_ModelPipe) {
           ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods()
         })
       }];
-    }
-  }, {
-    key: "relationshipMethods",
-    value: function relationshipMethods() {
-      return _Templates__WEBPACK_IMPORTED_MODULE_2__["default"].MULTIPLE_RELATIONSHIPS;
     }
   }]);
 

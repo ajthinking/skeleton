@@ -12,7 +12,7 @@ export default class ModelPipe extends BasePipe {
                     ___HIDDEN___: this.hiddenAttributes(model),
                     ___FILLABLE___: this.fillableAttributes(model),
                     ___CASTS___: this.casts(model),
-                    ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(),                
+                    ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(),                
                 })
             }
         }).toArray()
@@ -43,7 +43,7 @@ export default class ModelPipe extends BasePipe {
     fillableAttributes(model) {
         return this.horisontalStringList(
             model.attributes.filter(attribute => ![
-                'id', 'updated_at', 'created_at'
+                'id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'
             ].includes(attribute)),
             "//" // default value
         )        
@@ -55,5 +55,9 @@ export default class ModelPipe extends BasePipe {
 
     className(model) {
         return model.heading
-    }    
+    }
+    
+    relationshipMethods() {
+        return Templates.MULTIPLE_RELATIONSHIPS
+    }
 }

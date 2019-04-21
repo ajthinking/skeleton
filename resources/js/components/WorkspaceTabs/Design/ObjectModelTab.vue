@@ -43,7 +43,7 @@
 
         methods: {
             addUserSystem() {
-                this.objectModelNotes += "User\nname\nemail\npassword\nrememberToken\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"
+                this.objectModelNotes += "User\nname\nemail\nemail_verified_at\npassword\nremember_token\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"
 
                 // resizable textarea does not register the changes since it uses the 'input' event
                 // resort to forceUpdate

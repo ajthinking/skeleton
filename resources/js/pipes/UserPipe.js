@@ -16,8 +16,4 @@ export default class UserPipe extends ModelPipe {
             })
         }]
     }
-
-    relationshipMethods() {
-        return Templates.MULTIPLE_RELATIONSHIPS
-    }
 }
