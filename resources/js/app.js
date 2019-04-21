@@ -14,11 +14,6 @@ import store from './store'
 import VueHighlightJS from 'vue-highlightjs'
 Vue.use(VueHighlightJS)
 
-import VueTree from 'sl-vue-tree'
-Vue.component('sl-vue-tree', VueTree)
-
-
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

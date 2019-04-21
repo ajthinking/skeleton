@@ -11,10 +11,14 @@ export default class ObjectModelCollection {
     }
 
     hasUserModel() {
-        return this.userModel().count() > 0
+        return this.userModels().items.length > 0
     }
 
     userModel() {
+        return this.userModels().first()
+    }
+
+    userModels() {
         return this.entities.filter(entitiy => entitiy.isUserEntity())
     }
 

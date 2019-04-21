@@ -6,4 +6,12 @@ export default class BasePipe {
     name() {
         return this.constructor.name
     }
+
+    horisontalStringList(names, defaultValue) {
+        let result = names.map(name => {
+            return "'" + name + "'"
+        }).join(", ")
+
+        return result ? result : defaultValue
+    }
 }

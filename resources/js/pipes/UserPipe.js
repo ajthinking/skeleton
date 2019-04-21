@@ -9,9 +9,9 @@ export default class UserPipe extends ModelPipe {
         return [{
             path: "app/User.php",
             content: Template.for('User').replace({
-                ___HIDDEN___: "//",
-                ___FILLABLE___: "//",
-                ___CASTS___: "//",
+                ___HIDDEN___: this.hiddenAttributes(user),
+                ___FILLABLE___: this.fillableAttributes(user),
+                ___CASTS___: this.casts(user),
                 ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(),
             })
         }]

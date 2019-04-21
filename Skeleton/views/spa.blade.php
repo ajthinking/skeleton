@@ -15,7 +15,6 @@
 </head>
 <body>
     <div id="app">
-        <independent-component></independent-component>
         <app-header></app-header>
         <app-workspace></app-workspace>
     </div>
