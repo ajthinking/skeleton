@@ -66660,7 +66660,7 @@ function (_BasePipe) {
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
             ___CASTS___: _this.casts(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods()
+            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
           })
         };
       }).toArray();
@@ -66707,7 +66707,7 @@ function (_BasePipe) {
     }
   }, {
     key: "relationshipMethods",
-    value: function relationshipMethods() {
+    value: function relationshipMethods(model) {
       return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
     }
   }]);

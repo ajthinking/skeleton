@@ -12,7 +12,7 @@ export default class ModelPipe extends BasePipe {
                     ___HIDDEN___: this.hiddenAttributes(model),
                     ___FILLABLE___: this.fillableAttributes(model),
                     ___CASTS___: this.casts(model),
-                    ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(),                
+                    ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),                
                 })
             }
         }).toArray()
@@ -57,7 +57,7 @@ export default class ModelPipe extends BasePipe {
         return model.heading
     }
     
-    relationshipMethods() {
+    relationshipMethods(model) {
         return Templates.MULTIPLE_RELATIONSHIPS
     }
 }
