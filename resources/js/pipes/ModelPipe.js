@@ -45,8 +45,6 @@ export default class ModelPipe extends BasePipe {
     }
     
     relationshipMethods(model) {
-        let relationships = this.omc.relationships()
-
         return ""
     }
 }

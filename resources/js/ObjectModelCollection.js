@@ -1,8 +1,10 @@
 import collect from './Collection.js'
+import F from './Formatter'
 
 export default class ObjectModelCollection {
     constructor(entities) {
         this.entities = collect(entities)
+        this.findRelationships()
     }
 
     static fromEntities(entities) {
@@ -49,15 +51,21 @@ export default class ObjectModelCollection {
         return this.entities
     }
     
-    relationships() {
-        // Look for HasOne/HasMany
+    findRelationships() {
         this.modelsIncludingUser().mapWithRemaining((model, remaining) => {
-            console.log(model.heading, remaining.length)
-            // I need a attribute and class name formatter
-            // to create things like CreateUsersTable, user_id, users ...
-            // That potentialla is a job for a separate Attribute class ???
-        })
+            //HasOne/HasMany
+            model.hasManyRelationships = remaining.filter(candidate => {
+                return candidate.attributes.includes(model.asForeignKey())
+                    && !model.attributes.includes(candidate.asForeignKey())
+            })
 
+            //BelongsTo
+            model.belongsToRelationships = remaining.filter(candidate => {
+                return !candidate.attributes.includes(model.asForeignKey())
+                    && model.attributes.includes(candidate.asForeignKey())
+            })            
+        })
+        console.log(this)
         return ""
     }
     

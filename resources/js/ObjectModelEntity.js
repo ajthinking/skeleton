@@ -1,3 +1,5 @@
+import F from './Formatter.js'
+
 export default class ObjectModelEntity {
     constructor(chunk) {
         this.parts = chunk.split('\n')
@@ -32,5 +34,9 @@ export default class ObjectModelEntity {
     
     isTableEntity() {
         return this.constructor.name == "TableEntity"
-    }    
+    }
+    
+    asForeignKey() {
+        return F.snakeCase(this.heading) + "_id";       
+    }
 }
