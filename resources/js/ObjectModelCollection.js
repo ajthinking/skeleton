@@ -1,9 +1,8 @@
 import collect from './Collection.js'
 
 export default class ObjectModelCollection {
-    constructor(entities, modelDefinition = "LaravelModel") {
+    constructor(entities) {
         this.entities = collect(entities)
-        this.Model = modelDefinition
     }
 
     static fromEntities(entities) {
@@ -26,6 +25,10 @@ export default class ObjectModelCollection {
         return this.entities.filter(entitiy => entitiy.isModelEntity())
     }
 
+    modelsIncludingUser() {
+        return collect(this.models().items.concat(this.userModels().items))
+    }
+
     modelsExceptUser() {
         return this.models().filter(model => !model.isUserEntity())
     }
@@ -46,5 +49,16 @@ export default class ObjectModelCollection {
         return this.entities
     }
     
+    relationships() {
+        // Look for HasOne/HasMany
+        this.modelsIncludingUser().mapWithRemaining((model, remaining) => {
+            console.log(model.heading, remaining.length)
+            // I need a attribute and class name formatter
+            // to create things like CreateUsersTable, user_id, users ...
+            // That potentialla is a job for a separate Attribute class ???
+        })
+
+        return ""
+    }
     
 }

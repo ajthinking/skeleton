@@ -1,6 +1,10 @@
 export default class BasePipe {
-    static make() {
-        return new this()
+    constructor(omc) {
+        this.omc = omc
+    }
+
+    static with(omc) {
+        return new this(omc)
     }
         
     name() {

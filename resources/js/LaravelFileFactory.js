@@ -27,7 +27,7 @@ export default class LaravelFileFactory {
 
     calculateFiles() {
         return collect(this.pipes.map(pipe => {
-            return pipe.make().calculateFiles(this.omc)
+            return pipe.with(this.omc).calculateFiles(this.omc)
         }).reduce((pipeFileList, allFiles) => {
             return allFiles.concat(pipeFileList)
         }, [])).sortBy('path').toArray();

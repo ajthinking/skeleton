@@ -64996,7 +64996,7 @@ function () {
       var _this = this;
 
       return collect_js__WEBPACK_IMPORTED_MODULE_3___default()(this.pipes.map(function (pipe) {
-        return pipe.make().calculateFiles(_this.omc);
+        return pipe["with"](_this.omc).calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
         return allFiles.concat(pipeFileList);
       }, [])).sortBy('path').toArray();
@@ -65043,12 +65043,9 @@ var ObjectModelCollection =
 /*#__PURE__*/
 function () {
   function ObjectModelCollection(entities) {
-    var modelDefinition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "LaravelModel";
-
     _classCallCheck(this, ObjectModelCollection);
 
     this.entities = Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
-    this.Model = modelDefinition;
   }
 
   _createClass(ObjectModelCollection, [{
@@ -65076,6 +65073,11 @@ function () {
       });
     }
   }, {
+    key: "modelsIncludingUser",
+    value: function modelsIncludingUser() {
+      return Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(this.models().items.concat(this.userModels().items));
+    }
+  }, {
     key: "modelsExceptUser",
     value: function modelsExceptUser() {
       return this.models().filter(function (model) {
@@ -65101,6 +65103,17 @@ function () {
     key: "all",
     value: function all() {
       return this.entities;
+    }
+  }, {
+    key: "relationships",
+    value: function relationships() {
+      // Look for HasOne/HasMany
+      this.modelsIncludingUser().mapWithRemaining(function (model, remaining) {
+        console.log(model.heading, remaining.length); // I need a attribute and class name formatter
+        // to create things like CreateUsersTable, user_id, users ...
+        // That potentialla is a job for a separate Attribute class ???
+      });
+      return "";
     }
   }], [{
     key: "fromEntities",
@@ -66488,8 +66501,10 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var BasePipe =
 /*#__PURE__*/
 function () {
-  function BasePipe() {
+  function BasePipe(omc) {
     _classCallCheck(this, BasePipe);
+
+    this.omc = omc;
   }
 
   _createClass(BasePipe, [{
@@ -66506,9 +66521,9 @@ function () {
       return result ? result : defaultValue;
     }
   }], [{
-    key: "make",
-    value: function make() {
-      return new this();
+    key: "with",
+    value: function _with(omc) {
+      return new this(omc);
     }
   }]);
 
@@ -66660,24 +66675,11 @@ function (_BasePipe) {
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
             ___CASTS___: _this.casts(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
+            ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(model),                
+
           })
         };
       }).toArray();
-    }
-  }, {
-    key: "relationshipMethods",
-    value: function relationshipMethods() {
-      return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
-    }
-  }, {
-    key: "hasManyRelationships",
-    value: function hasManyRelationships(omc) {
-      var items = omc.entities.mapWithRemaining(function (item, remainging) {
-        item.candidates = remainging;
-        return item;
-      });
-      console.log(omc);
     }
   }, {
     key: "hiddenAttributes",
@@ -66708,7 +66710,8 @@ function (_BasePipe) {
   }, {
     key: "relationshipMethods",
     value: function relationshipMethods(model) {
-      return _Templates__WEBPACK_IMPORTED_MODULE_1__["default"].MULTIPLE_RELATIONSHIPS;
+      var relationships = this.omc.relationships();
+      return "";
     }
   }]);
 

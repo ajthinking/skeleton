@@ -12,23 +12,10 @@ export default class ModelPipe extends BasePipe {
                     ___HIDDEN___: this.hiddenAttributes(model),
                     ___FILLABLE___: this.fillableAttributes(model),
                     ___CASTS___: this.casts(model),
-                    ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),                
+                    ___RELATIONSHIP_METHODS_BLOCK___: "" //this.relationshipMethods(model),                
                 })
             }
         }).toArray()
-    }
-
-    relationshipMethods() {
-        return Templates.MULTIPLE_RELATIONSHIPS
-    }
-
-    hasManyRelationships(omc) {
-        let items = omc.entities.mapWithRemaining((item, remainging) => {
-            item.candidates = remainging
-            return item
-        })
-
-        console.log(omc)
     }
 
     hiddenAttributes(model) {
@@ -58,6 +45,8 @@ export default class ModelPipe extends BasePipe {
     }
     
     relationshipMethods(model) {
-        return Templates.MULTIPLE_RELATIONSHIPS
+        let relationships = this.omc.relationships()
+
+        return ""
     }
 }
