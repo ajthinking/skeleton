@@ -12,5 +12,9 @@ export default class Formatter {
 
     static camelCase(word) {
         return changeCase.camel(word)
+    }
+
+    static pascalCase(word) {
+        return changeCase.pascal(word)
     }    
 }

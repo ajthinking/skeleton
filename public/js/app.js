@@ -65629,6 +65629,11 @@ function () {
     value: function camelCase(word) {
       return changeCase.camel(word);
     }
+  }, {
+    key: "pascalCase",
+    value: function pascalCase(word) {
+      return changeCase.pascal(word);
+    }
   }]);
 
   return Formatter;
@@ -65738,9 +65743,35 @@ function () {
 
     this.entities = Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
     this.findRelationships();
+    console.log(this.entities);
   }
 
   _createClass(ObjectModelCollection, [{
+    key: "isManyToMany",
+    value: function isManyToMany(candidate) {
+      var models = this.modelsIncludingUser().map(function (item) {
+        return _Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+      }).toArray().join("|");
+      var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
+      var matches = manyToManyRegExp.exec(candidate.heading);
+
+      if (matches) {
+        return [matches[1], matches[2]];
+      }
+
+      return !!matches;
+    }
+  }, {
+    key: "manyToManyAssociatedModels",
+    value: function manyToManyAssociatedModels(manyToManyEntity) {
+      var models = this.modelsIncludingUser().map(function (item) {
+        return _Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+      }).toArray().join("|");
+      var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
+      var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
+      return [matches[1], matches[2]];
+    }
+  }, {
     key: "hasUserModel",
     value: function hasUserModel() {
       return this.userModels().items.length > 0;
@@ -65762,6 +65793,22 @@ function () {
     value: function models() {
       return this.entities.filter(function (entitiy) {
         return entitiy.isModelEntity();
+      });
+    }
+  }, {
+    key: "tables",
+    value: function tables() {
+      return this.entities.filter(function (entity) {
+        return entity.heading == entity.heading.toLowerCase();
+      });
+    }
+  }, {
+    key: "manyToManys",
+    value: function manyToManys() {
+      var _this = this;
+
+      return this.tables().filter(function (entitiy) {
+        return _this.isManyToMany(entitiy);
       });
     }
   }, {
@@ -65799,6 +65846,8 @@ function () {
   }, {
     key: "findRelationships",
     value: function findRelationships() {
+      var _this2 = this;
+
       this.modelsIncludingUser().mapWithRemaining(function (model, remaining) {
         //HasOne/HasMany
         model.hasManyRelationships = remaining.filter(function (candidate) {
@@ -65807,6 +65856,14 @@ function () {
 
         model.belongsToRelationships = remaining.filter(function (candidate) {
           return !candidate.attributes.includes(model.asForeignKey()) && model.attributes.includes(candidate.asForeignKey());
+        }); //BelongsToMany
+
+        model.belongsToManyRelationships = remaining.filter(function (candidate) {
+          return _this2.manyToManys().filter(function (manyToManyEntity) {
+            var parts = _this2.manyToManyAssociatedModels(manyToManyEntity);
+
+            return parts.includes(_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
+          }).items.length > 0;
         });
       });
     }
