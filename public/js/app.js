@@ -67473,8 +67473,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MigrationPipe; });
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
 /* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Formatter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter.js */ "./resources/js/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67518,7 +67517,7 @@ function (_BasePipe) {
         return {
           path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
-            ___TABLE___: pluralize__WEBPACK_IMPORTED_MODULE_2___default()(entity.heading),
+            ___TABLE___: _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(entity.heading),
             ___COLUMNS_BLOCK___: _this.columns(entity)
           })
         };
@@ -67527,11 +67526,79 @@ function (_BasePipe) {
   }, {
     key: "columns",
     value: function columns(entity) {
+      var _this2 = this;
+
       return entity.attributes.map(function (attribute) {
-        return ["$table->string('" + attribute + "');"];
+        return _this2.statementsFor(attribute);
       }).reduce(function (allStatements, statements) {
         return allStatements.concat(statements);
       }, []).join("\n");
+    }
+  }, {
+    key: "statementsFor",
+    value: function statementsFor(attribute) {
+      var statements = [//this.overridden(name), /* not implemented */
+      this.reserved(attribute), this.ruled(attribute), this["default"](attribute)].find(function (filter) {
+        return filter;
+      });
+      return Array.isArray(statements) ? statements.join('\n') : [statements];
+    }
+  }, {
+    key: "reserved",
+    value: function reserved(name) {
+      var reservedNames = {
+        "id": "$table->increments();",
+        "timestamps": "$table->timestamps();",
+        "timestamps()": "$table->timestamps();",
+        "rememberToken": "$table->rememberToken();",
+        "rememberToken()": "$table->rememberToken();",
+        "created_at": "$table->timestamp('created_at')->nullable();",
+        "email": "$table->string('email')->unique();"
+      };
+
+      if (reservedNames.hasOwnProperty(name)) {
+        return reservedNames[name];
+      }
+
+      return false;
+    }
+  }, {
+    key: "ruled",
+    value: function ruled(name) {
+      var matchedRuleKey = Object.keys(this.rules()).find(function (rule) {
+        return new RegExp(rule).test(name);
+      });
+
+      if (typeof matchedRuleKey !== "undefined") {
+        return this.rules()[matchedRuleKey](name);
+      }
+
+      return false;
+    }
+  }, {
+    key: "rules",
+    value: function rules() {
+      return {
+        // One to Many explicit
+        "_id$": function _id$(name) {
+          var snakeCaseSingular = name.slice(0, name.length - 3).replace(/_/g, "");
+          var plural = _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(snakeCaseSingular);
+          return ["$table->unsignedInteger('" + name + "');", "$table->foreign('" + name + "')->references('id')->on('" + plural + "')->onDelete('cascade');"];
+        },
+        // Time columns
+        "(time|date|_at)$": function timeDate_at$(name) {
+          return "$table->timestamp('" + name + "');";
+        },
+        // Boolean
+        "^(has_|is_|got_)": function has_Is_Got_(name) {
+          return "$table->boolean('" + name + "')->default(false);";
+        }
+      };
+    }
+  }, {
+    key: "default",
+    value: function _default(name) {
+      return "$table->string('" + name + "');";
     }
   }]);
 

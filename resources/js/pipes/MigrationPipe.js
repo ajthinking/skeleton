@@ -1,6 +1,6 @@
 import Template from '../Template'
 import BasePipe from './BasePipe'
-import pluralize from 'pluralize'
+import F from '../Formatter.js'
 
 export default class MigrationPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {
@@ -8,7 +8,7 @@ export default class MigrationPipe extends BasePipe {
             return {
                 path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
                 content: Template.for('Migration').replace({
-                    ___TABLE___: pluralize(entity.heading),
+                    ___TABLE___: F.pluralize(entity.heading),
                     ___COLUMNS_BLOCK___: this.columns(entity),
                 })
             }
@@ -17,9 +17,72 @@ export default class MigrationPipe extends BasePipe {
 
     columns(entity) {
         return entity.attributes.map(attribute => {
-            return ["$table->string('" + attribute + "');"]
+            return this.statementsFor(attribute)
         }).reduce((allStatements, statements) => allStatements.concat(statements), []).join("\n")
     }
+
+    statementsFor(attribute) {
+        let statements = [
+            //this.overridden(name), /* not implemented */
+            this.reserved(attribute),
+            this.ruled(attribute),
+            this.default(attribute)
+        ].find((filter) => filter);
+
+        return Array.isArray(statements) ? statements.join('\n') : [statements]
+    }
+
+    reserved(name) {
+        var reservedNames = {
+            "id": "$table->increments();",
+            "timestamps": "$table->timestamps();",
+            "timestamps()": "$table->timestamps();",
+            "rememberToken": "$table->rememberToken();",
+            "rememberToken()": "$table->rememberToken();",
+            "created_at": "$table->timestamp('created_at')->nullable();",
+            "email": "$table->string('email')->unique();",
+        }
+        if(reservedNames.hasOwnProperty(name)) {
+            return reservedNames[name];
+        }
+
+        return false;        
+    }
+    
+    ruled(name) {
+        var matchedRuleKey = Object.keys(this.rules()).find((rule) => (new RegExp(rule)).test(name));
+        if(typeof matchedRuleKey !== "undefined") {
+            return this.rules()[matchedRuleKey](name);
+        }
+
+        return false;
+    }
+
+    rules() { 
+        return {
+            // One to Many explicit
+            "_id$": function(name) {
+                var snakeCaseSingular = name.slice(0, name.length-3).replace(/_/g,"");
+                var plural = F.pluralize(snakeCaseSingular);
+                return [
+                    "$table->unsignedInteger('" + name + "');",
+                    "$table->foreign('" + name + "')->references('id')->on('" + plural + "')->onDelete('cascade');"
+                ]
+            },            
+            // Time columns
+            "(time|date|_at)$": function(name) {
+                return "$table->timestamp('" + name + "');";
+            },
+            // Boolean
+            "^(has_|is_|got_)": function(name) {
+                return "$table->boolean('" + name + "')->default(false);";
+            },
+        };                        
+    }    
+
+    default(name) {
+        return "$table->string('" + name + "');"
+    }    
 }
 
 
