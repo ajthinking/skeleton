@@ -67524,9 +67524,9 @@ function (_BasePipe) {
       var _this = this;
 
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
-      return omc.inOptimalMigrationOrder().map(function (entity) {
+      return omc.inOptimalMigrationOrder().map(function (entity, index) {
         return {
-          path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
+          path: "database/migrations/" + _this.migrationTimeStamp(index) + "_create_" + entity.className() + "_table.php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
             ___TABLE___: _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(entity.heading),
             ___COLUMNS_BLOCK___: _this.columns(entity)
@@ -67610,6 +67610,12 @@ function (_BasePipe) {
     key: "default",
     value: function _default(name) {
       return "$table->string('" + name + "');";
+    }
+  }, {
+    key: "migrationTimeStamp",
+    value: function migrationTimeStamp(index) {
+      var current_datetime = new Date();
+      return current_datetime.getFullYear() + "_" + (current_datetime.getMonth() + 1 < 10 ? "0" + (current_datetime.getMonth() + 1) : current_datetime.getMonth() + 1) + "_" + current_datetime.getDate() + "_" + current_datetime.getHours() + (current_datetime.getMinutes() < 10 ? "0" + current_datetime.getMinutes() : current_datetime.getMinutes()) + (index < 10 ? "0" + index : index);
     }
   }]);
 

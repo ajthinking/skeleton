@@ -4,9 +4,9 @@ import F from '../Formatter.js'
 
 export default class MigrationPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {
-        return omc.inOptimalMigrationOrder().map(entity => {
+        return omc.inOptimalMigrationOrder().map((entity, index) => {
             return {
-                path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
+                path: "database/migrations/" + this.migrationTimeStamp(index) +"_create_" + entity.className() + "_table.php",
                 content: Template.for('Migration').replace({
                     ___TABLE___: F.pluralize(entity.heading),
                     ___COLUMNS_BLOCK___: this.columns(entity),
@@ -82,7 +82,18 @@ export default class MigrationPipe extends BasePipe {
 
     default(name) {
         return "$table->string('" + name + "');"
-    }    
+    }
+    
+    migrationTimeStamp(index) {
+        let current_datetime = new Date()
+        return current_datetime.getFullYear() + "_"
+            + (current_datetime.getMonth() + 1 < 10 ? "0" + (current_datetime.getMonth() + 1) : current_datetime.getMonth() + 1)
+            + "_" + current_datetime.getDate()
+            + "_" + current_datetime.getHours()
+            + (current_datetime.getMinutes() < 10 ? "0" + current_datetime.getMinutes() : current_datetime.getMinutes())
+            + (index < 10 ? "0" + index : index)
+
+    }
 }
 
 
