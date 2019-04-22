@@ -41,7 +41,6 @@
                     });
                     const content = await rawResponse.json();
 
-                    console.log(content);
                     this.message = content.message
                 })();
             }

@@ -4,7 +4,7 @@ import F from '../Formatter.js'
 
 export default class MigrationPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {
-        return omc.all().map(entity => {
+        return omc.inOptimalMigrationOrder().map(entity => {
             return {
                 path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
                 content: Template.for('Migration').replace({

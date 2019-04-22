@@ -69,7 +69,6 @@ export default class ModelPipe extends BasePipe {
             }).join("/n"),
 
             model.belongsToManyRelationships.map(target => {
-                console.log("inne här")
                 return Template.for('BelongsToManyRelationship').replace({
                     ___TARGET_CLASS___: target.className(),                    
                     ___TARGET_CLASS_PLURAL___: F.pluralize(target.className()),

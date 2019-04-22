@@ -4,9 +4,7 @@ import F from './Formatter'
 export default class ObjectModelCollection {
     constructor(entities) {
         this.entities = collect(entities)
-        this.findRelationships()
-
-        console.log(this.entities)
+        this.attachRelationships()
     }
 
     isManyToMany(candidate) {
@@ -52,12 +50,12 @@ export default class ObjectModelCollection {
         return this.entities.filter(entitiy => entitiy.isModelEntity())
     }
 
-    tables() {
+    tablesOnly() {
         return this.entities.filter(entity => entity.heading == entity.heading.toLowerCase())
     }
     
     manyToManys() {
-        return this.tables().filter(entitiy => this.isManyToMany(entitiy))
+        return this.tablesOnly().filter(entitiy => this.isManyToMany(entitiy))
     }    
 
     modelsIncludingUser() {
@@ -83,9 +81,18 @@ export default class ObjectModelCollection {
     all() {
         return this.entities
     }
+
+    inOptimalMigrationOrder() {
+        return this.entities.sortBy((entity) => {
+            if(entity.isTableEntity() && this.isManyToMany(entity)) {
+                return 2
+            }
+            return entity.belongsToRelationships.length
+        })
+    }
     
-    findRelationships() {
-        this.modelsIncludingUser().mapWithRemaining((model, remaining) => {
+    attachRelationships() {
+        this.entities.mapWithRemaining((model, remaining) => {
             //HasOne/HasMany
             model.hasManyRelationships = remaining.filter(candidate => {
                 return candidate.attributes.includes(model.asForeignKey())

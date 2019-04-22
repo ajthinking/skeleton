@@ -1948,10 +1948,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 5:
                 content = _context.sent;
-                console.log(content);
                 _this.message = content.message;
 
-              case 8:
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -65751,8 +65750,7 @@ function () {
     _classCallCheck(this, ObjectModelCollection);
 
     this.entities = Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
-    this.findRelationships();
-    console.log(this.entities);
+    this.attachRelationships();
   }
 
   _createClass(ObjectModelCollection, [{
@@ -65805,8 +65803,8 @@ function () {
       });
     }
   }, {
-    key: "tables",
-    value: function tables() {
+    key: "tablesOnly",
+    value: function tablesOnly() {
       return this.entities.filter(function (entity) {
         return entity.heading == entity.heading.toLowerCase();
       });
@@ -65816,7 +65814,7 @@ function () {
     value: function manyToManys() {
       var _this = this;
 
-      return this.tables().filter(function (entitiy) {
+      return this.tablesOnly().filter(function (entitiy) {
         return _this.isManyToMany(entitiy);
       });
     }
@@ -65853,11 +65851,24 @@ function () {
       return this.entities;
     }
   }, {
-    key: "findRelationships",
-    value: function findRelationships() {
+    key: "inOptimalMigrationOrder",
+    value: function inOptimalMigrationOrder() {
       var _this2 = this;
 
-      this.modelsIncludingUser().mapWithRemaining(function (model, remaining) {
+      return this.entities.sortBy(function (entity) {
+        if (entity.isTableEntity() && _this2.isManyToMany(entity)) {
+          return 2;
+        }
+
+        return entity.belongsToRelationships.length;
+      });
+    }
+  }, {
+    key: "attachRelationships",
+    value: function attachRelationships() {
+      var _this3 = this;
+
+      this.entities.mapWithRemaining(function (model, remaining) {
         //HasOne/HasMany
         model.hasManyRelationships = remaining.filter(function (candidate) {
           return candidate.attributes.includes(model.asForeignKey()) && !model.attributes.includes(candidate.asForeignKey());
@@ -65868,8 +65879,8 @@ function () {
         }); //BelongsToMany
 
         model.belongsToManyRelationships = remaining.filter(function (candidate) {
-          return _this2.manyToManys().filter(function (manyToManyEntity) {
-            var parts = _this2.manyToManyAssociatedModels(manyToManyEntity);
+          return _this3.manyToManys().filter(function (manyToManyEntity) {
+            var parts = _this3.manyToManyAssociatedModels(manyToManyEntity);
 
             return parts.includes(_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
           }).items.length > 0;
@@ -67513,7 +67524,7 @@ function (_BasePipe) {
       var _this = this;
 
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
-      return omc.all().map(function (entity) {
+      return omc.inOptimalMigrationOrder().map(function (entity) {
         return {
           path: "database/migrations/2019_12_12_1212_create_" + entity.className() + "_table.php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
@@ -67717,7 +67728,6 @@ function (_BasePipe) {
           ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className())
         });
       }).join("/n"), model.belongsToManyRelationships.map(function (target) {
-        console.log("inne här");
         return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToManyRelationship').replace({
           ___TARGET_CLASS___: target.className(),
           ___TARGET_CLASS_PLURAL___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(target.className()),
