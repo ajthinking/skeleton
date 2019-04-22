@@ -1,5 +1,4 @@
 import Template from '../Template'
-import Templates from '../Templates'
 import BasePipe from './BasePipe'
 import pluralize from 'pluralize'
 
@@ -18,7 +17,10 @@ export default class MigrationPipe extends BasePipe {
 
     columns(entity) {
         return entity.attributes.map(attribute => {
-            return "$table->string('" + attribute + "');"
-        }).join("\n")
+            return ["$table->string('" + attribute + "');"]
+        }).reduce((allStatements, statements) => allStatements.concat(statements), []).join("\n")
     }
 }
+
+
+

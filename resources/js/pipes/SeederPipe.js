@@ -1,12 +1,12 @@
 import Template from '../Template'
 import ModelPipe from './ModelPipe';
 
-export default class ControllerPipe extends ModelPipe {
+export default class SeederPipe extends ModelPipe {
     calculateFiles(omc = ObjectModelCollection) {
         return omc.modelsIncludingUser().map(model => {
             return {
-                path: "app/Http/Controllers/" + model.className() + "Controller.php",
-                content: Template.for('Controller').replace({
+                path: "database/seeds/" + model.className() + "Seeder.php",
+                content: Template.for('Seeder').replace({
                     ___HIDDEN___: this.hiddenAttributes(model),
                     ___FILLABLE___: this.fillableAttributes(model),
                     ___CASTS___: this.casts(model),

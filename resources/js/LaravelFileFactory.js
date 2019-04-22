@@ -1,6 +1,9 @@
 import UserPipe from './pipes/UserPipe'
 import ModelPipe from './pipes/ModelPipe'
 import MigrationPipe from './pipes/MigrationPipe'
+import ControllerPipe from './pipes/ControllerPipe'
+import APIControllerPipe from './pipes/APIControllerPipe'
+import SeederPipe from './pipes/SeederPipe'
 import collect from 'collect.js'
 
 export default class LaravelFileFactory {
@@ -12,7 +15,10 @@ export default class LaravelFileFactory {
         return [
             UserPipe,
             ModelPipe,
-            MigrationPipe
+            MigrationPipe,
+            ControllerPipe,
+            APIControllerPipe,
+            SeederPipe,
         ]
     }
 

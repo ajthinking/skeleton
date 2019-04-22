@@ -1,5 +1,6 @@
+import store from './store'
+
 import ModelPipe from "./pipes/ModelPipe"
-import Templates from "./Templates"
 
 export default class Template {
     constructor(text) {
@@ -9,7 +10,7 @@ export default class Template {
 
     static for(templateName) {
         return new this(
-            Templates[templateName]
+            store.getters.templates[templateName]
         )
     }
 

@@ -10,10 +10,6 @@ import UserPipe from '../pipes/UserPipe'
 Vue.use(Vuex)
 Vue.config.debug = true
 
-fetch('/skeleton/api/templates').then(result => result.json()).then(data => {
-    console.log(data)
-})
-
 // how set this via config?
 let FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : LaravelFileFactory
 
@@ -29,7 +25,9 @@ export default new Vuex.Store({
 
         objectModelNotes: "",
 
-        reviewFiles: []
+        reviewFiles: [],
+
+        templates: {},
     },
     mutations: {
         navigate(state, {namespace, tab}) {
@@ -42,7 +40,11 @@ export default new Vuex.Store({
 
         setReviewFiles(state, files) {
             state.reviewFiles = files
-        },        
+        },
+        
+        setTemplates(state, templates) {
+            state.templates = templates
+        }
     },
     actions: {
         navigate(context, payload) {
@@ -65,6 +67,15 @@ export default new Vuex.Store({
 
             context.commit('setReviewFiles', files)
         
-        } 
-    }
+        },
+        
+        setTemplates(context) {
+            fetch('/skeleton/api/templates').then(result => result.json()).then(templates => 
+                context.commit('setTemplates', templates)
+            )            
+        }
+    },
+    getters: {
+        templates: state => state.templates
+    },    
 })

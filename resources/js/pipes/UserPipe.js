@@ -1,6 +1,5 @@
 import Template from '../Template'
 import ModelPipe from './ModelPipe';
-import Templates from '../Templates';
 
 export default class UserPipe extends ModelPipe {
     calculateFiles(omc = ObjectModelCollection) {

@@ -1,5 +1,4 @@
 import Template from '../Template'
-import Templates from '../Templates'
 import BasePipe from './BasePipe'
 import F from '../Formatter'
 

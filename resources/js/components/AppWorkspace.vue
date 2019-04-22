@@ -16,5 +16,9 @@
                 return this.activeTab.toLowerCase() + "-tab"
             },
         },
+
+        mounted() {
+            this.$store.dispatch('setTemplates')
+        }
     }
 </script>
