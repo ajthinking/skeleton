@@ -10,6 +10,10 @@ import UserPipe from '../pipes/UserPipe'
 Vue.use(Vuex)
 Vue.config.debug = true
 
+fetch('/skeleton/api/templates').then(result => result.json()).then(data => {
+    console.log(data)
+})
+
 // how set this via config?
 let FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : LaravelFileFactory
 

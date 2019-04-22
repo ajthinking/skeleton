@@ -67619,7 +67619,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true; // how set this via config?
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
+fetch('/skeleton/api/templates').then(function (result) {
+  return result.json();
+}).then(function (data) {
+  console.log(data);
+}); // how set this via config?
 
 var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"];
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
