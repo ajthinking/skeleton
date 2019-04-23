@@ -13,12 +13,15 @@ class SkeletonAPIController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function __construct()
+    {
+        // Add disk for the project here!
+        parent::__construct();        
+    }
+
     public function templates()
     {
-        return collect(glob(__DIR__ . '/../templates/*'))->reduce(function($allFiles, $path) {
-            $allFiles[$this->pathToFileName($path)] = File::get($path);
-            return $allFiles;
-        }, collect([]));
+        return $this->getTemplates();
     }
 
     public function build()
@@ -26,7 +29,7 @@ class SkeletonAPIController extends BaseController
         $files = json_decode(request()->getContent())->reviewFiles;
         $workspace = $this->getWorkspace();
         collect($files)->each(function($file) use($workspace) {
-            Storage::disk('Sandbox')->put($workspace . "/" . $file->path, $file->content);
+            Storage::disk('skeleton.sandbox')->put($workspace . "/" . $file->path, $file->content);
         });
 
         return response([
@@ -35,7 +38,7 @@ class SkeletonAPIController extends BaseController
     }
 
     private function getWorkspace() {
-        $latestBuild = collect(glob(storage_path('Sandbox') . '/*'))->map(function($build) {
+        $latestBuild = collect(glob(storage_path('skeleton.sandbox') . '/*'))->map(function($build) {
             return $this->pathToFileName($build);
         })->filter(function($build) {
             return preg_match('/^\d+$/', $build);
@@ -51,5 +54,11 @@ class SkeletonAPIController extends BaseController
         return substr($path, strrpos($path, '/') + 1);
     }
 
-
+    private function getTemplates()
+    {
+        return collect(glob(__DIR__ . '/../templates/*'))->reduce(function($allFiles, $path) {
+            $allFiles[$this->pathToFileName($path)] = File::get($path);
+            return $allFiles;
+        }, collect([]));
+    }
 }

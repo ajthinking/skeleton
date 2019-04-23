@@ -26,5 +26,24 @@ class SkeletonServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/routes/routes.php');
         $this->loadViewsFrom(__DIR__.'/views', 'skeleton');
-    }   
+        $this->registerStorages();
+    }
+    
+    private function registerStorages()
+    {
+        $this->app['config']["filesystems.disks.self"] = [
+            'driver' => 'local',
+            'root' => base_path(),
+        ];
+
+        $this->app['config']["filesystems.disks.skeleton"] = [
+            'driver' => 'local',
+            'root' => storage_path('skeleton'),
+        ];
+        
+        $this->app['config']["filesystems.disks.skeleton.sandbox"] = [
+            'driver' => 'local',
+            'root' => storage_path('skeleton/sandbox'),
+        ];        
+    }
 }

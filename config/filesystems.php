@@ -48,11 +48,6 @@ return [
             'root' => storage_path('app'),
         ],
 
-        'Sandbox' => [
-            'driver' => 'local',
-            'root' => storage_path('Sandbox'),
-        ],        
-
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

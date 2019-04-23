@@ -58,7 +58,7 @@ export default class ModelPipe extends BasePipe {
                     ),
 
                 })
-            }).join("\n"),
+            }).join("\n\n"),
 
             model.belongsToRelationships.map(target => {
                 return Template.for('BelongsToRelationship').replace({
@@ -66,7 +66,7 @@ export default class ModelPipe extends BasePipe {
                     ___THIS_CLASS___: model.className(),
                     ___METHOD_NAME___: F.camelCase(target.className()),
                 })
-            }).join("/n"),
+            }).join("\n\n"),
 
             model.belongsToManyRelationships.map(target => {
                 return Template.for('BelongsToManyRelationship').replace({

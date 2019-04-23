@@ -67727,13 +67727,13 @@ function (_BasePipe) {
           ___THIS_CLASS___: model.className(),
           ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className()))
         });
-      }).join("\n"), model.belongsToRelationships.map(function (target) {
+      }).join("\n\n"), model.belongsToRelationships.map(function (target) {
         return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToRelationship').replace({
           ___TARGET_CLASS___: target.className(),
           ___THIS_CLASS___: model.className(),
           ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className())
         });
-      }).join("/n"), model.belongsToManyRelationships.map(function (target) {
+      }).join("\n\n"), model.belongsToManyRelationships.map(function (target) {
         return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToManyRelationship').replace({
           ___TARGET_CLASS___: target.className(),
           ___TARGET_CLASS_PLURAL___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(target.className()),
