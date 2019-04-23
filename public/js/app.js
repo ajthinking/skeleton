@@ -67537,13 +67537,23 @@ function (_BasePipe) {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       return omc.inOptimalMigrationOrder().map(function (entity, index) {
         return {
-          path: "database/migrations/" + _this.migrationTimeStamp(index) + "_create_" + entity.className() + "_table.php",
+          path: "database/migrations/" + _this.migrationTimeStamp(index) + "_create_" + _this.tableName(entity) + "_table.php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
-            ___TABLE___: _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(entity.heading),
+            ___CLASS_NAME___: "Create" + _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pascalCase(_this.tableName(entity)) + "Table",
+            ___TABLE___: _this.tableName(entity),
             ___COLUMNS_BLOCK___: _this.columns(entity)
           })
         };
       }).toArray();
+    }
+  }, {
+    key: "tableName",
+    value: function tableName(entity) {
+      if (entity.isTableEntity()) {
+        return entity.heading;
+      }
+
+      return _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].snakeCase(_Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(entity.heading));
     }
   }, {
     key: "columns",
@@ -67569,7 +67579,7 @@ function (_BasePipe) {
     key: "reserved",
     value: function reserved(name) {
       var reservedNames = {
-        "id": "$table->increments();",
+        "id": "$table->increments('id');",
         "timestamps": "$table->timestamps();",
         "timestamps()": "$table->timestamps();",
         "rememberToken": "$table->rememberToken();",

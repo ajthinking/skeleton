@@ -6,13 +6,22 @@ export default class MigrationPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {
         return omc.inOptimalMigrationOrder().map((entity, index) => {
             return {
-                path: "database/migrations/" + this.migrationTimeStamp(index) +"_create_" + entity.className() + "_table.php",
+                path: "database/migrations/" + this.migrationTimeStamp(index) +"_create_" + this.tableName(entity) + "_table.php",
                 content: Template.for('Migration').replace({
-                    ___TABLE___: F.pluralize(entity.heading),
+                    ___CLASS_NAME___: "Create" + F.pascalCase(this.tableName(entity)) + "Table",
+                    ___TABLE___: this.tableName(entity),
                     ___COLUMNS_BLOCK___: this.columns(entity),
                 })
             }
         }).toArray()
+    }
+
+    tableName(entity) {
+        if(entity.isTableEntity()) {
+            return entity.heading
+        }
+
+        return F.snakeCase(F.pluralize(entity.heading))
     }
 
     columns(entity) {
@@ -34,7 +43,7 @@ export default class MigrationPipe extends BasePipe {
 
     reserved(name) {
         var reservedNames = {
-            "id": "$table->increments();",
+            "id": "$table->increments('id');",
             "timestamps": "$table->timestamps();",
             "timestamps()": "$table->timestamps();",
             "rememberToken": "$table->rememberToken();",

@@ -7,7 +7,6 @@ use Storage;
 use File;
 
 class ProjectFileManager {
-    /*********** PUBLIC API ************************************************** */    
     public function __construct($isSandboxed)
     {
         $this->isSandboxed = $isSandboxed;
