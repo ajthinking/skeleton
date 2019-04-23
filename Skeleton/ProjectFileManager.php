@@ -32,6 +32,10 @@ class ProjectFileManager {
     public function delete($files)
     {
         $this->recordCurrentStateFor($files);
+
+        collect($files)->each(function($file) {
+            $this->storage()->delete($file->path);
+        });        
     }    
 
     public function reverseHistory()
@@ -52,8 +56,9 @@ class ProjectFileManager {
             json_encode($this->history)
         );
     }
-    
-    public function setupSandboxProject()
+
+    /*********** PRIVATE ************************************************** */
+    private function setupSandboxProject()
     {
         app()['config']["filesystems.disks.skeleton_sandbox_project"] = [
             'driver' => 'local',
@@ -68,8 +73,6 @@ class ProjectFileManager {
         }
     }
 
-    /*********** PRIVATE ************************************************** */
-    
     private function loadHistory()
     {
         return $this->storage()->has('skeleton-history.json') ?

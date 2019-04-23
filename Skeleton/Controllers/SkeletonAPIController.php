@@ -21,16 +21,20 @@ class SkeletonAPIController extends BaseController
 
     public function build()
     {
-        $this->project = ProjectFileManager::make(
-            $this->jsonParameter("isSandboxed")
-        );
+        // Setup sandboxed or regular project
+        $this->setupProjectEnvironment();
 
+        // Reverse the previous iteration
+        // This is to remove previous mistakes and timestamp conflicts
         $this->project->reverseHistory();
 
-        $this->project->write(
-            $this->jsonParameter("reviewFiles")
-        );
+        // Write the files generated
+        $this->project->write($this->jsonParameter("reviewFiles"));
 
+        // We wont need them
+        $this->deleteDefaultMigrations();
+
+        // Save the changes we made
         $this->project->persistHistory();
 
         return response([
@@ -41,6 +45,26 @@ class SkeletonAPIController extends BaseController
     private function jsonParameter($name)
     {
         return json_decode(request()->getContent())->$name;
+    }
+
+    private function setupProjectEnvironment()
+    {
+        $this->project = ProjectFileManager::make(
+            $this->jsonParameter("isSandboxed")
+        );
+    }
+
+    private function deleteDefaultMigrations() {
+        $this->project->delete(json_decode(`
+            [
+                {
+                    "path": "database/migrations/2014_10_12_000000_create_users_table.php"
+                },
+                {
+                    "path": "database/migrations/2014_10_12_100000_create_password_resets_table.php"
+                }
+            ]
+        `));
     }
 
     private function getWorkspace() {
