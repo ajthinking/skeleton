@@ -8,16 +8,11 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Storage;
 use File;
+use Skeleton\ProjectFileManager;
 
 class SkeletonAPIController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function __construct()
-    {
-        // Add disk for the project here!
-        parent::__construct();        
-    }
 
     public function templates()
     {
@@ -26,15 +21,26 @@ class SkeletonAPIController extends BaseController
 
     public function build()
     {
-        $files = json_decode(request()->getContent())->reviewFiles;
-        $workspace = $this->getWorkspace();
-        collect($files)->each(function($file) use($workspace) {
-            Storage::disk('skeleton.sandbox')->put($workspace . "/" . $file->path, $file->content);
-        });
+        $this->project = ProjectFileManager::make(
+            $this->jsonParameter("isSandboxed")
+        );
+
+        $this->project->reverseHistory();
+
+        $this->project->write(
+            $this->jsonParameter("reviewFiles")
+        );
+
+        $this->project->persistHistory();
 
         return response([
             "message" => "Successfully stored files!"
         ], 200);
+    }
+
+    private function jsonParameter($name)
+    {
+        return json_decode(request()->getContent())->$name;
     }
 
     private function getWorkspace() {

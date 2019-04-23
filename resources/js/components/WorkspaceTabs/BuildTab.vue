@@ -36,7 +36,8 @@
                         'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
-                            reviewFiles: this.$store.state.reviewFiles
+                            reviewFiles: this.$store.state.reviewFiles,
+                            isSandboxed: true
                         })
                     });
                     const content = await rawResponse.json();

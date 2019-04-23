@@ -1937,7 +1937,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     'Content-Type': 'application/json'
                   },
                   body: JSON.stringify({
-                    reviewFiles: _this.$store.state.reviewFiles
+                    reviewFiles: _this.$store.state.reviewFiles,
+                    isSandboxed: true
                   })
                 });
 
