@@ -14,22 +14,28 @@ class SkeletonAPIController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    public function __construct()
+    {
+        $this->args = json_decode(request()->getContent());
+    }
+
     public function templates()
     {
+        
         return $this->getTemplates();
     }
 
     public function build()
     {
-        // Setup sandboxed or regular project
+        // Setup project - sandboxed or regular
         $this->setupProjectEnvironment();
 
-        // Reverse the previous iteration
-        // This is to remove previous mistakes and timestamp conflicts
-        $this->project->reverseHistory();
+        // Optionally reverse the previous design iteration
+        // This is useful to remove previous mistakes and timestamp conflicts
+        $this->args->reverseHistory? $this->project->reverseHistory() : null;
 
         // Write the files generated
-        $this->project->write($this->jsonParameter("reviewFiles"));
+        $this->project->write($this->args->reviewFiles);
 
         // We wont need them
         $this->deleteDefaultMigrations();
@@ -42,15 +48,10 @@ class SkeletonAPIController extends BaseController
         ], 200);
     }
 
-    private function jsonParameter($name)
-    {
-        return json_decode(request()->getContent())->$name;
-    }
-
     private function setupProjectEnvironment()
     {
         $this->project = ProjectFileManager::make(
-            $this->jsonParameter("isSandboxed")
+            $this->args->isSandboxed
         );
     }
 

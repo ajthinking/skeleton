@@ -1888,33 +1888,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isBuilding: false,
-      message: false,
-      nodes: [{
-        title: 'Item1',
-        isLeaf: true
-      }, {
-        title: 'Item2',
-        isLeaf: true,
-        data: {
-          visible: false
-        }
-      }, {
-        title: 'Folder1'
-      }, {
-        title: 'Folder2',
-        isExpanded: true,
-        children: [{
-          title: 'Item3',
-          isLeaf: true
-        }, {
-          title: 'Item4',
-          isLeaf: true
-        }]
-      }]
+      message: false
     };
   },
   methods: {
@@ -1938,7 +1922,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   },
                   body: JSON.stringify({
                     reviewFiles: _this.$store.state.reviewFiles,
-                    isSandboxed: true
+                    isSandboxed: true,
+                    reverseHistory: true
                   })
                 });
 
@@ -51933,9 +51918,11 @@ var render = function() {
     "div",
     {
       staticClass:
-        "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
+        "flex flex-col h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
     },
     [
+      _vm._m(0),
+      _vm._v(" "),
       !_vm.isBuilding
         ? _c(
             "button",
@@ -51957,7 +51944,30 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "flex flex-col text-sm mb-4" }, [
+      _c("div", [
+        _c("input", {
+          staticClass: "mr-2",
+          attrs: { type: "checkbox", checked: "" }
+        }),
+        _vm._v("Revert the latest build")
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("input", {
+          staticClass: "mr-2",
+          attrs: { type: "checkbox", checked: "" }
+        }),
+        _vm._v("Use Sandbox")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
