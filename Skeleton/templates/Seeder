@@ -14,7 +14,7 @@ class ___MODEL___Seeder extends Seeder
     public function run()
     {
         DB::table('___TABLE___')->insert([
-            ___COLUMNS___
+            ___COLUMNS_BLOCK___
         ]);
     }
 }

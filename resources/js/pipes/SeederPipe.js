@@ -1,5 +1,7 @@
 import Template from '../Template'
-import ModelPipe from './ModelPipe';
+import ModelPipe from './ModelPipe'
+
+import F from '../Formatter'
 
 export default class SeederPipe extends ModelPipe {
     calculateFiles(omc = ObjectModelCollection) {
@@ -14,10 +16,9 @@ export default class SeederPipe extends ModelPipe {
             return {
                 path: "database/seeds/" + model.className() + "Seeder.php",
                 content: Template.for('Seeder').replace({
-                    ___HIDDEN___: this.hiddenAttributes(model),
-                    ___FILLABLE___: this.fillableAttributes(model),
-                    ___CASTS___: this.casts(model),
-                    ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),
+                    ___MODEL___: model.className(),
+                    ___TABLE___: F.camelCase(F.pluralize(model.className())),
+                    ___COLUMNS_BLOCK___: this.columnsBlock(),
                 })
             }
         }).toArray()
@@ -39,5 +40,13 @@ export default class SeederPipe extends ModelPipe {
         return this.omc.modelsIncludingUser().map(model => {
             return "$this->call(" + model.className() + "Seeder::class);"
         }).toArray().join("\n")        
+    }
+
+    columnsBlock() {
+        return [
+            "'name' => Str::random(10),",
+            "'name' => Str::random(10),",
+            "'name' => Str::random(10),",
+        ].join("\n")
     }
 }

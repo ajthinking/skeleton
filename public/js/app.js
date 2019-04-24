@@ -67866,6 +67866,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SeederPipe; });
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
 /* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter */ "./resources/js/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -67891,6 +67892,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -67921,10 +67923,9 @@ function (_ModelPipe) {
         return {
           path: "database/seeds/" + model.className() + "Seeder.php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Seeder').replace({
-            ___HIDDEN___: _this.hiddenAttributes(model),
-            ___FILLABLE___: _this.fillableAttributes(model),
-            ___CASTS___: _this.casts(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
+            ___MODEL___: model.className(),
+            ___TABLE___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
+            ___COLUMNS_BLOCK___: _this.columnsBlock()
           })
         };
       }).toArray();
@@ -67948,6 +67949,11 @@ function (_ModelPipe) {
       return this.omc.modelsIncludingUser().map(function (model) {
         return "$this->call(" + model.className() + "Seeder::class);";
       }).toArray().join("\n");
+    }
+  }, {
+    key: "columnsBlock",
+    value: function columnsBlock() {
+      return ["'name' => Str::random(10),", "'name' => Str::random(10),", "'name' => Str::random(10),"].join("\n");
     }
   }]);
 
