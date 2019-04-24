@@ -66191,10 +66191,14 @@ function () {
   }, {
     key: "removeBlock",
     value: function removeBlock(marker) {
-      var regex = '^([\\n])*[ ]*' + marker + '[\\n]([\\n]+)?';
+      var regex = '^([\\n])*[ ]*' + marker + '([\\n])?([\\n]+)?';
       var matches = RegExp(regex, "gm").exec(this.text);
+
+      if (!matches) {}
+
       var spacingAbove = matches[1];
-      var spacingBelow = matches[2];
+      var imidiateFollowingLineBreak = matches[2];
+      var spacingBelow = matches[3];
       this.text = this.text.replace(new RegExp(regex, "gm"), !!spacingAbove && !!spacingBelow ? "\n" : "");
     }
   }], [{
@@ -67303,6 +67307,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return APIControllerPipe; });
 /* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
 /* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter */ "./resources/js/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67324,6 +67329,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var APIControllerPipe =
 /*#__PURE__*/
 function (_ModelPipe) {
@@ -67338,17 +67344,14 @@ function (_ModelPipe) {
   _createClass(APIControllerPipe, [{
     key: "calculateFiles",
     value: function calculateFiles() {
-      var _this = this;
-
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       return omc.modelsIncludingUser().map(function (model) {
         return {
           path: "app/Http/Controllers/" + model.className() + "APIController.php",
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('APIController').replace({
-            ___HIDDEN___: _this.hiddenAttributes(model),
-            ___FILLABLE___: _this.fillableAttributes(model),
-            ___CASTS___: _this.casts(model),
-            ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
+            ___MODEL___: model.className(),
+            ___MODEL_INSTANCE___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(model.className()),
+            ___WITH_RELATIONSHIPS___: ""
           })
         };
       }).toArray();
@@ -67421,7 +67424,7 @@ function (_BasePipe) {
   }, {
     key: "apiRoutes",
     value: function apiRoutes() {
-      return ["Route::resource('users', 'UsersController', [\n    'only' => ['index', 'show']\n]);", "Route::resource('cars', 'UsersController', [\n    'only' => ['index', 'show']\n]);"].join("\n\n");
+      return "";
     }
   }]);
 

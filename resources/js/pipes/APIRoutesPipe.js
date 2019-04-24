@@ -13,14 +13,7 @@ export default class MigrationPipe extends BasePipe {
     }
 
     apiRoutes() {
-        return [
-`Route::resource('users', 'UsersController', [
-    'only' => ['index', 'show']
-]);`,
-`Route::resource('cars', 'UsersController', [
-    'only' => ['index', 'show']
-]);`,
-        ].join("\n\n")
+        return ""
     }
 }
 

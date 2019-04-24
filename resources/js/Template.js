@@ -49,11 +49,16 @@ export default class Template {
     }
 
     removeBlock(marker) {
-        var regex = '^([\\n])*[ ]*' + marker + '[\\n]([\\n]+)?';
+        var regex = '^([\\n])*[ ]*' + marker + '([\\n])?([\\n]+)?';
         var matches = RegExp(regex, "gm").exec(this.text)
 
+        if(!matches) {
+
+        }
+
         let spacingAbove = matches[1]
-        let spacingBelow = matches[2]
+        let imidiateFollowingLineBreak = matches[2]
+        let spacingBelow = matches[3]
         
         this.text = this.text.replace(
             new RegExp(regex, "gm"),
