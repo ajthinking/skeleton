@@ -13,9 +13,11 @@ export default class MigrationPipe extends BasePipe {
     }
 
     apiRoutes() {
-        return ""
+        return this.omc.modelsIncludingUser().map(model => {
+            return Template.for('APIRoute').replace({
+                ___RESOURCE_NAME___: F.camelCase(F.pluralize(model.className())),
+                ___MODEL_NAME___: model.className(),
+            })
+        }).toArray().join("\n\n")
     }
 }
-
-
-
