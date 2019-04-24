@@ -65671,14 +65671,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pipes/MigrationPipe */ "./resources/js/pipes/MigrationPipe.js");
 /* harmony import */ var _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pipes/ControllerPipe */ "./resources/js/pipes/ControllerPipe.js");
 /* harmony import */ var _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pipes/APIControllerPipe */ "./resources/js/pipes/APIControllerPipe.js");
-/* harmony import */ var _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pipes/SeederPipe */ "./resources/js/pipes/SeederPipe.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pipes/SeederPipe */ "./resources/js/pipes/SeederPipe.js");
+/* harmony import */ var _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pipes/APIRoutesPipe */ "./resources/js/pipes/APIRoutesPipe.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_7__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -65708,7 +65710,7 @@ function () {
     value: function calculateFiles() {
       var _this = this;
 
-      return collect_js__WEBPACK_IMPORTED_MODULE_6___default()(this.pipes.map(function (pipe) {
+      return collect_js__WEBPACK_IMPORTED_MODULE_7___default()(this.pipes.map(function (pipe) {
         return pipe["with"](_this.omc).calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
         return allFiles.concat(pipeFileList);
@@ -65717,7 +65719,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_7__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__["default"], _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__["default"]];
     }
   }, {
     key: "from",
@@ -67355,6 +67357,76 @@ function (_ModelPipe) {
 
   return APIControllerPipe;
 }(_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pipes/APIRoutesPipe.js":
+/*!*********************************************!*\
+  !*** ./resources/js/pipes/APIRoutesPipe.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MigrationPipe; });
+/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
+/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
+/* harmony import */ var _Formatter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter.js */ "./resources/js/Formatter.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var MigrationPipe =
+/*#__PURE__*/
+function (_BasePipe) {
+  _inherits(MigrationPipe, _BasePipe);
+
+  function MigrationPipe() {
+    _classCallCheck(this, MigrationPipe);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MigrationPipe).apply(this, arguments));
+  }
+
+  _createClass(MigrationPipe, [{
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      return [{
+        path: "routes/api.php",
+        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('api').replace({
+          ___API_ROUTES_BLOCK___: this.apiRoutes()
+        })
+      }];
+    }
+  }, {
+    key: "apiRoutes",
+    value: function apiRoutes() {
+      return ["Route::resource('users', 'UsersController', [\n    'only' => ['index', 'show']\n]);", "Route::resource('cars', 'UsersController', [\n    'only' => ['index', 'show']\n]);"].join("\n\n");
+    }
+  }]);
+
+  return MigrationPipe;
+}(_BasePipe__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
 
