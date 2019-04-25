@@ -68118,7 +68118,7 @@ function () {
           if (_typeof(data) === 'object' && key in data) return data[key];
           throw new ReferenceError("No such key combination");
         }, preferences);
-      } catch (_unused) {
+      } catch (ReferenceError) {
         return false;
       }
     }

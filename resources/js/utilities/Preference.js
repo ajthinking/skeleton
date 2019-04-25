@@ -19,7 +19,7 @@ export default class Preference {
                 throw new ReferenceError("No such key combination")
             }, preferences)
 
-        } catch {
+        } catch(ReferenceError) {
             return false
         }
     }
