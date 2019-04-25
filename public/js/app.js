@@ -67992,7 +67992,6 @@ function (_BasePipe) {
   }, {
     key: "hiddenAttributes",
     value: function hiddenAttributes(model) {
-      console.log(model);
       return this.horisontalStringList(model.attributes.filter(function (attribute) {
         return attribute.hidden;
       }).map(function (attribute) {

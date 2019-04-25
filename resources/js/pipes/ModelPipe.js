@@ -19,7 +19,6 @@ export default class ModelPipe extends BasePipe {
     }
 
     hiddenAttributes(model) {
-        console.log(model)
         return this.horisontalStringList(
             model.attributes.filter(attribute => attribute.hidden).map(attribute => attribute.name),
             "//" // default value
