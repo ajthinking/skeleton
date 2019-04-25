@@ -56,12 +56,6 @@ export default class AttributeFactory {
     }
 
     hasPreference(setting) {
-        console.log(Preference.has([
-            'objectModel',
-            this.parent.heading,
-            this.name,            
-            setting
-        ]), this.parent.heading, this.name, setting)
         return Preference.has([
             'objectModel',
             this.parent.heading,
@@ -71,12 +65,6 @@ export default class AttributeFactory {
     }
 
     getPreference(setting) {
-        console.log(Preference.get([
-            'objectModel',
-            this.parent.heading,
-            this.name,            
-            setting
-        ]), this.parent.heading, this.name, setting)        
         return Preference.get([
             'objectModel',
             this.parent.heading,

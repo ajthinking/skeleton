@@ -67298,13 +67298,11 @@ function () {
   }, {
     key: "hasPreference",
     value: function hasPreference(setting) {
-      console.log(_utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(['objectModel', this.parent.heading, this.name, setting]), this.parent.heading, this.name, setting);
       return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(['objectModel', this.parent.heading, this.name, setting]);
     }
   }, {
     key: "getPreference",
     value: function getPreference(setting) {
-      console.log(_utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]), this.parent.heading, this.name, setting);
       return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
     }
     /*
