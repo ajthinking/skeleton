@@ -111,14 +111,14 @@ export default class ObjectModelCollection {
         this.entities.mapWithRemaining((model, remaining) => {
             //HasOne/HasMany
             model.hasManyRelationships = remaining.filter(candidate => {
-                return candidate.attributes.includes(model.asForeignKey())
-                    && !model.attributes.includes(candidate.asForeignKey())
+                return candidate.attributeNames().includes(model.asForeignKey())
+                    && !model.attributeNames().includes(candidate.asForeignKey())
             })
 
             //BelongsTo
             model.belongsToRelationships = remaining.filter(candidate => {
-                return !candidate.attributes.includes(model.asForeignKey())
-                    && model.attributes.includes(candidate.asForeignKey())
+                return !candidate.attributeNames().includes(model.asForeignKey())
+                    && model.attributeNames().includes(candidate.asForeignKey())
             })
             
             //BelongsToMany

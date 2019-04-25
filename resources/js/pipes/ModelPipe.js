@@ -20,18 +20,14 @@ export default class ModelPipe extends BasePipe {
 
     hiddenAttributes(model) {
         return this.horisontalStringList(
-            model.attributes.filter(attribute => [
-                'password', 'remember_token'
-            ].includes(attribute)),
+            model.attributes.filter(attribute => attribute.hidden).map(attribute => attribute.name),
             "//" // default value
         )
     }
 
     fillableAttributes(model) {
         return this.horisontalStringList(
-            model.attributes.filter(attribute => ![
-                'id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'
-            ].includes(attribute)),
+            model.attributes.filter(attribute => attribute.hidden).map(attribute => attribute.name),
             "//" // default value
         )        
     }

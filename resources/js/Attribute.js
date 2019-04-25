@@ -1,6 +1,9 @@
 export default class Attribute {
-    constructor(name, parent) {
-        this.name = name
-        this.parent = parent
+    constructor(properties) {
+        Object.keys(properties).map((key) => {
+            this[key] = properties[key]
+        })
+
+        console.log(this)
     }
 }

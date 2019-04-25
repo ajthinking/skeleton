@@ -65499,6 +65499,104 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 
 /***/ }),
 
+/***/ "./resources/js/Attribute.js":
+/*!***********************************!*\
+  !*** ./resources/js/Attribute.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Attribute; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Attribute = function Attribute(properties) {
+  var _this = this;
+
+  _classCallCheck(this, Attribute);
+
+  Object.keys(properties).map(function (key) {
+    _this[key] = properties[key];
+  });
+  console.log(this);
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/AttributeFactory.js":
+/*!******************************************!*\
+  !*** ./resources/js/AttributeFactory.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AttributeFactory; });
+/* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/Attribute.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var AttributeFactory =
+/*#__PURE__*/
+function () {
+  function AttributeFactory(name, parent) {
+    _classCallCheck(this, AttributeFactory);
+
+    this.name = name;
+    this.parent = parent;
+  }
+
+  _createClass(AttributeFactory, [{
+    key: "otherThings",
+    value: function otherThings() {
+      return {
+        hidden: true
+      };
+    }
+    /*
+    FOR LATER USE
+    model.attributes.filter(attribute => [
+        'password', 'remember_token'
+    ].includes(attribute)),    
+     return this.horisontalStringList(
+        model.attributes.filter(attribute => ![
+            'id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'
+        ].includes(attribute)),
+        "//" // default value
+    )    
+    */
+
+  }], [{
+    key: "make",
+    value: function make(name, parent) {
+      var factory = new this(name, parent);
+      return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
+        name: factory.name,
+        parent: factory.parent
+      }, factory.otherThings()));
+    }
+  }]);
+
+  return AttributeFactory;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/Collection.js":
 /*!************************************!*\
   !*** ./resources/js/Collection.js ***!
@@ -65719,7 +65817,8 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__["default"], _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__["default"]];
+      return [//UserPipe,
+      _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
     }
   }, {
     key: "from",
@@ -65899,11 +65998,11 @@ function () {
       this.entities.mapWithRemaining(function (model, remaining) {
         //HasOne/HasMany
         model.hasManyRelationships = remaining.filter(function (candidate) {
-          return candidate.attributes.includes(model.asForeignKey()) && !model.attributes.includes(candidate.asForeignKey());
+          return candidate.attributeNames().includes(model.asForeignKey()) && !model.attributeNames().includes(candidate.asForeignKey());
         }); //BelongsTo
 
         model.belongsToRelationships = remaining.filter(function (candidate) {
-          return !candidate.attributes.includes(model.asForeignKey()) && model.attributes.includes(candidate.asForeignKey());
+          return !candidate.attributeNames().includes(model.asForeignKey()) && model.attributeNames().includes(candidate.asForeignKey());
         }); //BelongsToMany
 
         model.belongsToManyRelationships = remaining.filter(function (candidate) {
@@ -65940,6 +66039,8 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelEntity; });
 /* harmony import */ var _Formatter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Formatter.js */ "./resources/js/Formatter.js");
+/* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/Attribute.js");
+/* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/AttributeFactory.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -65948,25 +66049,37 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
+
 var ObjectModelEntity =
 /*#__PURE__*/
 function () {
   function ObjectModelEntity(chunk) {
+    var _this = this;
+
     _classCallCheck(this, ObjectModelEntity);
 
     this.parts = chunk.split('\n');
     this.heading = this.parts[0];
-    this.attributes = this.parts.slice(1);
-    this.addDefaultColumns();
+    this.attributes = this.parts.slice(1).map(function (name) {
+      return _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].make(name, _this);
+    }); //this.addDefaultColumns()
   }
 
   _createClass(ObjectModelEntity, [{
+    key: "attributeNames",
+    value: function attributeNames() {
+      return this.attributes.map(function (attribute) {
+        return attribute.name;
+      });
+    }
+  }, {
     key: "addDefaultColumns",
     value: function addDefaultColumns() {
-      var _this = this;
+      var _this2 = this;
 
       this.attributes = ['id', 'created_at', 'updated_at'].filter(function (column) {
-        return !_this.attributes.includes(column);
+        return !_this2.attributes.includes(column);
       }).concat(this.attributes);
     }
   }, {
@@ -67811,7 +67924,9 @@ function (_BasePipe) {
     key: "hiddenAttributes",
     value: function hiddenAttributes(model) {
       return this.horisontalStringList(model.attributes.filter(function (attribute) {
-        return ['password', 'remember_token'].includes(attribute);
+        return attribute.hidden;
+      }).map(function (attribute) {
+        return attribute.name;
       }), "//" // default value
       );
     }
@@ -67819,7 +67934,9 @@ function (_BasePipe) {
     key: "fillableAttributes",
     value: function fillableAttributes(model) {
       return this.horisontalStringList(model.attributes.filter(function (attribute) {
-        return !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(attribute);
+        return attribute.hidden;
+      }).map(function (attribute) {
+        return attribute.name;
       }), "//" // default value
       );
     }

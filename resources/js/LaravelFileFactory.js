@@ -14,13 +14,13 @@ export default class LaravelFileFactory {
 
     static pipes() {
         return [
-            UserPipe,
+            //UserPipe,
             ModelPipe,
-            MigrationPipe,
-            ControllerPipe,
-            APIControllerPipe,
-            SeederPipe,
-            APIRoutesPipe,
+            //MigrationPipe,
+            //ControllerPipe,
+            //APIControllerPipe,
+            //SeederPipe,
+            //APIRoutesPipe,
         ]
     }
 
