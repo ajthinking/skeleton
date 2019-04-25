@@ -65536,6 +65536,7 @@ var Attribute = function Attribute(properties) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AttributeFactory; });
 /* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/Attribute.js");
+/* harmony import */ var _Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Preference */ "./resources/js/Preference.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -65545,6 +65546,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -65589,12 +65591,12 @@ function () {
   }, {
     key: "hasPreference",
     value: function hasPreference(setting) {
-      return true;
+      return _Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(setting);
     }
   }, {
     key: "getPreference",
     value: function getPreference(setting) {
-      return "BAJS";
+      return _Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
     }
     /*
     {
@@ -66269,6 +66271,49 @@ function () {
   }]);
 
   return ObjectModelNoteParser;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Preference.js":
+/*!************************************!*\
+  !*** ./resources/js/Preference.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Preference; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Preference =
+/*#__PURE__*/
+function () {
+  function Preference() {
+    _classCallCheck(this, Preference);
+  }
+
+  _createClass(Preference, null, [{
+    key: "has",
+    value: function has(key) {
+      return false;
+    }
+  }, {
+    key: "get",
+    value: function get() {}
+  }, {
+    key: "set",
+    value: function set() {}
+  }]);
+
+  return Preference;
 }();
 
 

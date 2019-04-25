@@ -1,4 +1,5 @@
 import Attribute from './Attribute'
+import Preference from './Preference'
 
 export default class AttributeFactory {
     constructor(name, parent) {
@@ -53,11 +54,16 @@ export default class AttributeFactory {
     }
 
     hasPreference(setting) {
-        return true
+        return Preference.has(setting)
     }
 
     getPreference(setting) {
-        return "BAJS"
+        return Preference.get(        [
+            'objectModel',
+            this.parent.heading,
+            this.name,
+            setting
+        ])
     }
     /*
     {

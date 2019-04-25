@@ -1,6 +1,6 @@
-export class Preference {
-    static has() {
-
+export default class Preference {
+    static has(key) {
+        return false
     }
 
     static get() {
@@ -8,6 +8,6 @@ export class Preference {
     }
     
     static set() {
-        
+
     }
 }
