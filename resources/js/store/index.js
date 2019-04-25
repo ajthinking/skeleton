@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Parser from '../ObjectModelNotesParser'
-import ObjectModelCollection from '../ObjectModelCollection'
+import Parser from '../objectModel/ObjectModelNotesParser'
+import ObjectModelCollection from '../objectModel/ObjectModelCollection'
 import LaravelFileFactory from '../fileFactories/Laravel/FileFactory'
 
 Vue.use(Vuex)

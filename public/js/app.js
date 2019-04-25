@@ -65499,545 +65499,6 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 
 /***/ }),
 
-/***/ "./resources/js/Attribute.js":
-/*!***********************************!*\
-  !*** ./resources/js/Attribute.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Attribute; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Attribute = function Attribute(properties) {
-  var _this = this;
-
-  _classCallCheck(this, Attribute);
-
-  Object.keys(properties).map(function (key) {
-    _this[key] = properties[key];
-  });
-};
-
-
-
-/***/ }),
-
-/***/ "./resources/js/AttributeFactory.js":
-/*!******************************************!*\
-  !*** ./resources/js/AttributeFactory.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AttributeFactory; });
-/* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/Attribute.js");
-/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities/Preference */ "./resources/js/utilities/Preference.js");
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-var AttributeFactory =
-/*#__PURE__*/
-function () {
-  function AttributeFactory(name, parent) {
-    _classCallCheck(this, AttributeFactory);
-
-    this.name = name;
-    this.parent = parent;
-  }
-
-  _createClass(AttributeFactory, [{
-    key: "property",
-
-    /* If there is a preference available use that, else refer to dedicated method */
-    value: function property(key) {
-      return _defineProperty({}, key, this.hasPreference(key) ? this.getPreference(key) : this[key]());
-    }
-  }, {
-    key: "dataType",
-    value: function dataType() {
-      return "string";
-    }
-  }, {
-    key: "hidden",
-    value: function hidden() {
-      return {
-        hidden: this.hasPreference('hidden') ? this.getPreference('hidden') : ['password', 'remember_token'].includes(this.name)
-      };
-    }
-  }, {
-    key: "fillable",
-    value: function fillable() {
-      return {
-        fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
-      };
-    }
-  }, {
-    key: "hasPreference",
-    value: function hasPreference(setting) {
-      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(setting);
-    }
-  }, {
-    key: "getPreference",
-    value: function getPreference(setting) {
-      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
-    }
-    /*
-    {
-        "User": {
-            "email": {
-                "hidden": true
-            }
-    }
-    */
-
-  }], [{
-    key: "make",
-    value: function make(name, parent) {
-      var factory = new this(name, parent);
-      return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
-        name: factory.name,
-        parent: factory.parent
-      }, factory.property("dataType"), factory.property("fillable"), factory.property("hidden")));
-    }
-  }]);
-
-  return AttributeFactory;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/ObjectModelCollection.js":
-/*!***********************************************!*\
-  !*** ./resources/js/ObjectModelCollection.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelCollection; });
-/* harmony import */ var _utilities_Collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/Collection */ "./resources/js/utilities/Collection.js");
-/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities/Formatter */ "./resources/js/utilities/Formatter.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-var ObjectModelCollection =
-/*#__PURE__*/
-function () {
-  function ObjectModelCollection(entities) {
-    _classCallCheck(this, ObjectModelCollection);
-
-    this.entities = Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
-    this.attachRelationships();
-    /*
-        this.attachIntelligentAttributes() ???
-         an IntelligentAttribute has:
-            name // color, user_id    
-            datatype // string, unsignedInteger
-            flaggor // nullable(), default(v), hidden, fillable, casts
-        
-        Do that info really belong there? Or should it be created in the pipes?
-        Is it generic enough to describe a objectModelCollection implementable by any framework?
-    */
-
-    /*
-        Another approach: do a special treatment check for table users and password_resets
-        to manage them induvidually?
-    */
-  }
-
-  _createClass(ObjectModelCollection, [{
-    key: "isManyToMany",
-    value: function isManyToMany(candidate) {
-      var models = this.modelsIncludingUser().map(function (item) {
-        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
-      }).toArray().join("|");
-      var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
-      var matches = manyToManyRegExp.exec(candidate.heading);
-
-      if (matches) {
-        return [matches[1], matches[2]];
-      }
-
-      return !!matches;
-    }
-  }, {
-    key: "manyToManyAssociatedModels",
-    value: function manyToManyAssociatedModels(manyToManyEntity) {
-      var models = this.modelsIncludingUser().map(function (item) {
-        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
-      }).toArray().join("|");
-      var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
-      var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
-      return [matches[1], matches[2]];
-    }
-  }, {
-    key: "hasUserModel",
-    value: function hasUserModel() {
-      return this.userModels().items.length > 0;
-    }
-  }, {
-    key: "userModel",
-    value: function userModel() {
-      return this.userModels().first();
-    }
-  }, {
-    key: "userModels",
-    value: function userModels() {
-      return this.entities.filter(function (entitiy) {
-        return entitiy.isUserEntity();
-      });
-    }
-  }, {
-    key: "models",
-    value: function models() {
-      return this.entities.filter(function (entitiy) {
-        return entitiy.isModelEntity();
-      });
-    }
-  }, {
-    key: "tablesOnly",
-    value: function tablesOnly() {
-      return this.entities.filter(function (entity) {
-        return entity.heading == entity.heading.toLowerCase();
-      });
-    }
-  }, {
-    key: "manyToManys",
-    value: function manyToManys() {
-      var _this = this;
-
-      return this.tablesOnly().filter(function (entitiy) {
-        return _this.isManyToMany(entitiy);
-      });
-    }
-  }, {
-    key: "modelsIncludingUser",
-    value: function modelsIncludingUser() {
-      return Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(this.models().items.concat(this.userModels().items));
-    }
-  }, {
-    key: "modelsExceptUser",
-    value: function modelsExceptUser() {
-      return this.models().filter(function (model) {
-        return !model.isUserEntity();
-      });
-    }
-  }, {
-    key: "map",
-    value: function map(callback) {
-      return this.entities.map(callback);
-    }
-  }, {
-    key: "filter",
-    value: function filter(callback) {
-      return this.entities.filter(callback);
-    }
-  }, {
-    key: "find",
-    value: function find(callback) {
-      return this.entities.find(callback);
-    }
-  }, {
-    key: "all",
-    value: function all() {
-      return this.entities;
-    }
-  }, {
-    key: "inOptimalMigrationOrder",
-    value: function inOptimalMigrationOrder() {
-      var _this2 = this;
-
-      return this.entities.sortBy(function (entity) {
-        if (entity.isTableEntity() && _this2.isManyToMany(entity)) {
-          return 2;
-        }
-
-        return entity.belongsToRelationships.length;
-      });
-    }
-  }, {
-    key: "attachRelationships",
-    value: function attachRelationships() {
-      var _this3 = this;
-
-      this.entities.mapWithRemaining(function (model, remaining) {
-        //HasOne/HasMany
-        model.hasManyRelationships = remaining.filter(function (candidate) {
-          return candidate.attributeNames().includes(model.asForeignKey()) && !model.attributeNames().includes(candidate.asForeignKey());
-        }); //BelongsTo
-
-        model.belongsToRelationships = remaining.filter(function (candidate) {
-          return !candidate.attributeNames().includes(model.asForeignKey()) && model.attributeNames().includes(candidate.asForeignKey());
-        }); //BelongsToMany
-
-        model.belongsToManyRelationships = remaining.filter(function (candidate) {
-          return _this3.manyToManys().filter(function (manyToManyEntity) {
-            var parts = _this3.manyToManyAssociatedModels(manyToManyEntity);
-
-            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
-          }).items.length > 0;
-        });
-      });
-    }
-  }], [{
-    key: "fromEntities",
-    value: function fromEntities(entities) {
-      return new this(entities);
-    }
-  }]);
-
-  return ObjectModelCollection;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/ObjectModelEntity.js":
-/*!*******************************************!*\
-  !*** ./resources/js/ObjectModelEntity.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelEntity; });
-/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/Formatter */ "./resources/js/utilities/Formatter.js");
-/* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/Attribute.js");
-/* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/AttributeFactory.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-
-var ObjectModelEntity =
-/*#__PURE__*/
-function () {
-  function ObjectModelEntity(chunk) {
-    var _this = this;
-
-    _classCallCheck(this, ObjectModelEntity);
-
-    this.parts = chunk.split('\n');
-    this.heading = this.parts[0];
-    this.attributes = this.parts.slice(1).map(function (name) {
-      return _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].make(name, _this);
-    }); //this.addDefaultColumns()
-  }
-
-  _createClass(ObjectModelEntity, [{
-    key: "attributeNames",
-    value: function attributeNames() {
-      return this.attributes.map(function (attribute) {
-        return attribute.name;
-      });
-    }
-  }, {
-    key: "addDefaultColumns",
-    value: function addDefaultColumns() {
-      var _this2 = this;
-
-      this.attributes = ['id', 'created_at', 'updated_at'].filter(function (column) {
-        return !_this2.attributes.includes(column);
-      }).concat(this.attributes);
-    }
-  }, {
-    key: "className",
-    value: function className() {
-      return this.heading;
-    }
-  }, {
-    key: "isUserEntity",
-    value: function isUserEntity() {
-      return this.constructor.name == "UserEntity";
-    }
-  }, {
-    key: "isModelEntity",
-    value: function isModelEntity() {
-      return this.constructor.name == "ModelEntity";
-    }
-  }, {
-    key: "isTableEntity",
-    value: function isTableEntity() {
-      return this.constructor.name == "TableEntity";
-    }
-  }, {
-    key: "asForeignKey",
-    value: function asForeignKey() {
-      return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(this.heading) + "_id";
-    }
-  }], [{
-    key: "fromText",
-    value: function fromText(chunk) {
-      return new this(chunk);
-    }
-  }]);
-
-  return ObjectModelEntity;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/ObjectModelEntityFactory.js":
-/*!**************************************************!*\
-  !*** ./resources/js/ObjectModelEntityFactory.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelEntityFactory; });
-/* harmony import */ var _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./entities/UserEntity */ "./resources/js/entities/UserEntity.js");
-/* harmony import */ var _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./entities/ModelEntity */ "./resources/js/entities/ModelEntity.js");
-/* harmony import */ var _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entities/TableEntity */ "./resources/js/entities/TableEntity.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-
-var ObjectModelEntityFactory =
-/*#__PURE__*/
-function () {
-  function ObjectModelEntityFactory(chunk) {
-    _classCallCheck(this, ObjectModelEntityFactory);
-
-    this.heading = chunk.split('\n')[0];
-  }
-
-  _createClass(ObjectModelEntityFactory, [{
-    key: "hasModel",
-    value: function hasModel() {
-      // a Model is indicated by capital first letter
-      return this.heading[0] == this.heading[0].toUpperCase();
-    }
-  }, {
-    key: "isUserModel",
-    value: function isUserModel() {
-      return this.heading == "User";
-    }
-  }], [{
-    key: "fromText",
-    value: function fromText(chunk) {
-      var factory = new this(chunk);
-      if (factory.isUserModel()) return new _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__["default"](chunk);
-      if (factory.hasModel()) return new _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__["default"](chunk);
-      return new _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__["default"](chunk);
-    }
-  }]);
-
-  return ObjectModelEntityFactory;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/ObjectModelNotesParser.js":
-/*!************************************************!*\
-  !*** ./resources/js/ObjectModelNotesParser.js ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelNoteParser; });
-/* harmony import */ var _ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectModelEntityFactory */ "./resources/js/ObjectModelEntityFactory.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var ObjectModelNoteParser =
-/*#__PURE__*/
-function () {
-  function ObjectModelNoteParser(text) {
-    _classCallCheck(this, ObjectModelNoteParser);
-
-    this.text = text;
-  }
-
-  _createClass(ObjectModelNoteParser, [{
-    key: "clean",
-    value: function clean() {
-      this.text = this.text // trim preciding line space
-      .replace(/[^\S\r\n]/gm, "") // trim trailing line space
-      .replace(/[\t]+$/gm, "") // trim preciding newlines
-      .replace(/^\n+/, "") // trim trailing newlines
-      .replace(/\n+$/, "") // remove exessive newlines
-      .replace(/\n\s+\n/, "\n\n") // remove comments
-      .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "");
-      return this;
-    }
-    /* returns an array with items of type ObjectModelEntity */
-
-  }, {
-    key: "segment",
-    value: function segment() {
-      return !this.text ? [] : this.text.split(/\n\s*\n/).map(function (chunk) {
-        return _ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_0__["default"].fromText(chunk);
-      });
-    }
-  }], [{
-    key: "makeWithText",
-    value: function makeWithText(text) {
-      return new ObjectModelNoteParser(text);
-    }
-  }, {
-    key: "parse",
-    value: function parse(text) {
-      return this.makeWithText(text).clean();
-    }
-  }]);
-
-  return ObjectModelNoteParser;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -66874,152 +66335,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/entities/ModelEntity.js":
-/*!**********************************************!*\
-  !*** ./resources/js/entities/ModelEntity.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelEntity; });
-/* harmony import */ var _ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ObjectModelEntity */ "./resources/js/ObjectModelEntity.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var ModelEntity =
-/*#__PURE__*/
-function (_ObjectModelEntity) {
-  _inherits(ModelEntity, _ObjectModelEntity);
-
-  function ModelEntity() {
-    _classCallCheck(this, ModelEntity);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(ModelEntity).apply(this, arguments));
-  }
-
-  return ModelEntity;
-}(_ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./resources/js/entities/TableEntity.js":
-/*!**********************************************!*\
-  !*** ./resources/js/entities/TableEntity.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TableEntity; });
-/* harmony import */ var _ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ObjectModelEntity */ "./resources/js/ObjectModelEntity.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var TableEntity =
-/*#__PURE__*/
-function (_ObjectModelEntity) {
-  _inherits(TableEntity, _ObjectModelEntity);
-
-  function TableEntity() {
-    _classCallCheck(this, TableEntity);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(TableEntity).apply(this, arguments));
-  }
-
-  _createClass(TableEntity, [{
-    key: "className",
-    value: function className() {
-      return this.heading;
-    }
-  }]);
-
-  return TableEntity;
-}(_ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
-/***/ "./resources/js/entities/UserEntity.js":
-/*!*********************************************!*\
-  !*** ./resources/js/entities/UserEntity.js ***!
-  \*********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserEntity; });
-/* harmony import */ var _ModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModelEntity */ "./resources/js/entities/ModelEntity.js");
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-var UserEntity =
-/*#__PURE__*/
-function (_ModelEntity) {
-  _inherits(UserEntity, _ModelEntity);
-
-  function UserEntity() {
-    _classCallCheck(this, UserEntity);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(UserEntity).apply(this, arguments));
-  }
-
-  return UserEntity;
-}(_ModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
-
-
-
-/***/ }),
-
 /***/ "./resources/js/fileFactories/Laravel/FileFactory.js":
 /*!***********************************************************!*\
   !*** ./resources/js/fileFactories/Laravel/FileFactory.js ***!
@@ -67846,6 +67161,691 @@ function (_ModelPipe) {
 
 /***/ }),
 
+/***/ "./resources/js/objectModel/Attribute.js":
+/*!***********************************************!*\
+  !*** ./resources/js/objectModel/Attribute.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Attribute; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Attribute = function Attribute(properties) {
+  var _this = this;
+
+  _classCallCheck(this, Attribute);
+
+  Object.keys(properties).map(function (key) {
+    _this[key] = properties[key];
+  });
+};
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/AttributeFactory.js":
+/*!******************************************************!*\
+  !*** ./resources/js/objectModel/AttributeFactory.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AttributeFactory; });
+/* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/objectModel/Attribute.js");
+/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var AttributeFactory =
+/*#__PURE__*/
+function () {
+  function AttributeFactory(name, parent) {
+    _classCallCheck(this, AttributeFactory);
+
+    this.name = name;
+    this.parent = parent;
+  }
+
+  _createClass(AttributeFactory, [{
+    key: "property",
+
+    /* If there is a preference available use that, else refer to dedicated method */
+    value: function property(key) {
+      return _defineProperty({}, key, this.hasPreference(key) ? this.getPreference(key) : this[key]());
+    }
+  }, {
+    key: "dataType",
+    value: function dataType() {
+      return "string";
+    }
+  }, {
+    key: "hidden",
+    value: function hidden() {
+      return {
+        hidden: this.hasPreference('hidden') ? this.getPreference('hidden') : ['password', 'remember_token'].includes(this.name)
+      };
+    }
+  }, {
+    key: "fillable",
+    value: function fillable() {
+      return {
+        fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
+      };
+    }
+  }, {
+    key: "hasPreference",
+    value: function hasPreference(setting) {
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(setting);
+    }
+  }, {
+    key: "getPreference",
+    value: function getPreference(setting) {
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
+    }
+    /*
+    {
+        "User": {
+            "email": {
+                "hidden": true
+            }
+    }
+    */
+
+  }], [{
+    key: "make",
+    value: function make(name, parent) {
+      var factory = new this(name, parent);
+      return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
+        name: factory.name,
+        parent: factory.parent
+      }, factory.property("dataType"), factory.property("fillable"), factory.property("hidden")));
+    }
+  }]);
+
+  return AttributeFactory;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/ObjectModelCollection.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/objectModel/ObjectModelCollection.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelCollection; });
+/* harmony import */ var _utilities_Collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Collection */ "./resources/js/utilities/Collection.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var ObjectModelCollection =
+/*#__PURE__*/
+function () {
+  function ObjectModelCollection(entities) {
+    _classCallCheck(this, ObjectModelCollection);
+
+    this.entities = Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
+    this.attachRelationships();
+    /*
+        this.attachIntelligentAttributes() ???
+         an IntelligentAttribute has:
+            name // color, user_id    
+            datatype // string, unsignedInteger
+            flaggor // nullable(), default(v), hidden, fillable, casts
+        
+        Do that info really belong there? Or should it be created in the pipes?
+        Is it generic enough to describe a objectModelCollection implementable by any framework?
+    */
+
+    /*
+        Another approach: do a special treatment check for table users and password_resets
+        to manage them induvidually?
+    */
+  }
+
+  _createClass(ObjectModelCollection, [{
+    key: "isManyToMany",
+    value: function isManyToMany(candidate) {
+      var models = this.modelsIncludingUser().map(function (item) {
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+      }).toArray().join("|");
+      var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
+      var matches = manyToManyRegExp.exec(candidate.heading);
+
+      if (matches) {
+        return [matches[1], matches[2]];
+      }
+
+      return !!matches;
+    }
+  }, {
+    key: "manyToManyAssociatedModels",
+    value: function manyToManyAssociatedModels(manyToManyEntity) {
+      var models = this.modelsIncludingUser().map(function (item) {
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+      }).toArray().join("|");
+      var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
+      var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
+      return [matches[1], matches[2]];
+    }
+  }, {
+    key: "hasUserModel",
+    value: function hasUserModel() {
+      return this.userModels().items.length > 0;
+    }
+  }, {
+    key: "userModel",
+    value: function userModel() {
+      return this.userModels().first();
+    }
+  }, {
+    key: "userModels",
+    value: function userModels() {
+      return this.entities.filter(function (entitiy) {
+        return entitiy.isUserEntity();
+      });
+    }
+  }, {
+    key: "models",
+    value: function models() {
+      return this.entities.filter(function (entitiy) {
+        return entitiy.isModelEntity();
+      });
+    }
+  }, {
+    key: "tablesOnly",
+    value: function tablesOnly() {
+      return this.entities.filter(function (entity) {
+        return entity.heading == entity.heading.toLowerCase();
+      });
+    }
+  }, {
+    key: "manyToManys",
+    value: function manyToManys() {
+      var _this = this;
+
+      return this.tablesOnly().filter(function (entitiy) {
+        return _this.isManyToMany(entitiy);
+      });
+    }
+  }, {
+    key: "modelsIncludingUser",
+    value: function modelsIncludingUser() {
+      return Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(this.models().items.concat(this.userModels().items));
+    }
+  }, {
+    key: "modelsExceptUser",
+    value: function modelsExceptUser() {
+      return this.models().filter(function (model) {
+        return !model.isUserEntity();
+      });
+    }
+  }, {
+    key: "map",
+    value: function map(callback) {
+      return this.entities.map(callback);
+    }
+  }, {
+    key: "filter",
+    value: function filter(callback) {
+      return this.entities.filter(callback);
+    }
+  }, {
+    key: "find",
+    value: function find(callback) {
+      return this.entities.find(callback);
+    }
+  }, {
+    key: "all",
+    value: function all() {
+      return this.entities;
+    }
+  }, {
+    key: "inOptimalMigrationOrder",
+    value: function inOptimalMigrationOrder() {
+      var _this2 = this;
+
+      return this.entities.sortBy(function (entity) {
+        if (entity.isTableEntity() && _this2.isManyToMany(entity)) {
+          return 2;
+        }
+
+        return entity.belongsToRelationships.length;
+      });
+    }
+  }, {
+    key: "attachRelationships",
+    value: function attachRelationships() {
+      var _this3 = this;
+
+      this.entities.mapWithRemaining(function (model, remaining) {
+        //HasOne/HasMany
+        model.hasManyRelationships = remaining.filter(function (candidate) {
+          return candidate.attributeNames().includes(model.asForeignKey()) && !model.attributeNames().includes(candidate.asForeignKey());
+        }); //BelongsTo
+
+        model.belongsToRelationships = remaining.filter(function (candidate) {
+          return !candidate.attributeNames().includes(model.asForeignKey()) && model.attributeNames().includes(candidate.asForeignKey());
+        }); //BelongsToMany
+
+        model.belongsToManyRelationships = remaining.filter(function (candidate) {
+          return _this3.manyToManys().filter(function (manyToManyEntity) {
+            var parts = _this3.manyToManyAssociatedModels(manyToManyEntity);
+
+            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
+          }).items.length > 0;
+        });
+      });
+    }
+  }], [{
+    key: "fromEntities",
+    value: function fromEntities(entities) {
+      return new this(entities);
+    }
+  }]);
+
+  return ObjectModelCollection;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/ObjectModelEntity.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/objectModel/ObjectModelEntity.js ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelEntity; });
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+/* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/objectModel/Attribute.js");
+/* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/objectModel/AttributeFactory.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var ObjectModelEntity =
+/*#__PURE__*/
+function () {
+  function ObjectModelEntity(chunk) {
+    var _this = this;
+
+    _classCallCheck(this, ObjectModelEntity);
+
+    this.parts = chunk.split('\n');
+    this.heading = this.parts[0];
+    this.attributes = this.parts.slice(1).map(function (name) {
+      return _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].make(name, _this);
+    }); //this.addDefaultColumns()
+  }
+
+  _createClass(ObjectModelEntity, [{
+    key: "attributeNames",
+    value: function attributeNames() {
+      return this.attributes.map(function (attribute) {
+        return attribute.name;
+      });
+    }
+  }, {
+    key: "addDefaultColumns",
+    value: function addDefaultColumns() {
+      var _this2 = this;
+
+      this.attributes = ['id', 'created_at', 'updated_at'].filter(function (column) {
+        return !_this2.attributes.includes(column);
+      }).concat(this.attributes);
+    }
+  }, {
+    key: "className",
+    value: function className() {
+      return this.heading;
+    }
+  }, {
+    key: "isUserEntity",
+    value: function isUserEntity() {
+      return this.constructor.name == "UserEntity";
+    }
+  }, {
+    key: "isModelEntity",
+    value: function isModelEntity() {
+      return this.constructor.name == "ModelEntity";
+    }
+  }, {
+    key: "isTableEntity",
+    value: function isTableEntity() {
+      return this.constructor.name == "TableEntity";
+    }
+  }, {
+    key: "asForeignKey",
+    value: function asForeignKey() {
+      return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(this.heading) + "_id";
+    }
+  }], [{
+    key: "fromText",
+    value: function fromText(chunk) {
+      return new this(chunk);
+    }
+  }]);
+
+  return ObjectModelEntity;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/ObjectModelEntityFactory.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/objectModel/ObjectModelEntityFactory.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelEntityFactory; });
+/* harmony import */ var _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./entities/UserEntity */ "./resources/js/objectModel/entities/UserEntity.js");
+/* harmony import */ var _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./entities/ModelEntity */ "./resources/js/objectModel/entities/ModelEntity.js");
+/* harmony import */ var _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entities/TableEntity */ "./resources/js/objectModel/entities/TableEntity.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+var ObjectModelEntityFactory =
+/*#__PURE__*/
+function () {
+  function ObjectModelEntityFactory(chunk) {
+    _classCallCheck(this, ObjectModelEntityFactory);
+
+    this.heading = chunk.split('\n')[0];
+  }
+
+  _createClass(ObjectModelEntityFactory, [{
+    key: "hasModel",
+    value: function hasModel() {
+      // a Model is indicated by capital first letter
+      return this.heading[0] == this.heading[0].toUpperCase();
+    }
+  }, {
+    key: "isUserModel",
+    value: function isUserModel() {
+      return this.heading == "User";
+    }
+  }], [{
+    key: "fromText",
+    value: function fromText(chunk) {
+      var factory = new this(chunk);
+      if (factory.isUserModel()) return new _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__["default"](chunk);
+      if (factory.hasModel()) return new _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__["default"](chunk);
+      return new _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__["default"](chunk);
+    }
+  }]);
+
+  return ObjectModelEntityFactory;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/ObjectModelNotesParser.js":
+/*!************************************************************!*\
+  !*** ./resources/js/objectModel/ObjectModelNotesParser.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelNoteParser; });
+/* harmony import */ var _ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectModelEntityFactory */ "./resources/js/objectModel/ObjectModelEntityFactory.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var ObjectModelNoteParser =
+/*#__PURE__*/
+function () {
+  function ObjectModelNoteParser(text) {
+    _classCallCheck(this, ObjectModelNoteParser);
+
+    this.text = text;
+  }
+
+  _createClass(ObjectModelNoteParser, [{
+    key: "clean",
+    value: function clean() {
+      this.text = this.text // trim preciding line space
+      .replace(/[^\S\r\n]/gm, "") // trim trailing line space
+      .replace(/[\t]+$/gm, "") // trim preciding newlines
+      .replace(/^\n+/, "") // trim trailing newlines
+      .replace(/\n+$/, "") // remove exessive newlines
+      .replace(/\n\s+\n/, "\n\n") // remove comments
+      .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "");
+      return this;
+    }
+    /* returns an array with items of type ObjectModelEntity */
+
+  }, {
+    key: "segment",
+    value: function segment() {
+      return !this.text ? [] : this.text.split(/\n\s*\n/).map(function (chunk) {
+        return _ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_0__["default"].fromText(chunk);
+      });
+    }
+  }], [{
+    key: "makeWithText",
+    value: function makeWithText(text) {
+      return new ObjectModelNoteParser(text);
+    }
+  }, {
+    key: "parse",
+    value: function parse(text) {
+      return this.makeWithText(text).clean();
+    }
+  }]);
+
+  return ObjectModelNoteParser;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/entities/ModelEntity.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/objectModel/entities/ModelEntity.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelEntity; });
+/* harmony import */ var _ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ObjectModelEntity */ "./resources/js/objectModel/ObjectModelEntity.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var ModelEntity =
+/*#__PURE__*/
+function (_ObjectModelEntity) {
+  _inherits(ModelEntity, _ObjectModelEntity);
+
+  function ModelEntity() {
+    _classCallCheck(this, ModelEntity);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ModelEntity).apply(this, arguments));
+  }
+
+  return ModelEntity;
+}(_ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/entities/TableEntity.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/objectModel/entities/TableEntity.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TableEntity; });
+/* harmony import */ var _ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ObjectModelEntity */ "./resources/js/objectModel/ObjectModelEntity.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var TableEntity =
+/*#__PURE__*/
+function (_ObjectModelEntity) {
+  _inherits(TableEntity, _ObjectModelEntity);
+
+  function TableEntity() {
+    _classCallCheck(this, TableEntity);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(TableEntity).apply(this, arguments));
+  }
+
+  _createClass(TableEntity, [{
+    key: "className",
+    value: function className() {
+      return this.heading;
+    }
+  }]);
+
+  return TableEntity;
+}(_ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/entities/UserEntity.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/objectModel/entities/UserEntity.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserEntity; });
+/* harmony import */ var _ModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModelEntity */ "./resources/js/objectModel/entities/ModelEntity.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var UserEntity =
+/*#__PURE__*/
+function (_ModelEntity) {
+  _inherits(UserEntity, _ModelEntity);
+
+  function UserEntity() {
+    _classCallCheck(this, UserEntity);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(UserEntity).apply(this, arguments));
+  }
+
+  return UserEntity;
+}(_ModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/store/index.js":
 /*!*************************************!*\
   !*** ./resources/js/store/index.js ***!
@@ -67858,8 +67858,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ObjectModelNotesParser */ "./resources/js/ObjectModelNotesParser.js");
-/* harmony import */ var _ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ObjectModelCollection */ "./resources/js/ObjectModelCollection.js");
+/* harmony import */ var _objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../objectModel/ObjectModelNotesParser */ "./resources/js/objectModel/ObjectModelNotesParser.js");
+/* harmony import */ var _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../objectModel/ObjectModelCollection */ "./resources/js/objectModel/ObjectModelCollection.js");
 /* harmony import */ var _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../fileFactories/Laravel/FileFactory */ "./resources/js/fileFactories/Laravel/FileFactory.js");
 
 
@@ -67908,7 +67908,7 @@ var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FA
       context.dispatch('compile', objectModelNotes);
     },
     compile: function compile(context, objectModelNotes) {
-      var files = FileFactory.from(_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
+      var files = FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
       context.commit('setReviewFiles', files);
     },
     setTemplates: function setTemplates(context) {

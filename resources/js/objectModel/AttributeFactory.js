@@ -1,5 +1,5 @@
 import Attribute from './Attribute'
-import Preference from './utilities/Preference'
+import Preference from '../utilities/Preference'
 
 export default class AttributeFactory {
     constructor(name, parent) {
