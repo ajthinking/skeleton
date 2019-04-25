@@ -5,6 +5,9 @@ import ControllerPipe from './pipes/ControllerPipe'
 import APIControllerPipe from './pipes/APIControllerPipe'
 import SeederPipe from './pipes/SeederPipe'
 import APIRoutesPipe from './pipes/APIRoutesPipe'
+
+import defaultSchema from './defaultSchema'
+
 import collect from 'collect.js'
 
 export default class FileFactory {
@@ -22,6 +25,10 @@ export default class FileFactory {
             //SeederPipe,
             //APIRoutesPipe,
         ]
+    }
+
+    static defaultSchema() {
+        return defaultSchema;
     }
 
     static from(objectModelCollection) {

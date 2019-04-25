@@ -5,6 +5,8 @@ export default class AttributeFactory {
     constructor(name, parent) {
         this.name = name
         this.parent = parent
+
+        this.hasPreference("email")
     }
 
     static make(name, parent) {
@@ -54,11 +56,28 @@ export default class AttributeFactory {
     }
 
     hasPreference(setting) {
-        return Preference.has(setting)
+        console.log(Preference.has([
+            'objectModel',
+            this.parent.heading,
+            this.name,            
+            setting
+        ]), this.parent.heading, this.name, setting)
+        return Preference.has([
+            'objectModel',
+            this.parent.heading,
+            this.name,            
+            setting
+        ])
     }
 
     getPreference(setting) {
-        return Preference.get(        [
+        console.log(Preference.get([
+            'objectModel',
+            this.parent.heading,
+            this.name,            
+            setting
+        ]), this.parent.heading, this.name, setting)        
+        return Preference.get([
             'objectModel',
             this.parent.heading,
             this.name,

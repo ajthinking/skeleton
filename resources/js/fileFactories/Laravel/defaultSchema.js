@@ -1,9 +1,9 @@
-export default defaultSchema = {
+export default {
     "objectModel": {
         "User": {
             "email": {
                 "fillable": true,
-                "hidden": false,
+                "hidden": true,
             }
         }
     }

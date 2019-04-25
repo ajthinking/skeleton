@@ -2,13 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Parser from '../objectModel/ObjectModelNotesParser'
 import ObjectModelCollection from '../objectModel/ObjectModelCollection'
-import LaravelFileFactory from '../fileFactories/Laravel/FileFactory'
+import Config from '../Config'
+
 
 Vue.use(Vuex)
 Vue.config.debug = true
-
-// how set this via config?
-let FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : LaravelFileFactory
 
 export default new Vuex.Store({
     state: {
@@ -18,7 +16,7 @@ export default new Vuex.Store({
             design: "Object model",
             review: "app/User.php",
         },
-        availablePipes: FileFactory.pipes(),
+        availablePipes: Config.FileFactory.pipes(),
 
         objectModelNotes: "",
 
@@ -54,7 +52,7 @@ export default new Vuex.Store({
         },
         
         compile(context, objectModelNotes) {
-            let files = FileFactory.from(
+            let files = Config.FileFactory.from(
                 ObjectModelCollection.fromEntities(
                     Parser.parse(objectModelNotes).segment()
                 )                   

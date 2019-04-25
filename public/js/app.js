@@ -1972,7 +1972,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      availableTabs: ["Object model",
+      availableTabs: ["Object model", "schema",
       /* "Object model diagram", */
       "settings", "templates"],
       activeTab: "Object model"
@@ -65499,6 +65499,23 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 
 /***/ }),
 
+/***/ "./resources/js/Config.js":
+/*!********************************!*\
+  !*** ./resources/js/Config.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./fileFactories/Laravel/FileFactory */ "./resources/js/fileFactories/Laravel/FileFactory.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  FileFactory: _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_0__["default"]
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -66352,13 +66369,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pipes/APIControllerPipe */ "./resources/js/fileFactories/Laravel/pipes/APIControllerPipe.js");
 /* harmony import */ var _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pipes/SeederPipe */ "./resources/js/fileFactories/Laravel/pipes/SeederPipe.js");
 /* harmony import */ var _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pipes/APIRoutesPipe */ "./resources/js/fileFactories/Laravel/pipes/APIRoutesPipe.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _defaultSchema__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./defaultSchema */ "./resources/js/fileFactories/Laravel/defaultSchema.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_8__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -66389,7 +66408,7 @@ function () {
     value: function calculateFiles() {
       var _this = this;
 
-      return collect_js__WEBPACK_IMPORTED_MODULE_7___default()(this.pipes.map(function (pipe) {
+      return collect_js__WEBPACK_IMPORTED_MODULE_8___default()(this.pipes.map(function (pipe) {
         return pipe["with"](_this.omc).calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
         return allFiles.concat(pipeFileList);
@@ -66402,6 +66421,11 @@ function () {
       _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
     }
   }, {
+    key: "defaultSchema",
+    value: function defaultSchema() {
+      return _defaultSchema__WEBPACK_IMPORTED_MODULE_7__["default"];
+    }
+  }, {
     key: "from",
     value: function from(objectModelCollection) {
       return new this(objectModelCollection);
@@ -66412,6 +66436,28 @@ function () {
 }();
 
 
+
+/***/ }),
+
+/***/ "./resources/js/fileFactories/Laravel/defaultSchema.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/defaultSchema.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  "objectModel": {
+    "User": {
+      "email": {
+        "fillable": true,
+        "hidden": true
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -67220,6 +67266,7 @@ function () {
 
     this.name = name;
     this.parent = parent;
+    this.hasPreference("email");
   }
 
   _createClass(AttributeFactory, [{
@@ -67251,11 +67298,13 @@ function () {
   }, {
     key: "hasPreference",
     value: function hasPreference(setting) {
-      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(setting);
+      console.log(_utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(['objectModel', this.parent.heading, this.name, setting]), this.parent.heading, this.name, setting);
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(['objectModel', this.parent.heading, this.name, setting]);
     }
   }, {
     key: "getPreference",
     value: function getPreference(setting) {
+      console.log(_utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]), this.parent.heading, this.name, setting);
       return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
     }
     /*
@@ -67860,16 +67909,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../objectModel/ObjectModelNotesParser */ "./resources/js/objectModel/ObjectModelNotesParser.js");
 /* harmony import */ var _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../objectModel/ObjectModelCollection */ "./resources/js/objectModel/ObjectModelCollection.js");
-/* harmony import */ var _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../fileFactories/Laravel/FileFactory */ "./resources/js/fileFactories/Laravel/FileFactory.js");
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
 
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true; // how set this via config?
-
-var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_4__["default"];
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     // Keep track of active tabs in each section
@@ -67878,7 +67925,7 @@ var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FA
       design: "Object model",
       review: "app/User.php"
     },
-    availablePipes: FileFactory.pipes(),
+    availablePipes: _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.pipes(),
     objectModelNotes: "",
     reviewFiles: [],
     templates: {}
@@ -67908,7 +67955,7 @@ var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FA
       context.dispatch('compile', objectModelNotes);
     },
     compile: function compile(context, objectModelNotes) {
-      var files = FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
+      var files = _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
       context.commit('setReviewFiles', files);
     },
     setTemplates: function setTemplates(context) {
@@ -68033,11 +68080,23 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Preference; });
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+var defaultSchema = _Config__WEBPACK_IMPORTED_MODULE_0__["default"].FileFactory.defaultSchema();
+
+var preferences = _objectSpread({}, defaultSchema);
 
 var Preference =
 /*#__PURE__*/
@@ -68048,12 +68107,21 @@ function () {
 
   _createClass(Preference, null, [{
     key: "has",
-    value: function has(key) {
-      return false;
+    value: function has(path) {
+      return !!this.get(path);
     }
   }, {
     key: "get",
-    value: function get() {}
+    value: function get(path) {
+      try {
+        return path.reduce(function (data, key) {
+          if (_typeof(data) === 'object' && key in data) return data[key];
+          throw new ReferenceError("No such key combination");
+        }, preferences);
+      } catch (_unused) {
+        return false;
+      }
+    }
   }, {
     key: "set",
     value: function set() {}
