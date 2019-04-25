@@ -3,9 +3,12 @@
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Faker\Factory as Faker;
 
 class ___MODEL___Seeder extends Seeder
 {
+    $faker = Faker::create(1337);
+
     /**
      * Run the database seeds.
      *

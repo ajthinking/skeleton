@@ -18,7 +18,7 @@ export default class SeederPipe extends ModelPipe {
                 content: Template.for('Seeder').replace({
                     ___MODEL___: model.className(),
                     ___TABLE___: F.camelCase(F.pluralize(model.className())),
-                    ___COLUMNS_BLOCK___: this.columnsBlock(),
+                    ___COLUMNS_BLOCK___: this.columnsBlock(model),
                 })
             }
         }).toArray()
@@ -42,11 +42,11 @@ export default class SeederPipe extends ModelPipe {
         }).toArray().join("\n")        
     }
 
-    columnsBlock() {
-        return [
-            "'name' => Str::random(10),",
-            "'name' => Str::random(10),",
-            "'name' => Str::random(10),",
-        ].join("\n")
+    columnsBlock(model) {
+        return model.attributes.filter(attribute => {
+            return !['id', 'created_at', 'updated_at'].includes(attribute)
+        }).map(attribute => {
+            return "'" + attribute + "' => $faker->sentence()";
+        }).join("\n")
     }
 }

@@ -65764,6 +65764,21 @@ function () {
 
     this.entities = Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
     this.attachRelationships();
+    /*
+        this.attachIntelligentAttributes() ???
+         an IntelligentAttribute has:
+            name // color, user_id    
+            datatype // string, unsignedInteger
+            flaggor // nullable(), default(v), hidden, fillable, casts
+        
+        Do that info really belong there? Or should it be created in the pipes?
+        Is it generic enough to describe a objectModelCollection implementable by any framework?
+    */
+
+    /*
+        Another approach: do a special treatment check for table users and password_resets
+        to manage them induvidually?
+    */
   }
 
   _createClass(ObjectModelCollection, [{
@@ -67925,7 +67940,7 @@ function (_ModelPipe) {
           content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Seeder').replace({
             ___MODEL___: model.className(),
             ___TABLE___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
-            ___COLUMNS_BLOCK___: _this.columnsBlock()
+            ___COLUMNS_BLOCK___: _this.columnsBlock(model)
           })
         };
       }).toArray();
@@ -67952,8 +67967,12 @@ function (_ModelPipe) {
     }
   }, {
     key: "columnsBlock",
-    value: function columnsBlock() {
-      return ["'name' => Str::random(10),", "'name' => Str::random(10),", "'name' => Str::random(10),"].join("\n");
+    value: function columnsBlock(model) {
+      return model.attributes.filter(function (attribute) {
+        return !['id', 'created_at', 'updated_at'].includes(attribute);
+      }).map(function (attribute) {
+        return "'" + attribute + "' => $faker->sentence()";
+      }).join("\n");
     }
   }]);
 

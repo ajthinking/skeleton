@@ -5,6 +5,22 @@ export default class ObjectModelCollection {
     constructor(entities) {
         this.entities = collect(entities)
         this.attachRelationships()
+        /*
+            this.attachIntelligentAttributes() ???
+
+            an IntelligentAttribute has:
+                name // color, user_id    
+                datatype // string, unsignedInteger
+                flaggor // nullable(), default(v), hidden, fillable, casts
+            
+            Do that info really belong there? Or should it be created in the pipes?
+            Is it generic enough to describe a objectModelCollection implementable by any framework?
+        */
+
+        /*
+            Another approach: do a special treatment check for table users and password_resets
+            to manage them induvidually?
+        */
     }
 
     isManyToMany(candidate) {
