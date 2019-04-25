@@ -13,27 +13,27 @@ export default class AttributeFactory {
             {
                 name: factory.name,
                 parent: factory.parent,
-                ... factory.otherThings()
+                ... factory.hidden(),
+                ... factory.fillable()
             }
         )
     }
 
-    otherThings() {
+    hidden() {
         return {
-            hidden: true
+            hidden: ['password', 'remember_token'].includes(this.name)
         }
     }
-    /*
-    FOR LATER USE
-    model.attributes.filter(attribute => [
-        'password', 'remember_token'
-    ].includes(attribute)),    
 
-    return this.horisontalStringList(
-        model.attributes.filter(attribute => ![
-            'id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'
-        ].includes(attribute)),
-        "//" // default value
-    )    
-    */
+    fillable() {
+        return {
+            fillable: ![
+                'id',
+                'updated_at',
+                'created_at',
+                'remember_token',
+                'email_verified_at'
+            ].includes(this.name)
+        }
+    }
 }

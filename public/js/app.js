@@ -65519,7 +65519,6 @@ var Attribute = function Attribute(properties) {
   Object.keys(properties).map(function (key) {
     _this[key] = properties[key];
   });
-  console.log(this);
 };
 
 
@@ -65560,25 +65559,19 @@ function () {
   }
 
   _createClass(AttributeFactory, [{
-    key: "otherThings",
-    value: function otherThings() {
+    key: "hidden",
+    value: function hidden() {
       return {
-        hidden: true
+        hidden: ['password', 'remember_token'].includes(this.name)
       };
     }
-    /*
-    FOR LATER USE
-    model.attributes.filter(attribute => [
-        'password', 'remember_token'
-    ].includes(attribute)),    
-     return this.horisontalStringList(
-        model.attributes.filter(attribute => ![
-            'id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'
-        ].includes(attribute)),
-        "//" // default value
-    )    
-    */
-
+  }, {
+    key: "fillable",
+    value: function fillable() {
+      return {
+        fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
+      };
+    }
   }], [{
     key: "make",
     value: function make(name, parent) {
@@ -65586,7 +65579,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.otherThings()));
+      }, factory.hidden(), factory.fillable()));
     }
   }]);
 
@@ -67934,7 +67927,7 @@ function (_BasePipe) {
     key: "fillableAttributes",
     value: function fillableAttributes(model) {
       return this.horisontalStringList(model.attributes.filter(function (attribute) {
-        return attribute.hidden;
+        return attribute.fillable;
       }).map(function (attribute) {
         return attribute.name;
       }), "//" // default value

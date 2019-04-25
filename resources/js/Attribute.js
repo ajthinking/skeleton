@@ -3,7 +3,5 @@ export default class Attribute {
         Object.keys(properties).map((key) => {
             this[key] = properties[key]
         })
-
-        console.log(this)
     }
 }
