@@ -7,7 +7,7 @@ import SeederPipe from './pipes/SeederPipe'
 import APIRoutesPipe from './pipes/APIRoutesPipe'
 import collect from 'collect.js'
 
-export default class LaravelFileFactory {
+export default class FileFactory {
     constructor(objectModelCollection) {
         this.omc = objectModelCollection
     }

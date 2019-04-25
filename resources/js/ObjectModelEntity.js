@@ -1,4 +1,4 @@
-import F from './Formatter.js'
+import F from './utilities/Formatter'
 import Attribute from './Attribute.js';
 import AttributeFactory from './AttributeFactory.js';
 

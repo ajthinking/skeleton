@@ -65536,7 +65536,7 @@ var Attribute = function Attribute(properties) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AttributeFactory; });
 /* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/Attribute.js");
-/* harmony import */ var _Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Preference */ "./resources/js/Preference.js");
+/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities/Preference */ "./resources/js/utilities/Preference.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -65589,12 +65589,12 @@ function () {
   }, {
     key: "hasPreference",
     value: function hasPreference(setting) {
-      return _Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(setting);
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(setting);
     }
   }, {
     key: "getPreference",
     value: function getPreference(setting) {
-      return _Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
     }
     /*
     {
@@ -65623,243 +65623,6 @@ function () {
 
 /***/ }),
 
-/***/ "./resources/js/Collection.js":
-/*!************************************!*\
-  !*** ./resources/js/Collection.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_0__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-
-collect_js__WEBPACK_IMPORTED_MODULE_0___default()().macro("mapWithRemaining", function (callback) {
-  var _this = this;
-
-  var keys = Object.keys(this.items);
-  var items = this.items.map(function (item, key) {
-    var remaining = _toConsumableArray(_this.items);
-
-    remaining.splice(remaining.indexOf(item), 1);
-    return callback(item, remaining);
-  });
-  return collect_js__WEBPACK_IMPORTED_MODULE_0___default()(items);
-});
-/* harmony default export */ __webpack_exports__["default"] = (collect_js__WEBPACK_IMPORTED_MODULE_0___default.a);
-
-/***/ }),
-
-/***/ "./resources/js/ExpressFileFactory.js":
-/*!********************************************!*\
-  !*** ./resources/js/ExpressFileFactory.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ExpressFileFactory; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var ExpressFileFactory =
-/*#__PURE__*/
-function () {
-  function ExpressFileFactory(objectModelCollection) {
-    _classCallCheck(this, ExpressFileFactory);
-
-    this.omc = objectModelCollection;
-  }
-
-  _createClass(ExpressFileFactory, [{
-    key: "withPipes",
-    value: function withPipes(pipes) {
-      this.pipes = pipes;
-      return this;
-    }
-  }, {
-    key: "calculateFiles",
-    value: function calculateFiles() {
-      var _this = this;
-
-      return this.pipes.map(function (pipe) {
-        return pipe.make().calculateFiles(_this.omc);
-      }).reduce(function (pipeFileList, allFiles) {
-        return allFiles.concat(pipeFileList);
-      }, []);
-    }
-  }], [{
-    key: "pipes",
-    value: function pipes() {
-      return [//
-      ];
-    }
-  }, {
-    key: "from",
-    value: function from(objectModelCollection) {
-      return new this(objectModelCollection);
-    }
-  }]);
-
-  return ExpressFileFactory;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/Formatter.js":
-/*!***********************************!*\
-  !*** ./resources/js/Formatter.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Formatter; });
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
-/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_0__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-var changeCase = __webpack_require__(/*! change-case */ "./node_modules/change-case/change-case.js"); // How to use import instead?
-
-
-var Formatter =
-/*#__PURE__*/
-function () {
-  function Formatter() {
-    _classCallCheck(this, Formatter);
-  }
-
-  _createClass(Formatter, null, [{
-    key: "pluralize",
-    value: function pluralize(word) {
-      return pluralize__WEBPACK_IMPORTED_MODULE_0___default()(word);
-    }
-  }, {
-    key: "snakeCase",
-    value: function snakeCase(word) {
-      return changeCase.snake(word);
-    }
-  }, {
-    key: "camelCase",
-    value: function camelCase(word) {
-      return changeCase.camel(word);
-    }
-  }, {
-    key: "pascalCase",
-    value: function pascalCase(word) {
-      return changeCase.pascal(word);
-    }
-  }]);
-
-  return Formatter;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/LaravelFileFactory.js":
-/*!********************************************!*\
-  !*** ./resources/js/LaravelFileFactory.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LaravelFileFactory; });
-/* harmony import */ var _pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pipes/UserPipe */ "./resources/js/pipes/UserPipe.js");
-/* harmony import */ var _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pipes/ModelPipe */ "./resources/js/pipes/ModelPipe.js");
-/* harmony import */ var _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pipes/MigrationPipe */ "./resources/js/pipes/MigrationPipe.js");
-/* harmony import */ var _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pipes/ControllerPipe */ "./resources/js/pipes/ControllerPipe.js");
-/* harmony import */ var _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pipes/APIControllerPipe */ "./resources/js/pipes/APIControllerPipe.js");
-/* harmony import */ var _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pipes/SeederPipe */ "./resources/js/pipes/SeederPipe.js");
-/* harmony import */ var _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pipes/APIRoutesPipe */ "./resources/js/pipes/APIRoutesPipe.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_7__);
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-
-
-
-
-
-
-var LaravelFileFactory =
-/*#__PURE__*/
-function () {
-  function LaravelFileFactory(objectModelCollection) {
-    _classCallCheck(this, LaravelFileFactory);
-
-    this.omc = objectModelCollection;
-  }
-
-  _createClass(LaravelFileFactory, [{
-    key: "withPipes",
-    value: function withPipes(pipes) {
-      this.pipes = pipes;
-      return this;
-    }
-  }, {
-    key: "calculateFiles",
-    value: function calculateFiles() {
-      var _this = this;
-
-      return collect_js__WEBPACK_IMPORTED_MODULE_7___default()(this.pipes.map(function (pipe) {
-        return pipe["with"](_this.omc).calculateFiles(_this.omc);
-      }).reduce(function (pipeFileList, allFiles) {
-        return allFiles.concat(pipeFileList);
-      }, [])).sortBy('path').toArray();
-    }
-  }], [{
-    key: "pipes",
-    value: function pipes() {
-      return [//UserPipe,
-      _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
-    }
-  }, {
-    key: "from",
-    value: function from(objectModelCollection) {
-      return new this(objectModelCollection);
-    }
-  }]);
-
-  return LaravelFileFactory;
-}();
-
-
-
-/***/ }),
-
 /***/ "./resources/js/ObjectModelCollection.js":
 /*!***********************************************!*\
   !*** ./resources/js/ObjectModelCollection.js ***!
@@ -65870,8 +65633,8 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelCollection; });
-/* harmony import */ var _Collection_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Collection.js */ "./resources/js/Collection.js");
-/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Formatter */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/Collection */ "./resources/js/utilities/Collection.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -65887,7 +65650,7 @@ function () {
   function ObjectModelCollection(entities) {
     _classCallCheck(this, ObjectModelCollection);
 
-    this.entities = Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
+    this.entities = Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
     this.attachRelationships();
     /*
         this.attachIntelligentAttributes() ???
@@ -65910,7 +65673,7 @@ function () {
     key: "isManyToMany",
     value: function isManyToMany(candidate) {
       var models = this.modelsIncludingUser().map(function (item) {
-        return _Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
       }).toArray().join("|");
       var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
       var matches = manyToManyRegExp.exec(candidate.heading);
@@ -65925,7 +65688,7 @@ function () {
     key: "manyToManyAssociatedModels",
     value: function manyToManyAssociatedModels(manyToManyEntity) {
       var models = this.modelsIncludingUser().map(function (item) {
-        return _Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
       }).toArray().join("|");
       var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
       var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
@@ -65974,7 +65737,7 @@ function () {
   }, {
     key: "modelsIncludingUser",
     value: function modelsIncludingUser() {
-      return Object(_Collection_js__WEBPACK_IMPORTED_MODULE_0__["default"])(this.models().items.concat(this.userModels().items));
+      return Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(this.models().items.concat(this.userModels().items));
     }
   }, {
     key: "modelsExceptUser",
@@ -66035,7 +65798,7 @@ function () {
           return _this3.manyToManys().filter(function (manyToManyEntity) {
             var parts = _this3.manyToManyAssociatedModels(manyToManyEntity);
 
-            return parts.includes(_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
+            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
           }).items.length > 0;
         });
       });
@@ -66064,7 +65827,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelEntity; });
-/* harmony import */ var _Formatter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Formatter.js */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 /* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/Attribute.js");
 /* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/AttributeFactory.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -66131,7 +65894,7 @@ function () {
   }, {
     key: "asForeignKey",
     value: function asForeignKey() {
-      return _Formatter_js__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(this.heading) + "_id";
+      return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(this.heading) + "_id";
     }
   }], [{
     key: "fromText",
@@ -66272,241 +66035,6 @@ function () {
 }();
 
 
-
-/***/ }),
-
-/***/ "./resources/js/Preference.js":
-/*!************************************!*\
-  !*** ./resources/js/Preference.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Preference; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-var Preference =
-/*#__PURE__*/
-function () {
-  function Preference() {
-    _classCallCheck(this, Preference);
-  }
-
-  _createClass(Preference, null, [{
-    key: "has",
-    value: function has(key) {
-      return false;
-    }
-  }, {
-    key: "get",
-    value: function get() {}
-  }, {
-    key: "set",
-    value: function set() {}
-  }]);
-
-  return Preference;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/Template.js":
-/*!**********************************!*\
-  !*** ./resources/js/Template.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Template; });
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pipes/ModelPipe */ "./resources/js/pipes/ModelPipe.js");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-
-
-var Template =
-/*#__PURE__*/
-function () {
-  function Template(text) {
-    _classCallCheck(this, Template);
-
-    this.originalText = text;
-    this.text = text;
-  }
-
-  _createClass(Template, [{
-    key: "replace",
-    value: function replace(replacementPairs) {
-      var _this = this;
-
-      Object.keys(replacementPairs).forEach(function (marker) {
-        if (!_this.text.includes(marker)) return;
-        if (marker.endsWith("_BLOCK___")) return _this.blockReplace(marker, replacementPairs[marker]);
-
-        _this.inlineReplace(marker, replacementPairs[marker]);
-      });
-      return this.text;
-    }
-  }, {
-    key: "inlineReplace",
-    value: function inlineReplace(marker, text) {
-      this.text = this.text.replace(new RegExp(marker, "g"), text);
-    }
-  }, {
-    key: "blockReplace",
-    value: function blockReplace(marker, text) {
-      if (text == "") return this.removeBlock(marker);
-      var matches = RegExp('([ ]*)(' + marker + ')').exec(this.text);
-      var tabsBeforeItem = matches[1].length / 4;
-      var fullMarker = matches[0];
-      this.text = this.text.replace(new RegExp(fullMarker, "g"), this.indent(text, tabsBeforeItem));
-    }
-  }, {
-    key: "indent",
-    value: function indent(text, tabs) {
-      return text.split('\n').map(function (line) {
-        if (line == "") return line; // No extra indentation for empty lines
-
-        return " ".repeat(tabs * 4) + line;
-      }).join('\n');
-    }
-  }, {
-    key: "removeBlock",
-    value: function removeBlock(marker) {
-      var regex = '^([\\n])*[ ]*' + marker + '([\\n])?([\\n]+)?';
-      var matches = RegExp(regex, "gm").exec(this.text);
-
-      if (!matches) {}
-
-      var spacingAbove = matches[1];
-      var imidiateFollowingLineBreak = matches[2];
-      var spacingBelow = matches[3];
-      this.text = this.text.replace(new RegExp(regex, "gm"), !!spacingAbove && !!spacingBelow ? "\n" : "");
-    }
-  }], [{
-    key: "for",
-    value: function _for(templateName) {
-      return new this(_store__WEBPACK_IMPORTED_MODULE_0__["default"].getters.templates[templateName]);
-    }
-  }]);
-
-  return Template;
-}();
-
-
-
-/***/ }),
-
-/***/ "./resources/js/Templates.js":
-/*!***********************************!*\
-  !*** ./resources/js/Templates.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _templateObject7() {
-  var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsToMany('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsToMany('App\\___TARGET_CLASS___');\n}"]);
-
-  _templateObject7 = function _templateObject7() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject6() {
-  var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsTo('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->belongsTo('App\\___TARGET_CLASS___');\n}"]);
-
-  _templateObject6 = function _templateObject6() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject5() {
-  var data = _taggedTemplateLiteral(["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->hasMany('App___TARGET_CLASS___');\n}"], ["/**\n * Get the ___TARGET_CLASS_PLURAL___ for the ___THIS_CLASS___.\n */\npublic function ___METHOD_NAME___()\n{\n    return $this->hasMany('App\\___TARGET_CLASS___');\n}"]);
-
-  _templateObject5 = function _templateObject5() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject4() {
-  var data = _taggedTemplateLiteral(["<?php\n\nuse IlluminateSupportFacadesSchema;\nuse IlluminateDatabaseSchemaBlueprint;\nuse IlluminateDatabaseMigrationsMigration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"], ["<?php\n\nuse Illuminate\\Support\\Facades\\Schema;\nuse Illuminate\\Database\\Schema\\Blueprint;\nuse Illuminate\\Database\\Migrations\\Migration;\n\nclass Create___TABLE___Table extends Migration\n{\n    /**\n     * Run the migrations.\n     *\n     * @return void\n     */\n    public function up()\n    {\n        Schema::create('___TABLE___', function (Blueprint $table) {\n            ___COLUMNS_BLOCK___\n        });\n    }\n\n    /**\n     * Reverse the migrations.\n     *\n     * @return void\n     */\n    public function down()\n    {\n        Schema::dropIfExists('___TABLE___');\n    }\n}"]);
-
-  _templateObject4 = function _templateObject4() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject3() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateDatabaseEloquentModel;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass ___CLASS_NAME___ extends Model\n{\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
-
-  _templateObject3 = function _templateObject3() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject2() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace AppHttpControllers;\n\nuse IlluminateFoundationBusDispatchesJobs;\nuse IlluminateRoutingController as BaseController;\nuse IlluminateFoundationValidationValidatesRequests;\nuse IlluminateFoundationAuthAccessAuthorizesRequests;\n\nclass Controller extends BaseController\n{\n    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;\n}"], ["<?php\n\nnamespace App\\Http\\Controllers;\n\nuse Illuminate\\Foundation\\Bus\\DispatchesJobs;\nuse Illuminate\\Routing\\Controller as BaseController;\nuse Illuminate\\Foundation\\Validation\\ValidatesRequests;\nuse Illuminate\\Foundation\\Auth\\Access\\AuthorizesRequests;\n\nclass Controller extends BaseController\n{\n    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;\n}"]);
-
-  _templateObject2 = function _templateObject2() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["<?php\n\nnamespace App;\n\nuse IlluminateNotificationsNotifiable;\nuse IlluminateContractsAuthMustVerifyEmail;\nuse IlluminateFoundationAuthUser as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        ___CASTS___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"], ["<?php\n\nnamespace App;\n\nuse Illuminate\\Notifications\\Notifiable;\nuse Illuminate\\Contracts\\Auth\\MustVerifyEmail;\nuse Illuminate\\Foundation\\Auth\\User as Authenticatable;\n\nclass User extends Authenticatable\n{\n    use Notifiable;\n\n    /**\n     * The attributes that are mass assignable.\n     *\n     * @var array\n     */\n    protected $fillable = [\n        ___FILLABLE___\n    ];\n\n    /**\n     * The attributes that should be hidden for arrays.\n     *\n     * @var array\n     */\n    protected $hidden = [\n        ___HIDDEN___\n    ];\n\n    /**\n     * The attributes that should be cast to native types.\n     *\n     * @var array\n     */\n    protected $casts = [\n        ___CASTS___\n    ];\n\n    ___RELATIONSHIP_METHODS_BLOCK___\n}"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  /******************************************************************* */
-  "User": String.raw(_templateObject()),
-
-  /******************************************************************* */
-  "Controller": String.raw(_templateObject2()),
-
-  /******************************************************************* */
-  "Model": String.raw(_templateObject3()),
-  "Migration": String.raw(_templateObject4()),
-  "HasManyRelationship": String.raw(_templateObject5()),
-  "BelongsToRelationship": String.raw(_templateObject6()),
-  "BelongsToManyRelationship": String.raw(_templateObject7())
-});
 
 /***/ }),
 
@@ -67492,19 +67020,99 @@ function (_ModelEntity) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/APIControllerPipe.js":
-/*!*************************************************!*\
-  !*** ./resources/js/pipes/APIControllerPipe.js ***!
-  \*************************************************/
+/***/ "./resources/js/fileFactories/Laravel/FileFactory.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/FileFactory.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FileFactory; });
+/* harmony import */ var _pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pipes/UserPipe */ "./resources/js/fileFactories/Laravel/pipes/UserPipe.js");
+/* harmony import */ var _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pipes/ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
+/* harmony import */ var _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pipes/MigrationPipe */ "./resources/js/fileFactories/Laravel/pipes/MigrationPipe.js");
+/* harmony import */ var _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pipes/ControllerPipe */ "./resources/js/fileFactories/Laravel/pipes/ControllerPipe.js");
+/* harmony import */ var _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pipes/APIControllerPipe */ "./resources/js/fileFactories/Laravel/pipes/APIControllerPipe.js");
+/* harmony import */ var _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pipes/SeederPipe */ "./resources/js/fileFactories/Laravel/pipes/SeederPipe.js");
+/* harmony import */ var _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pipes/APIRoutesPipe */ "./resources/js/fileFactories/Laravel/pipes/APIRoutesPipe.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_7__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+
+
+
+var FileFactory =
+/*#__PURE__*/
+function () {
+  function FileFactory(objectModelCollection) {
+    _classCallCheck(this, FileFactory);
+
+    this.omc = objectModelCollection;
+  }
+
+  _createClass(FileFactory, [{
+    key: "withPipes",
+    value: function withPipes(pipes) {
+      this.pipes = pipes;
+      return this;
+    }
+  }, {
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var _this = this;
+
+      return collect_js__WEBPACK_IMPORTED_MODULE_7___default()(this.pipes.map(function (pipe) {
+        return pipe["with"](_this.omc).calculateFiles(_this.omc);
+      }).reduce(function (pipeFileList, allFiles) {
+        return allFiles.concat(pipeFileList);
+      }, [])).sortBy('path').toArray();
+    }
+  }], [{
+    key: "pipes",
+    value: function pipes() {
+      return [//UserPipe,
+      _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
+    }
+  }, {
+    key: "from",
+    value: function from(objectModelCollection) {
+      return new this(objectModelCollection);
+    }
+  }]);
+
+  return FileFactory;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/fileFactories/Laravel/pipes/APIControllerPipe.js":
+/*!***********************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/APIControllerPipe.js ***!
+  \***********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return APIControllerPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
-/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67545,9 +67153,9 @@ function (_ModelPipe) {
       return omc.modelsIncludingUser().map(function (model) {
         return {
           path: "app/Http/Controllers/" + model.className() + "APIController.php",
-          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('APIController').replace({
+          content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('APIController').replace({
             ___MODEL___: model.className(),
-            ___MODEL_INSTANCE___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(model.className()),
+            ___MODEL_INSTANCE___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(model.className()),
             ___WITH_RELATIONSHIPS___: ""
           })
         };
@@ -67562,19 +67170,19 @@ function (_ModelPipe) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/APIRoutesPipe.js":
-/*!*********************************************!*\
-  !*** ./resources/js/pipes/APIRoutesPipe.js ***!
-  \*********************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/APIRoutesPipe.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/APIRoutesPipe.js ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MigrationPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
-/* harmony import */ var _Formatter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter.js */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/fileFactories/Laravel/pipes/BasePipe.js");
+/* harmony import */ var _utilities_Formatter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utilities/Formatter.js */ "./resources/js/utilities/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67613,7 +67221,7 @@ function (_BasePipe) {
     value: function calculateFiles() {
       return [{
         path: "routes/api.php",
-        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('api').replace({
+        content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('api').replace({
           ___API_ROUTES_BLOCK___: this.apiRoutes()
         })
       }];
@@ -67622,8 +67230,8 @@ function (_BasePipe) {
     key: "apiRoutes",
     value: function apiRoutes() {
       return this.omc.modelsIncludingUser().map(function (model) {
-        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('APIRoute').replace({
-          ___RESOURCE_NAME___: _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
+        return _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('APIRoute').replace({
+          ___RESOURCE_NAME___: _utilities_Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_utilities_Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
           ___MODEL_NAME___: model.className()
         });
       }).toArray().join("\n\n");
@@ -67637,10 +67245,10 @@ function (_BasePipe) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/BasePipe.js":
-/*!****************************************!*\
-  !*** ./resources/js/pipes/BasePipe.js ***!
-  \****************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/BasePipe.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/BasePipe.js ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -67689,18 +67297,18 @@ function () {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/ControllerPipe.js":
-/*!**********************************************!*\
-  !*** ./resources/js/pipes/ControllerPipe.js ***!
-  \**********************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/ControllerPipe.js":
+/*!********************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/ControllerPipe.js ***!
+  \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ControllerPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67742,7 +67350,7 @@ function (_ModelPipe) {
       return omc.modelsIncludingUser().map(function (model) {
         return {
           path: "app/Http/Controllers/" + model.className() + "Controller.php",
-          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Controller').replace({
+          content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Controller').replace({
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
             ___CASTS___: _this.casts(model),
@@ -67760,19 +67368,19 @@ function (_ModelPipe) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/MigrationPipe.js":
-/*!*********************************************!*\
-  !*** ./resources/js/pipes/MigrationPipe.js ***!
-  \*********************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/MigrationPipe.js":
+/*!*******************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/MigrationPipe.js ***!
+  \*******************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MigrationPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
-/* harmony import */ var _Formatter_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter.js */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/fileFactories/Laravel/pipes/BasePipe.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67815,8 +67423,8 @@ function (_BasePipe) {
       return omc.inOptimalMigrationOrder().map(function (entity, index) {
         return {
           path: "database/migrations/" + _this.migrationTimeStamp(index) + "_create_" + _this.tableName(entity) + "_table.php",
-          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
-            ___CLASS_NAME___: "Create" + _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pascalCase(_this.tableName(entity)) + "Table",
+          content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
+            ___CLASS_NAME___: "Create" + _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pascalCase(_this.tableName(entity)) + "Table",
             ___TABLE___: _this.tableName(entity),
             ___COLUMNS_BLOCK___: _this.columns(entity)
           })
@@ -67830,7 +67438,7 @@ function (_BasePipe) {
         return entity.heading;
       }
 
-      return _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].snakeCase(_Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(entity.heading));
+      return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].snakeCase(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(entity.heading));
     }
   }, {
     key: "columns",
@@ -67891,7 +67499,7 @@ function (_BasePipe) {
         // One to Many explicit
         "_id$": function _id$(name) {
           var snakeCaseSingular = name.slice(0, name.length - 3).replace(/_/g, "");
-          var plural = _Formatter_js__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(snakeCaseSingular);
+          var plural = _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(snakeCaseSingular);
           return ["$table->unsignedInteger('" + name + "');", "$table->foreign('" + name + "')->references('id')->on('" + plural + "')->onDelete('cascade');"];
         },
         // Time columns
@@ -67924,19 +67532,19 @@ function (_BasePipe) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/ModelPipe.js":
-/*!*****************************************!*\
-  !*** ./resources/js/pipes/ModelPipe.js ***!
-  \*****************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/ModelPipe.js ***!
+  \***************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/pipes/BasePipe.js");
-/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _BasePipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BasePipe */ "./resources/js/fileFactories/Laravel/pipes/BasePipe.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67979,7 +67587,7 @@ function (_BasePipe) {
       return omc.modelsExceptUser().map(function (model) {
         return {
           path: "app/" + model.className() + ".php",
-          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Model').replace({
+          content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Model').replace({
             ___CLASS_NAME___: _this.className(model),
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
@@ -68023,24 +67631,24 @@ function (_BasePipe) {
     key: "relationshipMethods",
     value: function relationshipMethods(model) {
       return [model.hasManyRelationships.map(function (target) {
-        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('HasManyRelationship').replace({
+        return _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('HasManyRelationship').replace({
           ___TARGET_CLASS___: target.className(),
-          ___TARGET_CLASS_PLURAL___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(target.className()),
+          ___TARGET_CLASS_PLURAL___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(target.className()),
           ___THIS_CLASS___: model.className(),
-          ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className()))
+          ___METHOD_NAME___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className()))
         });
       }).join("\n\n"), model.belongsToRelationships.map(function (target) {
-        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToRelationship').replace({
+        return _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToRelationship').replace({
           ___TARGET_CLASS___: target.className(),
           ___THIS_CLASS___: model.className(),
-          ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className())
+          ___METHOD_NAME___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className())
         });
       }).join("\n\n"), model.belongsToManyRelationships.map(function (target) {
-        return _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToManyRelationship').replace({
+        return _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('BelongsToManyRelationship').replace({
           ___TARGET_CLASS___: target.className(),
-          ___TARGET_CLASS_PLURAL___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(target.className()),
+          ___TARGET_CLASS_PLURAL___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(target.className()),
           ___THIS_CLASS___: model.className(),
-          ___METHOD_NAME___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className()))
+          ___METHOD_NAME___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(target.className()))
         });
       }).join("\n")].filter(function (candidate) {
         return candidate != "";
@@ -68055,19 +67663,19 @@ function (_BasePipe) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/SeederPipe.js":
-/*!******************************************!*\
-  !*** ./resources/js/pipes/SeederPipe.js ***!
-  \******************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/SeederPipe.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/SeederPipe.js ***!
+  \****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SeederPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
-/* harmony import */ var _Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Formatter */ "./resources/js/Formatter.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -68123,9 +67731,9 @@ function (_ModelPipe) {
       return this.omc.modelsIncludingUser().map(function (model) {
         return {
           path: "database/seeds/" + model.className() + "Seeder.php",
-          content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Seeder').replace({
+          content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Seeder').replace({
             ___MODEL___: model.className(),
-            ___TABLE___: _Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
+            ___TABLE___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
             ___COLUMNS_BLOCK___: _this.columnsBlock(model)
           })
         };
@@ -68136,7 +67744,7 @@ function (_ModelPipe) {
     value: function databaseSeeder() {
       return [{
         path: "database/seeds/DatabaseSeeder.php",
-        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('DatabaseSeeder').replace({
+        content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('DatabaseSeeder').replace({
           ___DATABASE_SEEDERS_BLOCK___: this.databaseSeedersBlock()
         })
       }];
@@ -68169,18 +67777,18 @@ function (_ModelPipe) {
 
 /***/ }),
 
-/***/ "./resources/js/pipes/UserPipe.js":
-/*!****************************************!*\
-  !*** ./resources/js/pipes/UserPipe.js ***!
-  \****************************************/
+/***/ "./resources/js/fileFactories/Laravel/pipes/UserPipe.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/UserPipe.js ***!
+  \**************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserPipe; });
-/* harmony import */ var _Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Template */ "./resources/js/Template.js");
-/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/pipes/ModelPipe.js");
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68221,7 +67829,7 @@ function (_ModelPipe) {
       var user = omc.userModel();
       return [{
         path: "app/User.php",
-        content: _Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
+        content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
           ___HIDDEN___: this.hiddenAttributes(user),
           ___FILLABLE___: this.fillableAttributes(user),
           ___CASTS___: this.casts(user),
@@ -68252,13 +67860,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../ObjectModelNotesParser */ "./resources/js/ObjectModelNotesParser.js");
 /* harmony import */ var _ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ObjectModelCollection */ "./resources/js/ObjectModelCollection.js");
-/* harmony import */ var _Templates__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Templates */ "./resources/js/Templates.js");
-/* harmony import */ var _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../LaravelFileFactory */ "./resources/js/LaravelFileFactory.js");
-/* harmony import */ var _ExpressFileFactory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../ExpressFileFactory */ "./resources/js/ExpressFileFactory.js");
-/* harmony import */ var _pipes_UserPipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pipes/UserPipe */ "./resources/js/pipes/UserPipe.js");
-
-
-
+/* harmony import */ var _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../fileFactories/Laravel/FileFactory */ "./resources/js/fileFactories/Laravel/FileFactory.js");
 
 
 
@@ -68267,7 +67869,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true; // how set this via config?
 
-var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : _LaravelFileFactory__WEBPACK_IMPORTED_MODULE_5__["default"];
+var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FACTORY___ : _fileFactories_Laravel_FileFactory__WEBPACK_IMPORTED_MODULE_4__["default"];
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     // Keep track of active tabs in each section
@@ -68323,6 +67925,238 @@ var FileFactory = typeof ___ENV_FILE_FACTORY___ !== 'undefined' ? ___ENV_FILE_FA
     }
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Collection.js":
+/*!**********************************************!*\
+  !*** ./resources/js/utilities/Collection.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+collect_js__WEBPACK_IMPORTED_MODULE_0___default()().macro("mapWithRemaining", function (callback) {
+  var _this = this;
+
+  var keys = Object.keys(this.items);
+  var items = this.items.map(function (item, key) {
+    var remaining = _toConsumableArray(_this.items);
+
+    remaining.splice(remaining.indexOf(item), 1);
+    return callback(item, remaining);
+  });
+  return collect_js__WEBPACK_IMPORTED_MODULE_0___default()(items);
+});
+/* harmony default export */ __webpack_exports__["default"] = (collect_js__WEBPACK_IMPORTED_MODULE_0___default.a);
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Formatter.js":
+/*!*********************************************!*\
+  !*** ./resources/js/utilities/Formatter.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Formatter; });
+/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
+/* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_0__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var changeCase = __webpack_require__(/*! change-case */ "./node_modules/change-case/change-case.js"); // How to use import instead?
+
+
+var Formatter =
+/*#__PURE__*/
+function () {
+  function Formatter() {
+    _classCallCheck(this, Formatter);
+  }
+
+  _createClass(Formatter, null, [{
+    key: "pluralize",
+    value: function pluralize(word) {
+      return pluralize__WEBPACK_IMPORTED_MODULE_0___default()(word);
+    }
+  }, {
+    key: "snakeCase",
+    value: function snakeCase(word) {
+      return changeCase.snake(word);
+    }
+  }, {
+    key: "camelCase",
+    value: function camelCase(word) {
+      return changeCase.camel(word);
+    }
+  }, {
+    key: "pascalCase",
+    value: function pascalCase(word) {
+      return changeCase.pascal(word);
+    }
+  }]);
+
+  return Formatter;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Preference.js":
+/*!**********************************************!*\
+  !*** ./resources/js/utilities/Preference.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Preference; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Preference =
+/*#__PURE__*/
+function () {
+  function Preference() {
+    _classCallCheck(this, Preference);
+  }
+
+  _createClass(Preference, null, [{
+    key: "has",
+    value: function has(key) {
+      return false;
+    }
+  }, {
+    key: "get",
+    value: function get() {}
+  }, {
+    key: "set",
+    value: function set() {}
+  }]);
+
+  return Preference;
+}();
+
+
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Template.js":
+/*!********************************************!*\
+  !*** ./resources/js/utilities/Template.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Template; });
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _fileFactories_Laravel_pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../fileFactories/Laravel/pipes/ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var Template =
+/*#__PURE__*/
+function () {
+  function Template(text) {
+    _classCallCheck(this, Template);
+
+    this.originalText = text;
+    this.text = text;
+  }
+
+  _createClass(Template, [{
+    key: "replace",
+    value: function replace(replacementPairs) {
+      var _this = this;
+
+      Object.keys(replacementPairs).forEach(function (marker) {
+        if (!_this.text.includes(marker)) return;
+        if (marker.endsWith("_BLOCK___")) return _this.blockReplace(marker, replacementPairs[marker]);
+
+        _this.inlineReplace(marker, replacementPairs[marker]);
+      });
+      return this.text;
+    }
+  }, {
+    key: "inlineReplace",
+    value: function inlineReplace(marker, text) {
+      this.text = this.text.replace(new RegExp(marker, "g"), text);
+    }
+  }, {
+    key: "blockReplace",
+    value: function blockReplace(marker, text) {
+      if (text == "") return this.removeBlock(marker);
+      var matches = RegExp('([ ]*)(' + marker + ')').exec(this.text);
+      var tabsBeforeItem = matches[1].length / 4;
+      var fullMarker = matches[0];
+      this.text = this.text.replace(new RegExp(fullMarker, "g"), this.indent(text, tabsBeforeItem));
+    }
+  }, {
+    key: "indent",
+    value: function indent(text, tabs) {
+      return text.split('\n').map(function (line) {
+        if (line == "") return line; // No extra indentation for empty lines
+
+        return " ".repeat(tabs * 4) + line;
+      }).join('\n');
+    }
+  }, {
+    key: "removeBlock",
+    value: function removeBlock(marker) {
+      var regex = '^([\\n])*[ ]*' + marker + '([\\n])?([\\n]+)?';
+      var matches = RegExp(regex, "gm").exec(this.text);
+
+      if (!matches) {}
+
+      var spacingAbove = matches[1];
+      var imidiateFollowingLineBreak = matches[2];
+      var spacingBelow = matches[3];
+      this.text = this.text.replace(new RegExp(regex, "gm"), !!spacingAbove && !!spacingBelow ? "\n" : "");
+    }
+  }], [{
+    key: "for",
+    value: function _for(templateName) {
+      return new this(_store__WEBPACK_IMPORTED_MODULE_0__["default"].getters.templates[templateName]);
+    }
+  }]);
+
+  return Template;
+}();
+
+
 
 /***/ }),
 

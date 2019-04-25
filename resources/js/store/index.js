@@ -2,10 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Parser from '../ObjectModelNotesParser'
 import ObjectModelCollection from '../ObjectModelCollection'
-import Templates from '../Templates'
-import LaravelFileFactory from '../LaravelFileFactory'
-import ExpressFileFactory from '../ExpressFileFactory'
-import UserPipe from '../pipes/UserPipe'
+import LaravelFileFactory from '../fileFactories/Laravel/FileFactory'
 
 Vue.use(Vuex)
 Vue.config.debug = true

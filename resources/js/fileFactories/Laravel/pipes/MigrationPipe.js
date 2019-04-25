@@ -1,6 +1,6 @@
-import Template from '../Template'
+import Template from '../../../utilities/Template'
 import BasePipe from './BasePipe'
-import F from '../Formatter.js'
+import F from '../../../utilities/Formatter'
 
 export default class MigrationPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {

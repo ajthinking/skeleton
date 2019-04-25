@@ -1,5 +1,5 @@
-import collect from './Collection.js'
-import F from './Formatter'
+import collect from './utilities/Collection'
+import F from './utilities/Formatter'
 
 export default class ObjectModelCollection {
     constructor(entities) {
