@@ -13,15 +13,30 @@ export default class AttributeFactory {
             {
                 name: factory.name,
                 parent: factory.parent,
-                ... factory.hidden(),
-                ... factory.fillable()
+                ... factory.property("dataType"),
+                ... factory.property("fillable"),
+                ... factory.property("hidden"),
             }
         )
     }
 
+    /* If there is a preference available use that, else refer to best guess */
+    property(key) {
+        let template = {}
+        template[key] = this.hasPreference(key) ? this.getPreference(key) : this[key]()
+        return template
+    }
+
+    dataType() {
+        return "string"
+    }
+
+
+
     hidden() {
         return {
-            hidden: ['password', 'remember_token'].includes(this.name)
+            hidden: this.hasPreference('hidden') ? this.getPreference('hidden') :
+                ['password', 'remember_token'].includes(this.name)
         }
     }
 
@@ -36,4 +51,20 @@ export default class AttributeFactory {
             ].includes(this.name)
         }
     }
+
+    hasPreference(setting) {
+        return true
+    }
+
+    getPreference(setting) {
+        return "BAJS"
+    }
+    /*
+    {
+        "User": {
+            "email": {
+                "hidden": true
+            }
+    }
+    */
 }

@@ -65559,10 +65559,24 @@ function () {
   }
 
   _createClass(AttributeFactory, [{
+    key: "property",
+
+    /* If there is a preference available use that, else refer to best guess */
+    value: function property(key) {
+      var template = {};
+      template[key] = this.hasPreference(key) ? this.getPreference(key) : this[key]();
+      return template;
+    }
+  }, {
+    key: "dataType",
+    value: function dataType() {
+      return "string";
+    }
+  }, {
     key: "hidden",
     value: function hidden() {
       return {
-        hidden: ['password', 'remember_token'].includes(this.name)
+        hidden: this.hasPreference('hidden') ? this.getPreference('hidden') : ['password', 'remember_token'].includes(this.name)
       };
     }
   }, {
@@ -65572,6 +65586,25 @@ function () {
         fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
       };
     }
+  }, {
+    key: "hasPreference",
+    value: function hasPreference(setting) {
+      return true;
+    }
+  }, {
+    key: "getPreference",
+    value: function getPreference(setting) {
+      return "BAJS";
+    }
+    /*
+    {
+        "User": {
+            "email": {
+                "hidden": true
+            }
+    }
+    */
+
   }], [{
     key: "make",
     value: function make(name, parent) {
@@ -65579,7 +65612,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.hidden(), factory.fillable()));
+      }, factory.property("dataType"), factory.property("fillable"), factory.property("hidden")));
     }
   }]);
 
@@ -67916,6 +67949,7 @@ function (_BasePipe) {
   }, {
     key: "hiddenAttributes",
     value: function hiddenAttributes(model) {
+      console.log(model);
       return this.horisontalStringList(model.attributes.filter(function (attribute) {
         return attribute.hidden;
       }).map(function (attribute) {
