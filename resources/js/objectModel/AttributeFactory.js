@@ -72,12 +72,4 @@ export default class AttributeFactory {
             setting
         ])
     }
-    /*
-    {
-        "User": {
-            "email": {
-                "hidden": true
-            }
-    }
-    */
 }

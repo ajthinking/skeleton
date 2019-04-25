@@ -67305,15 +67305,6 @@ function () {
     value: function getPreference(setting) {
       return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
     }
-    /*
-    {
-        "User": {
-            "email": {
-                "hidden": true
-            }
-    }
-    */
-
   }], [{
     key: "make",
     value: function make(name, parent) {
@@ -68106,7 +68097,7 @@ function () {
   _createClass(Preference, null, [{
     key: "has",
     value: function has(path) {
-      return !!this.get(path);
+      return !(this.get(path) instanceof Error);
     }
   }, {
     key: "get",
@@ -68117,7 +68108,7 @@ function () {
           throw new ReferenceError("No such key combination");
         }, preferences);
       } catch (ReferenceError) {
-        return false;
+        return ReferenceError;
       }
     }
   }, {

@@ -9,7 +9,7 @@ let preferences = {
 
 export default class Preference {
     static has(path) {
-        return !!this.get(path)
+        return !(this.get(path) instanceof Error)
     }
 
     static get(path) {
@@ -20,7 +20,7 @@ export default class Preference {
             }, preferences)
 
         } catch(ReferenceError) {
-            return false
+            return ReferenceError
         }
     }
     
