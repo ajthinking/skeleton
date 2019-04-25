@@ -21,11 +21,11 @@ export default class AttributeFactory {
         )
     }
 
-    /* If there is a preference available use that, else refer to best guess */
+    /* If there is a preference available use that, else refer to dedicated method */
     property(key) {
-        let template = {}
-        template[key] = this.hasPreference(key) ? this.getPreference(key) : this[key]()
-        return template
+        return {
+            [key]: this.hasPreference(key) ? this.getPreference(key) : this[key]()
+        }
     }
 
     dataType() {

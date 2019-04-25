@@ -65563,11 +65563,9 @@ function () {
   _createClass(AttributeFactory, [{
     key: "property",
 
-    /* If there is a preference available use that, else refer to best guess */
+    /* If there is a preference available use that, else refer to dedicated method */
     value: function property(key) {
-      var template = {};
-      template[key] = this.hasPreference(key) ? this.getPreference(key) : this[key]();
-      return template;
+      return _defineProperty({}, key, this.hasPreference(key) ? this.getPreference(key) : this[key]());
     }
   }, {
     key: "dataType",
