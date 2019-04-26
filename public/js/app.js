@@ -66993,7 +66993,7 @@ function (_BasePipe) {
             ___CLASS_NAME___: _this.className(model),
             ___HIDDEN___: _this.hiddenAttributes(model),
             ___FILLABLE___: _this.fillableAttributes(model),
-            ___CASTS___: _this.casts(model),
+            ___CASTS_BLOCK___: _this.casts(model),
             ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
           })
         };
@@ -67022,7 +67022,12 @@ function (_BasePipe) {
   }, {
     key: "casts",
     value: function casts(model) {
-      return "//";
+      console.log(model.attributes);
+      return model.attributes.filter(function (attribute) {
+        return attribute.cast;
+      }).map(function (attribute) {
+        return "'" + attribute.name + "' => '" + attribute.cast + "'";
+      }).join(",\n");
     }
   }, {
     key: "className",
@@ -67234,7 +67239,7 @@ function (_ModelPipe) {
         content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('User').replace({
           ___HIDDEN___: this.hiddenAttributes(user),
           ___FILLABLE___: this.fillableAttributes(user),
-          ___CASTS___: this.casts(user),
+          ___CASTS_BLOCK___: this.casts(user),
           ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(user)
         })
       }];
@@ -67321,6 +67326,11 @@ function () {
     /* GETTERS ***************************************************************/
 
   }, {
+    key: "getCast",
+    value: function getCast() {
+      return null;
+    }
+  }, {
     key: "getDataType",
     value: function getDataType() {
       return "string";
@@ -67368,7 +67378,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("unique")));
+      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("unique")));
     }
   }]);
 
@@ -67968,7 +67978,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     navigation: {
       workspace: "Design",
       design: "Object model",
-      review: "app/User.php"
+      review: ""
     },
     availablePipes: _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.pipes(),
     objectModelNotes: "",
@@ -68001,7 +68011,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     compile: function compile(context, objectModelNotes) {
       var files = _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
-      context.commit('setReviewFiles', files);
+      context.commit('setReviewFiles', files); // This part need to be refactored...
+
+      if (context.state.navigation.review == "" && context.state.reviewFiles.length) {
+        context.commit('navigate', {
+          namespace: "review",
+          tab: context.state.reviewFiles[0].path
+        });
+      }
     },
     setTemplates: function setTemplates(context) {
       fetch('/skeleton/api/templates').then(function (result) {

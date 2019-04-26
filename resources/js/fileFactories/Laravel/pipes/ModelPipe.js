@@ -11,7 +11,7 @@ export default class ModelPipe extends BasePipe {
                     ___CLASS_NAME___: this.className(model),
                     ___HIDDEN___: this.hiddenAttributes(model),
                     ___FILLABLE___: this.fillableAttributes(model),
-                    ___CASTS___: this.casts(model),
+                    ___CASTS_BLOCK___: this.casts(model),
                     ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),                
                 })
             }
@@ -20,22 +20,26 @@ export default class ModelPipe extends BasePipe {
 
     hiddenAttributes(model) {
         return this.horisontalStringList(
-            model.attributes.filter(attribute => {
-                return attribute.hidden
-            }).map(attribute => attribute.name),
+            model.attributes.filter(attribute => attribute.hidden)
+                .map(attribute => attribute.name),
             "//" // default value
         )
     }
 
     fillableAttributes(model) {
         return this.horisontalStringList(
-            model.attributes.filter(attribute => attribute.fillable).map(attribute => attribute.name),
+            model.attributes.filter(attribute => attribute.fillable)
+                .map(attribute => attribute.name),
             "//" // default value
         )        
     }
 
     casts(model) {
-        return "//"
+        console.log(model.attributes);
+        return model.attributes.filter(attribute => attribute.cast)
+            .map(attribute => "'" + attribute.name + "' => '" + attribute.cast + "'")
+            .join(",\n")
+        
     }
 
     className(model) {

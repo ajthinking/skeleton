@@ -133,5 +133,5 @@ export default class ObjectModelCollection {
                 }).items.length > 0 
             })            
         })
-    }    
+    }
 }

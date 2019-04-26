@@ -14,7 +14,7 @@ export default new Vuex.Store({
         navigation: {
             workspace: "Design",
             design: "Object model",
-            review: "app/User.php",
+            review: "",
         },
         availablePipes: Config.FileFactory.pipes(),
 
@@ -61,6 +61,15 @@ export default new Vuex.Store({
             ).calculateFiles()
 
             context.commit('setReviewFiles', files)
+
+            // This part need to be refactored...
+            if(context.state.navigation.review == "" && context.state.reviewFiles.length){
+                context.commit('navigate', {
+                    namespace: "review",
+                    tab: context.state.reviewFiles[0].path
+                })
+            }
+
         
         },
         
@@ -71,6 +80,6 @@ export default new Vuex.Store({
         }
     },
     getters: {
-        templates: state => state.templates
+        templates: state => state.templates,
     },    
 })

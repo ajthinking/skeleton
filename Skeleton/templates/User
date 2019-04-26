@@ -34,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        ___CASTS___
+        ___CASTS_BLOCK___
     ];
 
     ___RELATIONSHIP_METHODS_BLOCK___
