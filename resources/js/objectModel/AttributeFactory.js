@@ -1,12 +1,11 @@
 import Attribute from './Attribute'
 import Preference from '../utilities/Preference'
+import F from '../utilities/Formatter'
 
 export default class AttributeFactory {
     constructor(name, parent) {
         this.name = name
         this.parent = parent
-
-        this.hasPreference("email")
     }
 
     static make(name, parent) {
@@ -19,31 +18,39 @@ export default class AttributeFactory {
                 ... factory.property("dataType"),
                 ... factory.property("fillable"),
                 ... factory.property("hidden"),
+                ... factory.property("index"),
+                ... factory.property("unique"),
             }
         )
     }
 
-    /* If there is a preference available use that, else refer to dedicated method */
+    /* If there is a preference available use that, else refer to dedicated get method */
     property(key) {
         return {
-            [key]: this.hasPreference(key) ? this.getPreference(key) : this[key]()
+            [key]: this.hasPreference(key) ? this.getPreference(key) : this[F.camelCase(`get_${key}`)]()
         }
     }
 
-    dataType() {
+    /* GETTERS ***************************************************************/
+
+    getDataType() {
         return "string"
     }
 
-
-
-    hidden() {
-        return {
-            hidden: this.hasPreference('hidden') ? this.getPreference('hidden') :
-                ['password', 'remember_token'].includes(this.name)
-        }
+    getIndex() {
+        return false
     }
 
-    fillable() {
+    getUnique() {
+        return false
+    }    
+
+    getHidden() {
+        return this.hasPreference('hidden') ? this.getPreference('hidden') :
+            ['password', 'remember_token'].includes(this.name)
+    }
+
+    getFillable() {
         return {
             fillable: ![
                 'id',
@@ -55,6 +62,8 @@ export default class AttributeFactory {
         }
     }
 
+    /* ATTRIBUTE PREFERENCES ***************************************************************/
+
     hasPreference(setting) {
         return Preference.has([
             'objectModel',
@@ -64,6 +73,7 @@ export default class AttributeFactory {
         ])
     }
 
+    /* Exception from the get<Key> pattern! */
     getPreference(setting) {
         return Preference.get([
             'objectModel',

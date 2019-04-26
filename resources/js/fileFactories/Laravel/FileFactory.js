@@ -17,7 +17,7 @@ export default class FileFactory {
 
     static pipes() {
         return [
-            //UserPipe,
+            UserPipe,
             ModelPipe,
             //MigrationPipe,
             //ControllerPipe,

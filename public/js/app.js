@@ -66417,8 +66417,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [//UserPipe,
-      _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
     }
   }, {
     key: "defaultSchema",
@@ -66449,14 +66448,56 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  /* Lets only add things that will not be served as expected right out of the box */
   "objectModel": {
     "User": {
       "email": {
-        "fillable": true,
-        "hidden": true
+        "unique": true,
+        "fillable": true
+      },
+      "email_verified_at": {
+        "fillable": false,
+        "nullable": true,
+        "cast": "datetime"
+      },
+      "remember_token": {
+        "fillable": false
+      }
+    },
+    "password_resets": {
+      "email": {
+        "index": true
       }
     }
   }
+  /* User ************************************************************************
+      $table->bigIncrements('id');
+      $table->string('name');
+      $table->string('email')->unique();
+      $table->timestamp('email_verified_at')->nullable();
+      $table->string('password');
+      $table->rememberToken();
+      $table->timestamps();
+  
+      protected $fillable = [
+          'name', 'email', 'password',
+      ];
+  
+      protected $hidden = [
+          'password', 'remember_token',
+      ];
+  
+      protected $casts = [
+          'email_verified_at' => 'datetime',
+      ];    
+  */
+
+  /* password_resets
+      $table->string('email')->index();
+      $table->string('token');
+      $table->timestamp('created_at')->nullable();
+  */
+
 });
 
 /***/ }),
@@ -67245,6 +67286,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AttributeFactory; });
 /* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/objectModel/Attribute.js");
 /* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -67258,6 +67300,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 var AttributeFactory =
 /*#__PURE__*/
 function () {
@@ -67266,40 +67309,53 @@ function () {
 
     this.name = name;
     this.parent = parent;
-    this.hasPreference("email");
   }
 
   _createClass(AttributeFactory, [{
     key: "property",
 
-    /* If there is a preference available use that, else refer to dedicated method */
+    /* If there is a preference available use that, else refer to dedicated get method */
     value: function property(key) {
-      return _defineProperty({}, key, this.hasPreference(key) ? this.getPreference(key) : this[key]());
+      return _defineProperty({}, key, this.hasPreference(key) ? this.getPreference(key) : this[_utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase("get_".concat(key))]());
     }
+    /* GETTERS ***************************************************************/
+
   }, {
-    key: "dataType",
-    value: function dataType() {
+    key: "getDataType",
+    value: function getDataType() {
       return "string";
     }
   }, {
-    key: "hidden",
-    value: function hidden() {
-      return {
-        hidden: this.hasPreference('hidden') ? this.getPreference('hidden') : ['password', 'remember_token'].includes(this.name)
-      };
+    key: "getIndex",
+    value: function getIndex() {
+      return false;
     }
   }, {
-    key: "fillable",
-    value: function fillable() {
+    key: "getUnique",
+    value: function getUnique() {
+      return false;
+    }
+  }, {
+    key: "getHidden",
+    value: function getHidden() {
+      return this.hasPreference('hidden') ? this.getPreference('hidden') : ['password', 'remember_token'].includes(this.name);
+    }
+  }, {
+    key: "getFillable",
+    value: function getFillable() {
       return {
         fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
       };
     }
+    /* ATTRIBUTE PREFERENCES ***************************************************************/
+
   }, {
     key: "hasPreference",
     value: function hasPreference(setting) {
       return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(['objectModel', this.parent.heading, this.name, setting]);
     }
+    /* Exception from the get<Key> pattern! */
+
   }, {
     key: "getPreference",
     value: function getPreference(setting) {
@@ -67312,7 +67368,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.property("dataType"), factory.property("fillable"), factory.property("hidden")));
+      }, factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("unique")));
     }
   }]);
 
