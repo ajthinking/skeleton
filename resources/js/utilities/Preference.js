@@ -18,11 +18,18 @@ export default class Preference {
             return path.reduce((data, key) => {
                 if(typeof data === 'object' && key in data) return data[key];
                 throw new ReferenceError("No such key combination")
-            }, preferences)
+            }, this.getPreferences())
 
         } catch(ReferenceError) {
             return ReferenceError
         }
+    }
+
+    static getPreferences() {
+        return mergeJSON(
+            defaultSchema,
+            Storage.get('objectModel') ? Storage.get('objectModel') : {}
+        )
     }
 
     /* Default driver is localstorage but could also be something like a gist */

@@ -68587,10 +68587,15 @@ function () {
         return path.reduce(function (data, key) {
           if (_typeof(data) === 'object' && key in data) return data[key];
           throw new ReferenceError("No such key combination");
-        }, preferences);
+        }, this.getPreferences());
       } catch (ReferenceError) {
         return ReferenceError;
       }
+    }
+  }, {
+    key: "getPreferences",
+    value: function getPreferences() {
+      return mergeJSON(defaultSchema, _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') ? _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') : {});
     }
     /* Default driver is localstorage but could also be something like a gist */
 
