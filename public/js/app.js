@@ -2220,25 +2220,37 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    minHeight: {
+      type: Number,
+      "default": 400
+    }
+  },
   methods: {
     resizeTextarea: function resizeTextarea(event) {
       event.target.style.height = 'auto';
-      event.target.style.height = event.target.scrollHeight + 'px';
+      event.target.style.height = this.acceptScrollHeight(event.target.scrollHeight) + 'px';
     },
     forceRerender: function forceRerender() {
       var _this = this;
 
       this.$nextTick(function () {
         _this.$el.style.height = 'auto';
-        _this.$el.style.height = _this.$el.scrollHeight + 'px';
+        _this.$el.style.height = _this.height() + 'px';
       });
+    },
+    height: function height() {
+      return Math.max(this.$el.style.height, this.minHeight);
+    },
+    acceptScrollHeight: function acceptScrollHeight(candidateHeight) {
+      return Math.max(candidateHeight, this.minHeight);
     }
   },
   mounted: function mounted() {
     var _this2 = this;
 
     this.$nextTick(function () {
-      _this2.$el.setAttribute('style', 'height:' + _this2.$el.scrollHeight + 'px;overflow-y:hidden;');
+      _this2.$el.setAttribute('style', 'height:' + _this2.height() + 'px;overflow-y:hidden;');
     });
     this.$el.addEventListener('input', this.resizeTextarea);
   },
