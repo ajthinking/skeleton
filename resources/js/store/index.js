@@ -4,7 +4,8 @@ import Parser from '../objectModel/ObjectModelNotesParser'
 import ObjectModelCollection from '../objectModel/ObjectModelCollection'
 import Config from '../Config'
 import Preference from '../utilities/Preference'
-
+import Storage from '../utilities/Storage'
+const mergeJSON = require('deepmerge')
 
 Vue.use(Vuex)
 Vue.config.debug = true
@@ -26,6 +27,8 @@ export default new Vuex.Store({
         templates: {},
 
         schema: {},
+
+        preferences: Storage.get('objectModel')
     },
     mutations: {
         navigate(state, {namespace, tab}) {
@@ -46,7 +49,11 @@ export default new Vuex.Store({
         
         setTemplates(state, templates) {
             state.templates = templates
-        }
+        },
+
+        setPreferences(state, preferences) {
+            state.preferences = preferences
+        }        
     },
     actions: {
         navigate(context, payload) {
@@ -62,7 +69,17 @@ export default new Vuex.Store({
         setSchema(context, schema) {
             context.commit('setSchema', schema)
             Preference.persist(schema)
-        },        
+            context.dispatch('setPreferences', schema)
+        },  
+        
+        setPreferences(context, schema) {
+            context.commit('setPreferences',
+                mergeJSON(
+                    Storage.get('objectModel') ? Storage.get('objectModel') : {},
+                    schema
+                )
+            )            
+        },          
         
         compile(context, objectModelNotes) {
             let files = Config.FileFactory.from(
@@ -104,5 +121,6 @@ export default new Vuex.Store({
     },
     getters: {
         templates: state => state.templates,
+        preferences: state => state.preferences,
     },    
 })

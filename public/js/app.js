@@ -2038,9 +2038,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addUserSystem: function addUserSystem() {
       this.objectModelNotes += "User\nname\nemail\nemail_verified_at\npassword\nremember_token\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"; // resizable textarea does not register the changes since it uses the 'input' event
-      // resort to forceUpdate
-
-      this.$refs.resizableTextarea.forceRerender();
+      // resort to forceUpdate (BUGGED OUT ...)
+      //this.$refs.resizableTextarea.forceRerender()
     }
   }
 });
@@ -68339,11 +68338,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../objectModel/ObjectModelCollection */ "./resources/js/objectModel/ObjectModelCollection.js");
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
 /* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
+/* harmony import */ var _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utilities/Storage */ "./resources/js/utilities/Storage.js");
 
 
 
 
 
+
+
+
+var mergeJSON = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/umd.js");
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
@@ -68359,7 +68363,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     objectModelNotes: "",
     reviewFiles: [],
     templates: {},
-    schema: {}
+    schema: {},
+    preferences: _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel')
   },
   mutations: {
     navigate: function navigate(state, _ref) {
@@ -68378,6 +68383,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     setTemplates: function setTemplates(state, templates) {
       state.templates = templates;
+    },
+    setPreferences: function setPreferences(state, preferences) {
+      state.preferences = preferences;
     }
   },
   actions: {
@@ -68392,6 +68400,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     setSchema: function setSchema(context, schema) {
       context.commit('setSchema', schema);
       _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__["default"].persist(schema);
+      context.dispatch('setPreferences', schema);
+    },
+    setPreferences: function setPreferences(context, schema) {
+      context.commit('setPreferences', mergeJSON(_utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel') ? _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel') : {}, schema));
     },
     compile: function compile(context, objectModelNotes) {
       var files = _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
@@ -68420,6 +68432,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
   getters: {
     templates: function templates(state) {
       return state.templates;
+    },
+    preferences: function preferences(state) {
+      return state.preferences;
     }
   }
 }));
@@ -68534,6 +68549,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
 /* harmony import */ var _Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Storage */ "./resources/js/utilities/Storage.js");
 /* harmony import */ var _recursiveJSONIterator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./recursiveJSONIterator */ "./resources/js/utilities/recursiveJSONIterator.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68547,6 +68563,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 var mergeJSON = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/umd.js");
+
 
 var defaultSchema = _Config__WEBPACK_IMPORTED_MODULE_0__["default"].FileFactory.defaultSchema();
 
@@ -68577,6 +68594,7 @@ function () {
   }, {
     key: "getInitialData",
     value: function getInitialData() {
+      return _store__WEBPACK_IMPORTED_MODULE_3__["default"].getters.preferences;
       return mergeJSON(defaultSchema, _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') ? _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') : {});
     }
     /* Default driver is localstorage but could also be something like a gist */
@@ -68631,20 +68649,9 @@ function () {
       return JSON.parse(localStorage.getItem(name));
     }
   }, {
-    key: "getWithStack",
-    value: function getWithStack(stack) {}
-  }, {
     key: "set",
     value: function set(name, value) {
       localStorage.setItem(name, JSON.stringify(value));
-    }
-  }, {
-    key: "setWithStack",
-    value: function setWithStack(stack, value) {//
-    }
-  }, {
-    key: "mergeJSON",
-    value: function mergeJSON(name, data) {//
     }
   }]);
 

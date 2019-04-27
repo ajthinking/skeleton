@@ -2,6 +2,7 @@ import Config from '../Config'
 import Storage from './Storage'
 import recursiveJSONIterator from './recursiveJSONIterator'
 const mergeJSON = require('deepmerge')
+import store from '../store'
 
 let defaultSchema = Config.FileFactory.defaultSchema()
 
@@ -26,6 +27,8 @@ export default class Preference {
     }
 
     static getInitialData() {
+        return store.getters.preferences
+
         return mergeJSON(
             defaultSchema,
             Storage.get('objectModel') ? Storage.get('objectModel') : {}
