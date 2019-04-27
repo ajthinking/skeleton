@@ -45,10 +45,10 @@ export default class MigrationPipe extends BasePipe {
     }
 
     chainings(attribute) {
-        console.log(attribute)
         let chainings = ""
         if(attribute.index) chainings += "->index()";
         if(attribute.nullable) chainings += "->nullable()";
+        if(attribute.unique) chainings += "->uniqe()";
         return chainings
         
     }

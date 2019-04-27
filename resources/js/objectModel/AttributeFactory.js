@@ -21,6 +21,7 @@ export default class AttributeFactory {
                 ... factory.property("fillable"),
                 ... factory.property("hidden"),
                 ... factory.property("index"),
+                ... factory.property("nullable"),
                 ... factory.property("unique"),
             }
         )
@@ -66,6 +67,10 @@ export default class AttributeFactory {
                 'email_verified_at'
             ].includes(this.name)
         }
+    }
+
+    getNullable() {
+        return false
     }
 
     /* ATTRIBUTE PREFERENCES ***************************************************************/

@@ -12,7 +12,8 @@ export default {
                 "cast": "datetime"
             },
             "remember_token": {
-                "fillable": false
+                "fillable": false,
+                "nullable": true
             }
         },
         "password_resets": {

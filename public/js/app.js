@@ -66461,7 +66461,8 @@ __webpack_require__.r(__webpack_exports__);
         "cast": "datetime"
       },
       "remember_token": {
-        "fillable": false
+        "fillable": false,
+        "nullable": true
       }
     },
     "password_resets": {
@@ -66873,10 +66874,10 @@ function (_BasePipe) {
   }, {
     key: "chainings",
     value: function chainings(attribute) {
-      console.log(attribute);
       var chainings = "";
       if (attribute.index) chainings += "->index()";
       if (attribute.nullable) chainings += "->nullable()";
+      if (attribute.unique) chainings += "->uniqe()";
       return chainings;
     }
   }, {
@@ -67315,6 +67316,11 @@ function () {
         fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
       };
     }
+  }, {
+    key: "getNullable",
+    value: function getNullable() {
+      return false;
+    }
     /* ATTRIBUTE PREFERENCES ***************************************************************/
 
   }, {
@@ -67336,7 +67342,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("unique")));
+      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("nullable"), factory.property("unique")));
     }
   }]);
 
