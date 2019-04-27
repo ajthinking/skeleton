@@ -18,7 +18,9 @@ export default {
         "password_resets": {
             "email": {
                 "index": true
-            }
+            },
+            "id": false,
+            "updated_at": false
         }
     }
 }

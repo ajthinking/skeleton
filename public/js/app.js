@@ -66467,7 +66467,9 @@ __webpack_require__.r(__webpack_exports__);
     "password_resets": {
       "email": {
         "index": true
-      }
+      },
+      "id": false,
+      "updated_at": false
     }
   }
   /* User ************************************************************************
