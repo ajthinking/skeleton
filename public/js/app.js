@@ -66868,7 +66868,16 @@ function (_BasePipe) {
   }, {
     key: "statementsFor",
     value: function statementsFor(attribute) {
-      return ["$table->".concat(attribute.dataType, "('").concat(attribute.name, "');")].join("\n");
+      return ["$table->".concat(attribute.dataType, "('").concat(attribute.name, "')").concat(this.chainings(attribute), ";")].join("\n");
+    }
+  }, {
+    key: "chainings",
+    value: function chainings(attribute) {
+      console.log(attribute);
+      var chainings = "";
+      if (attribute.index) chainings += "->index()";
+      if (attribute.nullable) chainings += "->nullable()";
+      return chainings;
     }
   }, {
     key: "migrationTimeStamp",
@@ -67327,7 +67336,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.property("dataType")));
+      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("unique")));
     }
   }]);
 

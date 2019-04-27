@@ -40,8 +40,17 @@ export default class MigrationPipe extends BasePipe {
 
     statementsFor(attribute) {
         return [
-            `$table->${attribute.dataType}('${attribute.name}');` 
+            `$table->${attribute.dataType}('${attribute.name}')${this.chainings(attribute)};` 
         ].join("\n")
+    }
+
+    chainings(attribute) {
+        console.log(attribute)
+        let chainings = ""
+        if(attribute.index) chainings += "->index()";
+        if(attribute.nullable) chainings += "->nullable()";
+        return chainings
+        
     }
     
     migrationTimeStamp(index) {

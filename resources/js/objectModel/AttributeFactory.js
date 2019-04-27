@@ -16,12 +16,12 @@ export default class AttributeFactory {
             {
                 name: factory.name,
                 parent: factory.parent,
-                //... factory.property("cast"),
+                ... factory.property("cast"),
                 ... factory.property("dataType"),
-                //... factory.property("fillable"),
-                //... factory.property("hidden"),
-                //... factory.property("index"),
-                //... factory.property("unique"),
+                ... factory.property("fillable"),
+                ... factory.property("hidden"),
+                ... factory.property("index"),
+                ... factory.property("unique"),
             }
         )
     }
