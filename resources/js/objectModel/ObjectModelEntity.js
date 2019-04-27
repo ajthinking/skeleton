@@ -6,9 +6,11 @@ export default class ObjectModelEntity {
     constructor(chunk) {
         this.parts = chunk.split('\n')
         this.heading = this.parts[0]
-        this.attributes = this.parts.slice(1).map(name => AttributeFactory.make(name, this))
-
-        //this.addDefaultColumns()
+        this.rows = [
+            ... this.parts.slice(1),
+            ... this.defaultColumns()
+        ]
+        this.attributes = this.rows.map(name => AttributeFactory.make(name, this))
     }
 
     static fromText(chunk) {
@@ -19,10 +21,8 @@ export default class ObjectModelEntity {
         return this.attributes.map(attribute => attribute.name)
     }
 
-    addDefaultColumns() {
-        this.attributes = ['id', 'created_at', 'updated_at']
-            .filter(column => !this.attributes.includes(column))
-            .concat(this.attributes)
+    defaultColumns() {
+        return ['id', 'created_at', 'updated_at']
     }
 
     className() {

@@ -70,7 +70,6 @@ class DataTypeResolver {
 /* exporting getDataType() */
 export default function(name) {
     let resolver = new DataTypeResolver(name)
-
     return [
         //resolver.overridden(name), // not implemented
         resolver.reserved(name),

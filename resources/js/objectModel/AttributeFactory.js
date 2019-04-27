@@ -1,6 +1,7 @@
 import Attribute from './Attribute'
 import Preference from '../utilities/Preference'
 import F from '../utilities/Formatter'
+import getDataType from './propertyGetters/getDataType'
 
 export default class AttributeFactory {
     constructor(name, parent) {
@@ -15,12 +16,12 @@ export default class AttributeFactory {
             {
                 name: factory.name,
                 parent: factory.parent,
-                ... factory.property("cast"),
+                //... factory.property("cast"),
                 ... factory.property("dataType"),
-                ... factory.property("fillable"),
-                ... factory.property("hidden"),
-                ... factory.property("index"),
-                ... factory.property("unique"),
+                //... factory.property("fillable"),
+                //... factory.property("hidden"),
+                //... factory.property("index"),
+                //... factory.property("unique"),
             }
         )
     }
@@ -39,7 +40,7 @@ export default class AttributeFactory {
     }
 
     getDataType() {
-        return "string"
+        return getDataType(this.name)
     }
 
     getIndex() {

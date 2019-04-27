@@ -67237,6 +67237,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Attribute */ "./resources/js/objectModel/Attribute.js");
 /* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
 /* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+/* harmony import */ var _propertyGetters_getDataType__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./propertyGetters/getDataType */ "./resources/js/objectModel/propertyGetters/getDataType.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -67246,6 +67247,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -67278,7 +67280,7 @@ function () {
   }, {
     key: "getDataType",
     value: function getDataType() {
-      return "string";
+      return Object(_propertyGetters_getDataType__WEBPACK_IMPORTED_MODULE_3__["default"])(this.name);
     }
   }, {
     key: "getIndex",
@@ -67323,7 +67325,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("unique")));
+      }, factory.property("dataType")));
     }
   }]);
 
@@ -67541,6 +67543,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 /* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/objectModel/Attribute.js");
 /* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/objectModel/AttributeFactory.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -67561,9 +67571,10 @@ function () {
 
     this.parts = chunk.split('\n');
     this.heading = this.parts[0];
-    this.attributes = this.parts.slice(1).map(function (name) {
+    this.rows = [].concat(_toConsumableArray(this.parts.slice(1)), _toConsumableArray(this.defaultColumns()));
+    this.attributes = this.rows.map(function (name) {
       return _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].make(name, _this);
-    }); //this.addDefaultColumns()
+    });
   }
 
   _createClass(ObjectModelEntity, [{
@@ -67574,13 +67585,9 @@ function () {
       });
     }
   }, {
-    key: "addDefaultColumns",
-    value: function addDefaultColumns() {
-      var _this2 = this;
-
-      this.attributes = ['id', 'created_at', 'updated_at'].filter(function (column) {
-        return !_this2.attributes.includes(column);
-      }).concat(this.attributes);
+    key: "defaultColumns",
+    value: function defaultColumns() {
+      return ['id', 'created_at', 'updated_at'];
     }
   }, {
     key: "className",
@@ -67892,6 +67899,120 @@ function (_ModelEntity) {
 }(_ModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/propertyGetters/getDataType.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/objectModel/propertyGetters/getDataType.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/* local helper class assisting getDataType() function */
+var DataTypeResolver =
+/*#__PURE__*/
+function () {
+  function DataTypeResolver(name) {
+    _classCallCheck(this, DataTypeResolver);
+
+    this.name = name;
+  }
+
+  _createClass(DataTypeResolver, [{
+    key: "overridden",
+    value: function overridden(name) {
+      // Handle overridden line starting with $
+      if (name.charAt(0) == "$") {
+        // Save for future reference?
+        return name;
+      } // Load previous override rules
+
+
+      var overrided = {};
+
+      if (overrided.hasOwnProperty(name)) {
+        return overrided[name];
+      }
+
+      return false;
+    }
+  }, {
+    key: "reserved",
+    value: function reserved(name) {
+      var reservedNames = {
+        "id": "bigIncrements",
+        "timestamps": "timestamps",
+        "rememberToken": "rememberToken",
+        "timestamps()": "timestamps",
+        "created_at": "timestamps",
+        "email": "string"
+      };
+
+      if (reservedNames.hasOwnProperty(name)) {
+        return reservedNames[name];
+      }
+
+      return false;
+    }
+  }, {
+    key: "ruled",
+    value: function ruled(name) {
+      var matchedRuleKey = Object.keys(this.rules()).find(function (rule) {
+        return new RegExp(rule).test(name);
+      });
+
+      if (typeof matchedRuleKey !== "undefined") {
+        return this.rules()[matchedRuleKey](name);
+      }
+
+      return false;
+    }
+  }, {
+    key: "default",
+    value: function _default(name) {
+      return "string";
+    }
+  }, {
+    key: "rules",
+    value: function rules() {
+      return {
+        // One to Many explicit
+        "_id$": function _id$(name) {
+          return "unsignedInteger";
+        },
+        // Time columns
+        "(time|date|_at)$": function timeDate_at$(name) {
+          return "timestamp";
+        },
+        // Boolean
+        "^(has_|is_|got_)": function has_Is_Got_(name) {
+          return "boolean";
+        }
+      };
+    }
+  }]);
+
+  return DataTypeResolver;
+}();
+/* exporting getDataType() */
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (name) {
+  var resolver = new DataTypeResolver(name);
+  return [//resolver.overridden(name), // not implemented
+  resolver.reserved(name), resolver.ruled(name), resolver["default"](name)].find(function (filter) {
+    return filter;
+  });
+});
 
 /***/ }),
 
