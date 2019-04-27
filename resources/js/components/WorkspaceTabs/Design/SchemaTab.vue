@@ -16,7 +16,7 @@
 
                 set(value) {
                     if(JSON.parse(value)) {
-                        this.$store.dispatch('setSchema', value)
+                        this.$store.dispatch('setSchema', JSON.parse(value))
                     }
                 }
             }

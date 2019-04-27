@@ -18,14 +18,14 @@ export default class Preference {
             return path.reduce((data, key) => {
                 if(typeof data === 'object' && key in data) return data[key];
                 throw new ReferenceError("No such key combination")
-            }, this.getPreferences())
+            }, this.getInitialData())
 
         } catch(ReferenceError) {
             return ReferenceError
         }
     }
 
-    static getPreferences() {
+    static getInitialData() {
         return mergeJSON(
             defaultSchema,
             Storage.get('objectModel') ? Storage.get('objectModel') : {}

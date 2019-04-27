@@ -81,7 +81,6 @@ export default class AttributeFactory {
 
     hasPreference(setting) {
         return Preference.has([
-            'objectModel',
             this.parent.heading,
             this.name,            
             setting
@@ -91,7 +90,6 @@ export default class AttributeFactory {
     /* Exception from the get<Key> pattern! */
     getPreference(setting) {
         return Preference.get([
-            'objectModel',
             this.parent.heading,
             this.name,
             setting

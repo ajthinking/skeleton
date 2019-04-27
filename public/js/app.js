@@ -2072,7 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       set: function set(value) {
         if (JSON.parse(value)) {
-          this.$store.dispatch('setSchema', value);
+          this.$store.dispatch('setSchema', JSON.parse(value));
         }
       }
     }
@@ -66696,58 +66696,28 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   /* Lets only add things that will not be served as expected right out of the box */
-  "objectModel": {
-    "User": {
-      "email": {
-        "unique": true,
-        "fillable": true
-      },
-      "email_verified_at": {
-        "fillable": false,
-        "nullable": true,
-        "cast": "datetime"
-      },
-      "remember_token": {
-        "fillable": false,
-        "nullable": true
-      }
+  "User": {
+    "email": {
+      "unique": true,
+      "fillable": true
     },
-    "password_resets": {
-      "email": {
-        "index": true
-      },
-      "id": false,
-      "updated_at": false
+    "email_verified_at": {
+      "fillable": false,
+      "nullable": true,
+      "cast": "datetime"
+    },
+    "remember_token": {
+      "fillable": false,
+      "nullable": true
     }
+  },
+  "password_resets": {
+    "email": {
+      "index": true
+    },
+    "id": false,
+    "updated_at": false
   }
-  /* User ************************************************************************
-      $table->bigIncrements('id');
-      $table->string('name');
-      $table->string('email')->unique();
-      $table->timestamp('email_verified_at')->nullable();
-      $table->string('password');
-      $table->rememberToken();
-      $table->timestamps();
-  
-      protected $fillable = [
-          'name', 'email', 'password',
-      ];
-  
-      protected $hidden = [
-          'password', 'remember_token',
-      ];
-  
-      protected $casts = [
-          'email_verified_at' => 'datetime',
-      ];    
-  */
-
-  /* password_resets
-      $table->string('email')->index();
-      $table->string('token');
-      $table->timestamp('created_at')->nullable();
-  */
-
 });
 
 /***/ }),
@@ -67604,14 +67574,14 @@ function () {
   }, {
     key: "hasPreference",
     value: function hasPreference(setting) {
-      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has(['objectModel', this.parent.heading, this.name, setting]);
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].has([this.parent.heading, this.name, setting]);
     }
     /* Exception from the get<Key> pattern! */
 
   }, {
     key: "getPreference",
     value: function getPreference(setting) {
-      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get(['objectModel', this.parent.heading, this.name, setting]);
+      return _utilities_Preference__WEBPACK_IMPORTED_MODULE_1__["default"].get([this.parent.heading, this.name, setting]);
     }
   }], [{
     key: "make",
@@ -68403,12 +68373,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       context.commit('navigate', payload);
     },
     setObjectModelNotes: function setObjectModelNotes(context, objectModelNotes) {
-      context.commit('setObjectModelNotes', objectModelNotes);
-      context.dispatch('compile', objectModelNotes);
+      context.commit('setObjectModelNotes', objectModelNotes); //context.dispatch('compile', objectModelNotes)
+
       context.dispatch('compileSchema', objectModelNotes);
     },
     setSchema: function setSchema(context, schema) {
       context.commit('setSchema', schema);
+      _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__["default"].persist(schema);
     },
     compile: function compile(context, objectModelNotes) {
       var files = _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
@@ -68424,8 +68395,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     compileSchema: function compileSchema(context, objectModelNotes) {
       var schema = _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment()).serializeSchema();
-      context.commit('setSchema', schema);
-      _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__["default"].persist(schema);
+      context.dispatch('setSchema', schema);
     },
     setTemplates: function setTemplates(context) {
       fetch('/skeleton/api/templates').then(function (result) {
@@ -68587,14 +68557,14 @@ function () {
         return path.reduce(function (data, key) {
           if (_typeof(data) === 'object' && key in data) return data[key];
           throw new ReferenceError("No such key combination");
-        }, this.getPreferences());
+        }, this.getInitialData());
       } catch (ReferenceError) {
         return ReferenceError;
       }
     }
   }, {
-    key: "getPreferences",
-    value: function getPreferences() {
+    key: "getInitialData",
+    value: function getInitialData() {
       return mergeJSON(defaultSchema, _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') ? _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') : {});
     }
     /* Default driver is localstorage but could also be something like a gist */

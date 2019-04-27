@@ -55,12 +55,13 @@ export default new Vuex.Store({
 
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
-            context.dispatch('compile', objectModelNotes)
+            //context.dispatch('compile', objectModelNotes)
             context.dispatch('compileSchema', objectModelNotes)
         },
 
         setSchema(context, schema) {
             context.commit('setSchema', schema)
+            Preference.persist(schema)
         },        
         
         compile(context, objectModelNotes) {
@@ -92,9 +93,7 @@ export default new Vuex.Store({
                 Parser.parse(objectModelNotes).segment()
             ).serializeSchema()
             
-            context.commit('setSchema', schema)
-
-            Preference.persist(schema)
+            context.dispatch('setSchema', schema)
         },
 
         setTemplates(context) {
