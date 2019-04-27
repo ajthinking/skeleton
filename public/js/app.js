@@ -67545,6 +67545,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 /* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/objectModel/Attribute.js");
 /* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/objectModel/AttributeFactory.js");
+/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -67563,6 +67564,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
 var ObjectModelEntity =
 /*#__PURE__*/
 function () {
@@ -67572,9 +67574,10 @@ function () {
     _classCallCheck(this, ObjectModelEntity);
 
     this.parts = chunk.split('\n');
-    this.heading = this.parts[0];
-    this.rows = [].concat(_toConsumableArray(this.parts.slice(1)), _toConsumableArray(this.defaultColumns()));
-    this.attributes = this.rows.map(function (name) {
+    this.heading = this.parts[0]; // Sort and only keep unique attributes
+
+    this.attributeRows = _toConsumableArray(new Set([].concat(_toConsumableArray(this.injectColumns(['id'])), _toConsumableArray(this.parts.slice(1)), _toConsumableArray(this.injectColumns(['created_at', 'updated_at'])))));
+    this.attributes = this.attributeRows.map(function (name) {
       return _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].make(name, _this);
     });
   }
@@ -67587,9 +67590,15 @@ function () {
       });
     }
   }, {
-    key: "defaultColumns",
-    value: function defaultColumns() {
-      return ['id', 'created_at', 'updated_at'];
+    key: "injectColumns",
+    value: function injectColumns(columns) {
+      var _this2 = this;
+
+      return columns.filter(function (column) {
+        var path = ['objectModel', _this2.heading, column]; // Check if it is excluded in preferences
+
+        return !(_utilities_Preference__WEBPACK_IMPORTED_MODULE_3__["default"].has(path) && _utilities_Preference__WEBPACK_IMPORTED_MODULE_3__["default"].get(path) === false);
+      });
     }
   }, {
     key: "className",

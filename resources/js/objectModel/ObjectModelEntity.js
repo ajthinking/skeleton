@@ -1,16 +1,21 @@
 import F from '../utilities/Formatter'
 import Attribute from './Attribute.js';
 import AttributeFactory from './AttributeFactory.js';
+import Preference from '../utilities/Preference'
 
 export default class ObjectModelEntity {
     constructor(chunk) {
         this.parts = chunk.split('\n')
         this.heading = this.parts[0]
-        this.rows = [
-            ... this.parts.slice(1),
-            ... this.defaultColumns()
+        // Sort and only keep unique attributes
+        this.attributeRows = [
+            ... new Set([
+                ... this.injectColumns(['id']),
+                ... this.parts.slice(1),
+                ... this.injectColumns(['created_at', 'updated_at']),
+            ])
         ]
-        this.attributes = this.rows.map(name => AttributeFactory.make(name, this))
+        this.attributes = this.attributeRows.map(name => AttributeFactory.make(name, this))
     }
 
     static fromText(chunk) {
@@ -21,8 +26,12 @@ export default class ObjectModelEntity {
         return this.attributes.map(attribute => attribute.name)
     }
 
-    defaultColumns() {
-        return ['id', 'created_at', 'updated_at']
+    injectColumns(columns) {
+        return columns.filter(column => {
+            let path = ['objectModel', this.heading, column]
+            // Check if it is excluded in preferences
+            return !(Preference.has(path) && (Preference.get(path) === false))
+        })
     }
 
     className() {
