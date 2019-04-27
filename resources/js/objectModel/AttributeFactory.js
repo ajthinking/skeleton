@@ -23,6 +23,7 @@ export default class AttributeFactory {
                 ... factory.property("index"),
                 ... factory.property("nullable"),
                 ... factory.property("unique"),
+                ... factory.property("foreign"),
             }
         )
     }
@@ -35,6 +36,11 @@ export default class AttributeFactory {
     }
 
     /* GETTERS ***************************************************************/
+
+    getForeign() {
+        let matches = (new RegExp("^(.*)_id$")).exec(this.name)
+        return matches ? matches[1] : null
+    }
 
     getCast() {
         return null
@@ -58,15 +64,13 @@ export default class AttributeFactory {
     }
 
     getFillable() {
-        return {
-            fillable: ![
-                'id',
-                'updated_at',
-                'created_at',
-                'remember_token',
-                'email_verified_at'
-            ].includes(this.name)
-        }
+        return ![
+            'id',
+            'updated_at',
+            'created_at',
+            'remember_token',
+            'email_verified_at'
+        ].includes(this.name)
     }
 
     getNullable() {

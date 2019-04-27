@@ -1,10 +1,11 @@
 import Config from '../Config'
+import Storage from './Storage'
+import recursiveJSONIterator from './recursiveJSONIterator'
+const mergeJSON = require('deepmerge')
 
 let defaultSchema = Config.FileFactory.defaultSchema()
 
-let preferences = {
-    ...defaultSchema
-}
+
 
 
 export default class Preference {
@@ -23,8 +24,30 @@ export default class Preference {
             return ReferenceError
         }
     }
-    
-    static set() {
 
+    /* Default driver is localstorage but could also be something like a gist */
+    static persist(data) {
+        Storage.set('objectModel',
+            mergeJSON(
+                Storage.get('objectModel') ? Storage.get('objectModel') : {},
+                data
+            )
+        )
     }
 }
+
+
+
+
+
+
+
+
+// let result = Storage.get('objectModel') ? Storage.get('objectModel') : {}
+        
+// recursiveJSONIterator(data, [], (stack, value) => {
+//     stack.reduce((branch, key) => {
+//         if(!branch)
+//         branch[key] = value
+//     }, result)
+// })

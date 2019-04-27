@@ -4,4 +4,13 @@ export default class Attribute {
             this[key] = properties[key]
         })
     }
+
+    serialize() {
+        return Object.keys(this).filter(key => key != "parent").reduce((result, key) => {
+            return {
+                ... result,
+                [key]: this[key]
+            }
+        }, {})
+    }
 }

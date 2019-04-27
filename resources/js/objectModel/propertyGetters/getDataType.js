@@ -26,7 +26,6 @@ class DataTypeResolver {
             "timestamps": "timestamps",
             "rememberToken": "rememberToken",
             "timestamps()": "timestamps",
-            "created_at": "timestamps",
             "email": "string",
         }
         if(reservedNames.hasOwnProperty(name)) {

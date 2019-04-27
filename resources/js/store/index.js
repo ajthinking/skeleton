@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import Parser from '../objectModel/ObjectModelNotesParser'
 import ObjectModelCollection from '../objectModel/ObjectModelCollection'
 import Config from '../Config'
+import Preference from '../utilities/Preference'
 
 
 Vue.use(Vuex)
@@ -23,6 +24,8 @@ export default new Vuex.Store({
         reviewFiles: [],
 
         templates: {},
+
+        schema: {},
     },
     mutations: {
         navigate(state, {namespace, tab}) {
@@ -32,6 +35,10 @@ export default new Vuex.Store({
         setObjectModelNotes(state, content) {
             state.objectModelNotes = content
         },
+
+        setSchema(state, content) {
+            state.schema = content
+        },        
 
         setReviewFiles(state, files) {
             state.reviewFiles = files
@@ -49,7 +56,12 @@ export default new Vuex.Store({
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
             context.dispatch('compile', objectModelNotes)
+            context.dispatch('compileSchema', objectModelNotes)
         },
+
+        setSchema(context, schema) {
+            context.commit('setSchema', schema)
+        },        
         
         compile(context, objectModelNotes) {
             let files = Config.FileFactory.from(
@@ -62,6 +74,8 @@ export default new Vuex.Store({
 
             context.commit('setReviewFiles', files)
 
+            
+            // Set the highlighted file in the review list
             // This part need to be refactored...
             if(context.state.navigation.review == "" && context.state.reviewFiles.length){
                 context.commit('navigate', {
@@ -73,6 +87,16 @@ export default new Vuex.Store({
         
         },
         
+        compileSchema(context, objectModelNotes) {
+            let schema = ObjectModelCollection.fromEntities(
+                Parser.parse(objectModelNotes).segment()
+            ).serializeSchema()
+            
+            context.commit('setSchema', schema)
+
+            Preference.persist(schema)
+        },
+
         setTemplates(context) {
             fetch('/skeleton/api/templates').then(result => result.json()).then(templates => 
                 context.commit('setTemplates', templates)

@@ -2047,6 +2047,40 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: {
+    schema: {
+      get: function get() {
+        return JSON.stringify(this.$store.state.schema, null, 4);
+      },
+      set: function set(value) {
+        if (JSON.parse(value)) {
+          this.$store.dispatch('setSchema', value);
+        }
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue?vue&type=script&lang=js& ***!
@@ -2062,13 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({}); // <!--:class="style(file) + 'flex'"-->
-// @click="$store.dispatch('navigate', {namespace: 'build', pipe})"
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -5518,6 +5546,121 @@ var snakeCase = __webpack_require__(/*! snake-case */ "./node_modules/snake-case
 module.exports = function (value, locale) {
   return upperCase(snakeCase(value, locale), locale)
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/deepmerge/dist/umd.js":
+/*!********************************************!*\
+  !*** ./node_modules/deepmerge/dist/umd.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+	 true ? module.exports = factory() :
+	undefined;
+}(this, (function () { 'use strict';
+
+var isMergeableObject = function isMergeableObject(value) {
+	return isNonNullObject(value)
+		&& !isSpecial(value)
+};
+
+function isNonNullObject(value) {
+	return !!value && typeof value === 'object'
+}
+
+function isSpecial(value) {
+	var stringValue = Object.prototype.toString.call(value);
+
+	return stringValue === '[object RegExp]'
+		|| stringValue === '[object Date]'
+		|| isReactElement(value)
+}
+
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
+
+function isReactElement(value) {
+	return value.$$typeof === REACT_ELEMENT_TYPE
+}
+
+function emptyTarget(val) {
+	return Array.isArray(val) ? [] : {}
+}
+
+function cloneUnlessOtherwiseSpecified(value, options) {
+	return (options.clone !== false && options.isMergeableObject(value))
+		? deepmerge(emptyTarget(value), value, options)
+		: value
+}
+
+function defaultArrayMerge(target, source, options) {
+	return target.concat(source).map(function(element) {
+		return cloneUnlessOtherwiseSpecified(element, options)
+	})
+}
+
+function getMergeFunction(key, options) {
+	if (!options.customMerge) {
+		return deepmerge
+	}
+	var customMerge = options.customMerge(key);
+	return typeof customMerge === 'function' ? customMerge : deepmerge
+}
+
+function mergeObject(target, source, options) {
+	var destination = {};
+	if (options.isMergeableObject(target)) {
+		Object.keys(target).forEach(function(key) {
+			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+		});
+	}
+	Object.keys(source).forEach(function(key) {
+		if (!options.isMergeableObject(source[key]) || !target[key]) {
+			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+		} else {
+			destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+		}
+	});
+	return destination
+}
+
+function deepmerge(target, source, options) {
+	options = options || {};
+	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+
+	var sourceIsArray = Array.isArray(source);
+	var targetIsArray = Array.isArray(target);
+	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+
+	if (!sourceAndTargetTypesMatch) {
+		return cloneUnlessOtherwiseSpecified(source, options)
+	} else if (sourceIsArray) {
+		return options.arrayMerge(target, source, options)
+	} else {
+		return mergeObject(target, source, options)
+	}
+}
+
+deepmerge.all = function deepmergeAll(array, options) {
+	if (!Array.isArray(array)) {
+		throw new Error('first argument should be an array')
+	}
+
+	return array.reduce(function(prev, next) {
+		return deepmerge(prev, next, options)
+	}, {})
+};
+
+var deepmerge_1 = deepmerge;
+
+return deepmerge_1;
+
+})));
 
 
 /***/ }),
@@ -52095,6 +52238,62 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "resizable-textarea",
+        { ref: "resizableTextarea", staticClass: "mt-4" },
+        [
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.schema,
+                expression: "schema"
+              }
+            ],
+            staticClass: "w-full bg-grey-lighter rounded p-2 text-sm",
+            attrs: { placeholder: "No data yet..." },
+            domProps: { value: _vm.schema },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.schema = $event.target.value
+              }
+            }
+          })
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue?vue&type=template&id=35cb4568&":
 /*!***********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue?vue&type=template&id=35cb4568& ***!
@@ -52110,31 +52309,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "p-2 text-sm" },
-    [
-      _c("p", { staticClass: "mb-4" }, [
-        _vm._v("Select which files you want to generate")
-      ]),
-      _vm._v(" "),
-      _vm._l(_vm.$store.state.availablePipes, function(pipe) {
-        return _c("div", { key: pipe.make().name() }, [
-          _c("input", {
-            attrs: {
-              type: "checkbox",
-              name: "vehicle1",
-              value: "Bike",
-              checked: ""
-            }
-          }),
-          _vm._v(" " + _vm._s(pipe.make().name())),
-          _c("br")
-        ])
-      })
-    ],
-    2
-  )
+  return _c("div", { staticClass: "p-2 text-sm" }, [
+    _vm._v("\n    Here we can set settings\n")
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -65470,6 +65647,7 @@ var map = {
 	"./components/WorkspaceTabs/BuildTab.vue": "./resources/js/components/WorkspaceTabs/BuildTab.vue",
 	"./components/WorkspaceTabs/Design/DesignNavigation.vue": "./resources/js/components/WorkspaceTabs/Design/DesignNavigation.vue",
 	"./components/WorkspaceTabs/Design/ObjectModelTab.vue": "./resources/js/components/WorkspaceTabs/Design/ObjectModelTab.vue",
+	"./components/WorkspaceTabs/Design/SchemaTab.vue": "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue",
 	"./components/WorkspaceTabs/Design/SettingsTab.vue": "./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue",
 	"./components/WorkspaceTabs/Design/TemplatesTab.vue": "./resources/js/components/WorkspaceTabs/Design/TemplatesTab.vue",
 	"./components/WorkspaceTabs/DesignTab.vue": "./resources/js/components/WorkspaceTabs/DesignTab.vue",
@@ -66021,6 +66199,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ObjectModelTab_vue_vue_type_template_id_f80d5df6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ObjectModelTab_vue_vue_type_template_id_f80d5df6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SchemaTab.vue?vue&type=template&id=f515fcac& */ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&");
+/* harmony import */ var _SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SchemaTab.vue?vue&type=script&lang=js& */ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/WorkspaceTabs/Design/SchemaTab.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SchemaTab.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SchemaTab.vue?vue&type=template&id=f515fcac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -67220,17 +67467,44 @@ function (_ModelPipe) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Attribute; });
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Attribute = function Attribute(properties) {
-  var _this = this;
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  _classCallCheck(this, Attribute);
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  Object.keys(properties).map(function (key) {
-    _this[key] = properties[key];
-  });
-};
+var Attribute =
+/*#__PURE__*/
+function () {
+  function Attribute(properties) {
+    var _this = this;
+
+    _classCallCheck(this, Attribute);
+
+    Object.keys(properties).map(function (key) {
+      _this[key] = properties[key];
+    });
+  }
+
+  _createClass(Attribute, [{
+    key: "serialize",
+    value: function serialize() {
+      var _this2 = this;
+
+      return Object.keys(this).filter(function (key) {
+        return key != "parent";
+      }).reduce(function (result, key) {
+        return _objectSpread({}, result, _defineProperty({}, key, _this2[key]));
+      }, {});
+    }
+  }]);
+
+  return Attribute;
+}();
 
 
 
@@ -67285,6 +67559,12 @@ function () {
     /* GETTERS ***************************************************************/
 
   }, {
+    key: "getForeign",
+    value: function getForeign() {
+      var matches = new RegExp("^(.*)_id$").exec(this.name);
+      return matches ? matches[1] : null;
+    }
+  }, {
     key: "getCast",
     value: function getCast() {
       return null;
@@ -67312,9 +67592,7 @@ function () {
   }, {
     key: "getFillable",
     value: function getFillable() {
-      return {
-        fillable: !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name)
-      };
+      return !['id', 'updated_at', 'created_at', 'remember_token', 'email_verified_at'].includes(this.name);
     }
   }, {
     key: "getNullable",
@@ -67342,7 +67620,7 @@ function () {
       return new _Attribute__WEBPACK_IMPORTED_MODULE_0__["default"](_objectSpread({
         name: factory.name,
         parent: factory.parent
-      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("nullable"), factory.property("unique")));
+      }, factory.property("cast"), factory.property("dataType"), factory.property("fillable"), factory.property("hidden"), factory.property("index"), factory.property("nullable"), factory.property("unique"), factory.property("foreign")));
     }
   }]);
 
@@ -67365,6 +67643,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelCollection; });
 /* harmony import */ var _utilities_Collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Collection */ "./resources/js/utilities/Collection.js");
 /* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -67533,6 +67815,13 @@ function () {
         });
       });
     }
+  }, {
+    key: "serializeSchema",
+    value: function serializeSchema() {
+      return this.entities.reduce(function (result, entity) {
+        return _objectSpread({}, result, _defineProperty({}, entity.heading, entity.serialize()));
+      }, {});
+    }
   }], [{
     key: "fromEntities",
     value: function fromEntities(entities) {
@@ -67561,6 +67850,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Attribute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute.js */ "./resources/js/objectModel/Attribute.js");
 /* harmony import */ var _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AttributeFactory.js */ "./resources/js/objectModel/AttributeFactory.js");
 /* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -67639,6 +67932,13 @@ function () {
     key: "asForeignKey",
     value: function asForeignKey() {
       return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(this.heading) + "_id";
+    }
+  }, {
+    key: "serialize",
+    value: function serialize() {
+      return this.attributes.reduce(function (result, attribute) {
+        return _objectSpread({}, result, _defineProperty({}, attribute.name, attribute.serialize()));
+      }, {});
     }
   }], [{
     key: "fromText",
@@ -67979,7 +68279,6 @@ function () {
         "timestamps": "timestamps",
         "rememberToken": "rememberToken",
         "timestamps()": "timestamps",
-        "created_at": "timestamps",
         "email": "string"
       };
 
@@ -68057,6 +68356,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../objectModel/ObjectModelNotesParser */ "./resources/js/objectModel/ObjectModelNotesParser.js");
 /* harmony import */ var _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../objectModel/ObjectModelCollection */ "./resources/js/objectModel/ObjectModelCollection.js");
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
+/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
+
 
 
 
@@ -68075,7 +68376,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     availablePipes: _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.pipes(),
     objectModelNotes: "",
     reviewFiles: [],
-    templates: {}
+    templates: {},
+    schema: {}
   },
   mutations: {
     navigate: function navigate(state, _ref) {
@@ -68085,6 +68387,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     setObjectModelNotes: function setObjectModelNotes(state, content) {
       state.objectModelNotes = content;
+    },
+    setSchema: function setSchema(state, content) {
+      state.schema = content;
     },
     setReviewFiles: function setReviewFiles(state, files) {
       state.reviewFiles = files;
@@ -68100,10 +68405,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     setObjectModelNotes: function setObjectModelNotes(context, objectModelNotes) {
       context.commit('setObjectModelNotes', objectModelNotes);
       context.dispatch('compile', objectModelNotes);
+      context.dispatch('compileSchema', objectModelNotes);
+    },
+    setSchema: function setSchema(context, schema) {
+      context.commit('setSchema', schema);
     },
     compile: function compile(context, objectModelNotes) {
       var files = _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
-      context.commit('setReviewFiles', files); // This part need to be refactored...
+      context.commit('setReviewFiles', files); // Set the highlighted file in the review list
+      // This part need to be refactored...
 
       if (context.state.navigation.review == "" && context.state.reviewFiles.length) {
         context.commit('navigate', {
@@ -68111,6 +68421,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
           tab: context.state.reviewFiles[0].path
         });
       }
+    },
+    compileSchema: function compileSchema(context, objectModelNotes) {
+      var schema = _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment()).serializeSchema();
+      context.commit('setSchema', schema);
+      _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__["default"].persist(schema);
     },
     setTemplates: function setTemplates(context) {
       fetch('/skeleton/api/templates').then(function (result) {
@@ -68235,6 +68550,8 @@ function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Preference; });
 /* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
+/* harmony import */ var _Storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Storage */ "./resources/js/utilities/Storage.js");
+/* harmony import */ var _recursiveJSONIterator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./recursiveJSONIterator */ "./resources/js/utilities/recursiveJSONIterator.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -68243,14 +68560,13 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+
+
+var mergeJSON = __webpack_require__(/*! deepmerge */ "./node_modules/deepmerge/dist/umd.js");
 
 var defaultSchema = _Config__WEBPACK_IMPORTED_MODULE_0__["default"].FileFactory.defaultSchema();
-
-var preferences = _objectSpread({}, defaultSchema);
 
 var Preference =
 /*#__PURE__*/
@@ -68276,12 +68592,76 @@ function () {
         return ReferenceError;
       }
     }
+    /* Default driver is localstorage but could also be something like a gist */
+
   }, {
-    key: "set",
-    value: function set() {}
+    key: "persist",
+    value: function persist(data) {
+      _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].set('objectModel', mergeJSON(_Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') ? _Storage__WEBPACK_IMPORTED_MODULE_1__["default"].get('objectModel') : {}, data));
+    }
   }]);
 
   return Preference;
+}(); // let result = Storage.get('objectModel') ? Storage.get('objectModel') : {}
+// recursiveJSONIterator(data, [], (stack, value) => {
+//     stack.reduce((branch, key) => {
+//         if(!branch)
+//         branch[key] = value
+//     }, result)
+// })
+
+
+
+
+/***/ }),
+
+/***/ "./resources/js/utilities/Storage.js":
+/*!*******************************************!*\
+  !*** ./resources/js/utilities/Storage.js ***!
+  \*******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Storage; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Storage =
+/*#__PURE__*/
+function () {
+  function Storage() {
+    _classCallCheck(this, Storage);
+  }
+
+  _createClass(Storage, null, [{
+    key: "get",
+    value: function get(name) {
+      return JSON.parse(localStorage.getItem(name));
+    }
+  }, {
+    key: "getWithStack",
+    value: function getWithStack(stack) {}
+  }, {
+    key: "set",
+    value: function set(name, value) {
+      localStorage.setItem(name, JSON.stringify(value));
+    }
+  }, {
+    key: "setWithStack",
+    value: function setWithStack(stack, value) {//
+    }
+  }, {
+    key: "mergeJSON",
+    value: function mergeJSON(name, data) {//
+    }
+  }]);
+
+  return Storage;
 }();
 
 
@@ -68379,6 +68759,41 @@ function () {
 }();
 
 
+
+/***/ }),
+
+/***/ "./resources/js/utilities/recursiveJSONIterator.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/utilities/recursiveJSONIterator.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function iterate(obj, stack, callback) {
+  for (var property in obj) {
+    if (obj.hasOwnProperty(property)) {
+      if (_typeof(obj[property]) == "object") {
+        iterate(obj[property], [].concat(_toConsumableArray(stack), [property]), callback);
+      } else {
+        callback([].concat(_toConsumableArray(stack), [property]), obj[property]);
+      }
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (iterate);
 
 /***/ }),
 

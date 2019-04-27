@@ -53,4 +53,13 @@ export default class ObjectModelEntity {
     asForeignKey() {
         return F.snakeCase(this.heading) + "_id";       
     }
+
+    serialize() {
+        return this.attributes.reduce((result, attribute) => {
+            return {
+                ... result,
+                [attribute.name]: attribute.serialize()
+            }
+        }, {})
+    }
 }

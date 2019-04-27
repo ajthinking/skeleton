@@ -134,4 +134,13 @@ export default class ObjectModelCollection {
             })            
         })
     }
+
+    serializeSchema() {
+        return this.entities.reduce((result, entity) => {
+            return {
+                ... result,
+                [entity.heading]: entity.serialize()
+            }
+        }, {})
+    }   
 }
