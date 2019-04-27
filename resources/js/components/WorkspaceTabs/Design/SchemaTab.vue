@@ -1,8 +1,13 @@
 <template>
     <div>
-        <resizable-textarea class="mt-4" ref="resizableTextarea">
-            <textarea placeholder="No data yet..." v-model="schema" class="w-full bg-grey-lighter rounded p-2 text-sm"></textarea>
-        </resizable-textarea>
+        <textarea-autosize
+            class="w-full bg-grey-lighter rounded p-2 text-sm"
+            placeholder="No data yet..."
+            ref="someName"
+            v-model="schema"
+            :min-height="400"
+            @blur.native="onBlurTextarea"
+        ></textarea-autosize>        
     </div>
 </template>
 

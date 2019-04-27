@@ -14,6 +14,10 @@ import store from './store'
 import VueHighlightJS from 'vue-highlightjs'
 Vue.use(VueHighlightJS)
 
+import VueTextareaAutosize from 'vue-textarea-autosize'
+
+Vue.use(VueTextareaAutosize)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
