@@ -19,7 +19,7 @@ export default class FileFactory {
         return [
             UserPipe,
             ModelPipe,
-            //MigrationPipe,
+            MigrationPipe,
             //ControllerPipe,
             //APIControllerPipe,
             //SeederPipe,

@@ -34,9 +34,6 @@ export default class SeederPipe extends ModelPipe {
     }
 
     databaseSeedersBlock() {
-        console.log(this.omc.modelsIncludingUser().map(model => {
-            return "$this->call(" + model.className() + "Seeder::class);"
-        }).toArray().join("\n"))
         return this.omc.modelsIncludingUser().map(model => {
             return "$this->call(" + model.className() + "Seeder::class);"
         }).toArray().join("\n")        

@@ -66417,7 +66417,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"]];
     }
   }, {
     key: "defaultSchema",
@@ -66824,14 +66824,24 @@ function (_BasePipe) {
       var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
       return omc.inOptimalMigrationOrder().map(function (entity, index) {
         return {
-          path: "database/migrations/" + _this.migrationTimeStamp(index) + "_create_" + _this.tableName(entity) + "_table.php",
+          path: _this.migrationFilePath(entity, index),
           content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Migration').replace({
-            ___CLASS_NAME___: "Create" + _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pascalCase(_this.tableName(entity)) + "Table",
+            ___CLASS_NAME___: _this.className(entity),
             ___TABLE___: _this.tableName(entity),
             ___COLUMNS_BLOCK___: _this.columns(entity)
           })
         };
       }).toArray();
+    }
+  }, {
+    key: "migrationFilePath",
+    value: function migrationFilePath(entity, index) {
+      return "database/migrations/" + this.migrationTimeStamp(index) + "_create_" + this.tableName(entity) + "_table.php";
+    }
+  }, {
+    key: "className",
+    value: function className(entity) {
+      return "Create" + _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pascalCase(this.tableName(entity)) + "Table";
     }
   }, {
     key: "tableName",
@@ -66856,68 +66866,7 @@ function (_BasePipe) {
   }, {
     key: "statementsFor",
     value: function statementsFor(attribute) {
-      var statements = [//this.overridden(name), /* not implemented */
-      this.reserved(attribute), this.ruled(attribute), this["default"](attribute)].find(function (filter) {
-        return filter;
-      });
-      return Array.isArray(statements) ? statements.join('\n') : [statements];
-    }
-  }, {
-    key: "reserved",
-    value: function reserved(name) {
-      var reservedNames = {
-        "id": "$table->increments('id');",
-        "timestamps": "$table->timestamps();",
-        "timestamps()": "$table->timestamps();",
-        "rememberToken": "$table->rememberToken();",
-        "rememberToken()": "$table->rememberToken();",
-        "created_at": "$table->timestamp('created_at')->nullable();",
-        "email": "$table->string('email')->unique();"
-      };
-
-      if (reservedNames.hasOwnProperty(name)) {
-        return reservedNames[name];
-      }
-
-      return false;
-    }
-  }, {
-    key: "ruled",
-    value: function ruled(name) {
-      var matchedRuleKey = Object.keys(this.rules()).find(function (rule) {
-        return new RegExp(rule).test(name);
-      });
-
-      if (typeof matchedRuleKey !== "undefined") {
-        return this.rules()[matchedRuleKey](name);
-      }
-
-      return false;
-    }
-  }, {
-    key: "rules",
-    value: function rules() {
-      return {
-        // One to Many explicit
-        "_id$": function _id$(name) {
-          var snakeCaseSingular = name.slice(0, name.length - 3).replace(/_/g, "");
-          var plural = _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(snakeCaseSingular);
-          return ["$table->unsignedInteger('" + name + "');", "$table->foreign('" + name + "')->references('id')->on('" + plural + "')->onDelete('cascade');"];
-        },
-        // Time columns
-        "(time|date|_at)$": function timeDate_at$(name) {
-          return "$table->timestamp('" + name + "');";
-        },
-        // Boolean
-        "^(has_|is_|got_)": function has_Is_Got_(name) {
-          return "$table->boolean('" + name + "')->default(false);";
-        }
-      };
-    }
-  }, {
-    key: "default",
-    value: function _default(name) {
-      return "$table->string('" + name + "');";
+      return ["$table->".concat(attribute.dataType, "('").concat(attribute.name, "');")].join("\n");
     }
   }, {
     key: "migrationTimeStamp",
@@ -67022,7 +66971,6 @@ function (_BasePipe) {
   }, {
     key: "casts",
     value: function casts(model) {
-      console.log(model.attributes);
       return model.attributes.filter(function (attribute) {
         return attribute.cast;
       }).map(function (attribute) {
@@ -67159,9 +67107,6 @@ function (_ModelPipe) {
   }, {
     key: "databaseSeedersBlock",
     value: function databaseSeedersBlock() {
-      console.log(this.omc.modelsIncludingUser().map(function (model) {
-        return "$this->call(" + model.className() + "Seeder::class);";
-      }).toArray().join("\n"));
       return this.omc.modelsIncludingUser().map(function (model) {
         return "$this->call(" + model.className() + "Seeder::class);";
       }).toArray().join("\n");

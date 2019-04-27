@@ -35,7 +35,6 @@ export default class ModelPipe extends BasePipe {
     }
 
     casts(model) {
-        console.log(model.attributes);
         return model.attributes.filter(attribute => attribute.cast)
             .map(attribute => "'" + attribute.name + "' => '" + attribute.cast + "'")
             .join(",\n")
