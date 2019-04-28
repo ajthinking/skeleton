@@ -1972,16 +1972,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      availableTabs: ["Object model", "schema",
-      /* "Object model diagram", */
-      "settings", "templates"],
+      availableTabs: ["Object model", "settings", "templates"],
       activeTab: "Object model"
     };
   },
   methods: {
-    style: function style(tab) {
-      var class_ = "flex items-center justify-center cursor-pointer border text-sm p-2 " + (this.activeTab == tab ? "bg-grey-light" : "bg-grey-lighter hover:bg-white");
-      return class_;
+    styleButtonContainer: function styleButtonContainer(tab) {
+      var activeStyle = "-mb-px mr-1";
+      var passiveStyle = "mr-1";
+      return this.activeTab == tab ? activeStyle : passiveStyle;
+    },
+    styleButton: function styleButton(tab) {
+      var activeStyle = "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-dark font-semibold";
+      var passiveStyle = "bg-white inline-block py-2 px-4 text-blue hover:text-blue-darker font-semibold";
+      return this.activeTab == tab ? activeStyle : passiveStyle;
     }
   }
 });
@@ -1997,6 +2001,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2038,43 +2056,7 @@ __webpack_require__.r(__webpack_exports__);
       set: function set(value) {
         this.$store.commit('updateMessage', value);
       }
-    }
-  },
-  methods: {
-    addUserSystem: function addUserSystem() {
-      this.objectModelNotes += "User\nname\nemail\nemail_verified_at\npassword\nremember_token\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"; // resizable textarea does not register the changes since it uses the 'input' event
-      // resort to forceUpdate (BUGGED OUT ...)
-      //this.$refs.resizableTextarea.forceRerender()
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  computed: {
+    },
     schema: {
       get: function get() {
         return JSON.stringify(this.$store.state.schema, null, 4);
@@ -2084,6 +2066,13 @@ __webpack_require__.r(__webpack_exports__);
           this.$store.dispatch('setSchema', JSON.parse(value));
         }
       }
+    }
+  },
+  methods: {
+    addUserSystem: function addUserSystem() {
+      this.objectModelNotes += "User\nname\nemail\nemail_verified_at\npassword\nremember_token\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"; // resizable textarea does not register the changes since it uses the 'input' event
+      // resort to forceUpdate (BUGGED OUT ...)
+      //this.$refs.resizableTextarea.forceRerender()
     }
   }
 });
@@ -2214,60 +2203,6 @@ __webpack_require__.r(__webpack_exports__);
       var class_ = "px-2 py-2 " + (this.isActiveFile(file) ? "bg-grey-light bg-grey-darker" : "bg-grey-lighter hover:bg-white");
       return class_;
     }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    minHeight: {
-      type: Number,
-      "default": 400
-    }
-  },
-  methods: {
-    resizeTextarea: function resizeTextarea(event) {
-      event.target.style.height = 'auto';
-      event.target.style.height = this.acceptScrollHeight(event.target.scrollHeight) + 'px';
-    },
-    forceRerender: function forceRerender() {
-      var _this = this;
-
-      this.$nextTick(function () {
-        _this.$el.style.height = 'auto';
-        _this.$el.style.height = _this.height() + 'px';
-      });
-    },
-    height: function height() {
-      return Math.max(this.$el.style.height, this.minHeight);
-    },
-    acceptScrollHeight: function acceptScrollHeight(candidateHeight) {
-      return Math.max(candidateHeight, this.minHeight);
-    }
-  },
-  mounted: function mounted() {
-    var _this2 = this;
-
-    this.$nextTick(function () {
-      _this2.$el.setAttribute('style', 'height:' + _this2.height() + 'px;overflow-y:hidden;');
-    });
-    this.$el.addEventListener('input', this.resizeTextarea);
-  },
-  beforeDestroy: function beforeDestroy() {
-    this.$el.removeEventListener('input', this.resizeTextarea);
-  },
-  render: function render() {
-    return this.$slots["default"][0];
   }
 });
 
@@ -52154,23 +52089,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "flex h-12 mx-auto border" },
+    "ul",
+    { staticClass: "list-reset flex border-b mb-8 px-24" },
     _vm._l(_vm.availableTabs, function(tab) {
-      return _c(
-        "div",
-        {
-          key: tab,
-          class: _vm.style(tab),
-          on: {
-            click: function($event) {
-              _vm.activeTab = tab
-              _vm.$store.dispatch("navigate", { namespace: "design", tab: tab })
+      return _c("li", { key: tab, class: _vm.styleButtonContainer(tab) }, [
+        _c(
+          "div",
+          {
+            class: _vm.styleButton(tab),
+            on: {
+              click: function($event) {
+                _vm.activeTab = tab
+                _vm.$store.dispatch("navigate", {
+                  namespace: "design",
+                  tab: tab
+                })
+              }
             }
-          }
-        },
-        [_vm._v("\n        " + _vm._s(tab) + "\n    ")]
-      )
+          },
+          [_vm._v(_vm._s(tab))]
+        )
+      ])
     }),
     0
   )
@@ -52197,96 +52136,72 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("textarea-autosize", {
-        ref: "someName",
-        staticClass: "w-full bg-grey-lighter rounded p-2 text-sm",
-        attrs: { placeholder: "Start typing here...", "min-height": 400 },
-        nativeOn: {
-          blur: function($event) {
-            return _vm.onBlurTextarea($event)
+  return _c("div", { staticClass: "flex max-w-2xl mx-auto px-8" }, [
+    _c(
+      "div",
+      { staticClass: "flex-1 mr-2" },
+      [
+        _c("textarea-autosize", {
+          ref: "someName",
+          staticClass: "w-full bg-grey-lighter rounded p-2 text-sm",
+          attrs: { placeholder: "Start typing here...", "min-height": 400 },
+          model: {
+            value: _vm.objectModelNotes,
+            callback: function($$v) {
+              _vm.objectModelNotes = $$v
+            },
+            expression: "objectModelNotes"
           }
-        },
-        model: {
-          value: _vm.objectModelNotes,
-          callback: function($$v) {
-            _vm.objectModelNotes = $$v
-          },
-          expression: "objectModelNotes"
-        }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "mt-1" }, [
-        _c(
-          "button",
-          {
-            class: _vm.buttonStyle,
-            on: {
-              click: function($event) {
-                return _vm.addUserSystem()
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-1" }, [
+          _c(
+            "button",
+            {
+              class: _vm.buttonStyle,
+              on: {
+                click: function($event) {
+                  return _vm.addUserSystem()
+                }
               }
-            }
-          },
-          [_vm._v("+ user system")]
-        ),
-        _vm._v(" "),
-        _c("button", { class: _vm.buttonStyle }, [_vm._v("+ sample app")]),
-        _vm._v(" "),
-        _c("button", { class: _vm.buttonStyle }, [_vm._v("+ random app")]),
-        _vm._v(" "),
-        _c("button", { class: _vm.buttonStyle }, [_vm._v("syntax")])
-      ])
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("textarea-autosize", {
-        ref: "someName",
-        staticClass: "w-full bg-grey-lighter rounded p-2 text-sm",
-        attrs: { placeholder: "No data yet...", "min-height": 400 },
-        nativeOn: {
-          blur: function($event) {
-            return _vm.onBlurTextarea($event)
+            },
+            [_vm._v("+ user system")]
+          ),
+          _vm._v(" "),
+          _c("button", { class: _vm.buttonStyle }, [_vm._v("+ sample app")]),
+          _vm._v(" "),
+          _c("button", { class: _vm.buttonStyle }, [_vm._v("+ random app")]),
+          _vm._v(" "),
+          _c("button", { class: _vm.buttonStyle }, [_vm._v("syntax")])
+        ])
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "flex-1 ml-2" },
+      [
+        _c("textarea-autosize", {
+          ref: "someName",
+          staticClass: "w-full bg-grey-lighter rounded p-2 text-sm",
+          attrs: { placeholder: "No data yet...", "min-height": 400 },
+          model: {
+            value: _vm.schema,
+            callback: function($$v) {
+              _vm.schema = $$v
+            },
+            expression: "schema"
           }
-        },
-        model: {
-          value: _vm.schema,
-          callback: function($$v) {
-            _vm.schema = $$v
-          },
-          expression: "schema"
-        }
-      })
-    ],
-    1
-  )
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-1" }, [
+          _c("button", { class: _vm.buttonStyle }, [_vm._v("+ some action")])
+        ])
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52383,12 +52298,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass:
-        "h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto"
-    },
+    { staticClass: "h-full mt-8 mx-auto" },
     [
-      _c("design-navigation"),
+      _c("design-navigation", { staticClass: "mb-4" }),
       _vm._v(" "),
       _c(_vm.activeTabComponent, { tag: "div" })
     ],
@@ -65679,12 +65591,10 @@ var map = {
 	"./components/WorkspaceTabs/BuildTab.vue": "./resources/js/components/WorkspaceTabs/BuildTab.vue",
 	"./components/WorkspaceTabs/Design/DesignNavigation.vue": "./resources/js/components/WorkspaceTabs/Design/DesignNavigation.vue",
 	"./components/WorkspaceTabs/Design/ObjectModelTab.vue": "./resources/js/components/WorkspaceTabs/Design/ObjectModelTab.vue",
-	"./components/WorkspaceTabs/Design/SchemaTab.vue": "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue",
 	"./components/WorkspaceTabs/Design/SettingsTab.vue": "./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue",
 	"./components/WorkspaceTabs/Design/TemplatesTab.vue": "./resources/js/components/WorkspaceTabs/Design/TemplatesTab.vue",
 	"./components/WorkspaceTabs/DesignTab.vue": "./resources/js/components/WorkspaceTabs/DesignTab.vue",
-	"./components/WorkspaceTabs/ReviewTab.vue": "./resources/js/components/WorkspaceTabs/ReviewTab.vue",
-	"./components/utilities/ResizableTextarea.vue": "./resources/js/components/utilities/ResizableTextarea.vue"
+	"./components/WorkspaceTabs/ReviewTab.vue": "./resources/js/components/WorkspaceTabs/ReviewTab.vue"
 };
 
 
@@ -66239,75 +66149,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SchemaTab.vue?vue&type=template&id=f515fcac& */ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&");
-/* harmony import */ var _SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SchemaTab.vue?vue&type=script&lang=js& */ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/WorkspaceTabs/Design/SchemaTab.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SchemaTab.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac& ***!
-  \***************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SchemaTab.vue?vue&type=template&id=f515fcac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/WorkspaceTabs/Design/SchemaTab.vue?vue&type=template&id=f515fcac&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SchemaTab_vue_vue_type_template_id_f515fcac___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue":
 /*!**********************************************************************!*\
   !*** ./resources/js/components/WorkspaceTabs/Design/SettingsTab.vue ***!
@@ -66581,56 +66422,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReviewTab_vue_vue_type_template_id_fc95eaf4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/utilities/ResizableTextarea.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/utilities/ResizableTextarea.vue ***!
-  \*****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ResizableTextarea.vue?vue&type=script&lang=js& */ "./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  _ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"],
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/utilities/ResizableTextarea.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ResizableTextarea.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utilities/ResizableTextarea.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ResizableTextarea_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

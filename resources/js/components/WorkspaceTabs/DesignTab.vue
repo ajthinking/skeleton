@@ -1,6 +1,6 @@
 <template>
-    <div class="h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto">
-        <design-navigation></design-navigation>
+    <div class="h-full mt-8 mx-auto">
+        <design-navigation class="mb-4"></design-navigation>
         <div :is="activeTabComponent"></div>
     </div>
 </template>
