@@ -1860,9 +1860,9 @@ __webpack_require__.r(__webpack_exports__);
       return this.activeTab == tab ? activeStyle : passiveStyle;
     },
     styleButton: function styleButton(tab) {
-      var common = "w-full text-center flex-1 bg-white inline-block font-semibold ";
-      var activeStyle = "border-l border-t border-r rounded-t py-2 px-4 text-blue-dark";
-      var passiveStyle = "py-2 px-4 text-blue hover:text-blue-darker";
+      var common = "w-full text-center flex-1 inline-block font-semibold ";
+      var activeStyle = "bg-white border-l border-t border-r py-2 px-4 text-blue";
+      var passiveStyle = "py-2 px-4 hover:text-blue-darker bg-grey-lightest ";
       return this.activeTab == tab ? common + activeStyle : common + passiveStyle;
     }
   }
@@ -1990,9 +1990,10 @@ __webpack_require__.r(__webpack_exports__);
       return this.activeTab == tab ? activeStyle : passiveStyle;
     },
     styleButton: function styleButton(tab) {
-      var activeStyle = "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-dark font-semibold";
-      var passiveStyle = "bg-white inline-block py-2 px-4 text-blue hover:text-blue-darker font-semibold";
-      return this.activeTab == tab ? activeStyle : passiveStyle;
+      var common = "bg-white inline-block font-semibold ";
+      var activeStyle = "border-l border-t border-r rounded-t py-2 px-4 text-blue-dark";
+      var passiveStyle = "py-2 px-4 text-blue hover:text-blue-darker";
+      return this.activeTab == tab ? common + activeStyle : common + passiveStyle;
     }
   }
 });
@@ -51975,7 +51976,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "ul",
-    { staticClass: "list-reset flex justify-around border-b" },
+    { staticClass: "list-reset flex justify-around border-b bg-grey-lighter" },
     _vm._l(_vm.availableTabs, function(tab) {
       return _c("li", { key: tab, class: _vm.styleButtonContainer(tab) }, [
         _c(
