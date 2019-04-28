@@ -1854,9 +1854,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    style: function style(tab) {
-      var class_ = "flex items-center justify-center flex-1 cursor-pointer border text-sm " + (this.activeTab == tab ? "bg-grey-light" : "bg-grey-lighter hover:bg-white");
-      return class_;
+    styleButtonContainer: function styleButtonContainer(tab) {
+      var activeStyle = "flex-1 -mb-px mr-1";
+      var passiveStyle = "flex-1 mr-1";
+      return this.activeTab == tab ? activeStyle : passiveStyle;
+    },
+    styleButton: function styleButton(tab) {
+      var common = "w-full text-center flex-1 bg-white inline-block font-semibold ";
+      var activeStyle = "border-l border-t border-r rounded-t py-2 px-4 text-blue-dark";
+      var passiveStyle = "py-2 px-4 text-blue hover:text-blue-darker";
+      return this.activeTab == tab ? common + activeStyle : common + passiveStyle;
     }
   }
 });
@@ -51967,26 +51974,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "flex h-12 mx-auto border" },
+    "ul",
+    { staticClass: "list-reset flex justify-around border-b" },
     _vm._l(_vm.availableTabs, function(tab) {
-      return _c(
-        "div",
-        {
-          key: tab,
-          class: _vm.style(tab),
-          on: {
-            click: function($event) {
-              _vm.activeTab = tab
-              _vm.$store.dispatch("navigate", {
-                namespace: "workspace",
-                tab: tab
-              })
+      return _c("li", { key: tab, class: _vm.styleButtonContainer(tab) }, [
+        _c(
+          "div",
+          {
+            class: _vm.styleButton(tab),
+            on: {
+              click: function($event) {
+                _vm.activeTab = tab
+                _vm.$store.dispatch("navigate", {
+                  namespace: "workspace",
+                  tab: tab
+                })
+              }
             }
-          }
-        },
-        [_vm._v("\n        " + _vm._s(tab) + "\n    ")]
-      )
+          },
+          [_vm._v(_vm._s(tab))]
+        )
+      ])
     }),
     0
   )
