@@ -26,9 +26,9 @@
             },
 
             styleButton(tab) {
-                let common = "w-full text-center flex-1 inline-block font-semibold "
+                let common = "py-4 w-full text-center flex-1 inline-block font-semibold "
                 let activeStyle = "bg-white border-l border-t border-r py-2 px-4 text-blue"
-                let passiveStyle = "py-2 px-4 hover:text-blue-darker bg-grey-lightest "                
+                let passiveStyle = "py-2 px-4 hover:text-blue-darker bg-grey-lightest text-grey-darkest"                
             
                 return this.activeTab == tab ? common + activeStyle : common + passiveStyle
             },

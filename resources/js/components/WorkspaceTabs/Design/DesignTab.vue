@@ -1,12 +1,21 @@
 <template>
     <div class="h-full mt-8 mx-auto">
-        <design-navigation class="mb-4"></design-navigation>
+        <workspace-tab-navigation 
+            :availableTabs="availableTabs"
+            :namespace="'design'"
+        ></workspace-tab-navigation>
         <div :is="activeTabComponent"></div>
     </div>
 </template>
 
 <script>
     export default {
+        data() {
+            return {
+                availableTabs: ['Object model', 'templates', 'settings']
+            }
+        },
+
         computed: {
             activeTab() {
                 return this.$store.state.navigation.design
@@ -18,3 +27,5 @@
         }            
     }
 </script>
+
+

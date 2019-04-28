@@ -1,8 +1,8 @@
 <template>
-    <div class="flex max-w-2xl mx-auto px-8">
+    <div class="flex max-w-3xl mx-auto px-8 bg-white pt-4">
         <div class="flex-1 mr-2">           
             <textarea-autosize
-                class="w-full bg-grey-lighter rounded p-2 text-sm"
+                class="w-full bg-grey-lightest rounded p-2 text-sm"
                 placeholder="Start typing here..."
                 ref="someName"
                 v-model="objectModelNotes"
@@ -18,7 +18,7 @@
         </div>
         <div class="flex-1 ml-2">            
             <textarea-autosize
-                class="w-full bg-grey-lighter rounded p-2 text-sm"
+                class="w-full bg-grey-lightest rounded p-2 text-sm"
                 placeholder="No data yet..."
                 ref="someName"
                 v-model="schema"

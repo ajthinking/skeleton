@@ -1,9 +1,9 @@
 <template>
-    <ul class="list-reset flex border-b mb-8 px-24">
+    <ul class="list-reset flex border-b px-24 mb-0">
         <li :class="styleButtonContainer(tab)" v-for="tab in availableTabs" :key="tab">
             <div 
                 :class="styleButton(tab)"
-                @click="activeTab = tab; $store.dispatch('navigate', {namespace: 'design', tab})"
+                @click="activeTab = tab; $store.dispatch('navigate', {namespace, tab})"
             >{{ tab }}</div>
         </li>
     </ul>
@@ -11,14 +11,11 @@
 
 <script>
     export default {
+        props: ['availableTabs', 'namespace'],
+
         data: function() {
             return {
-                availableTabs: [
-                    "Object model", 
-                    "settings",
-                    "templates"
-                ],
-                activeTab: "Object model",
+                activeTab: this.availableTabs[0],
             }
         },
 
@@ -30,9 +27,9 @@
             },
 
             styleButton(tab) {
-                let common = "bg-white inline-block font-semibold "
+                let common = "bg-white inline-block text-sm "
                 let activeStyle = "border-l border-t border-r rounded-t py-2 px-4 text-blue-dark"
-                let passiveStyle = "py-2 px-4 text-blue hover:text-blue-darker"                
+                let passiveStyle = "py-2 px-4 text-grey-darker hover:text-blue-darkest"                
             
                 return this.activeTab == tab ? common + activeStyle : common + passiveStyle
             },

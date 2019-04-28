@@ -16,7 +16,8 @@ export default new Vuex.Store({
         navigation: {
             workspace: "Design",
             design: "Object model",
-            review: "",
+            review: "files",
+            template: ""
         },
         availablePipes: Config.FileFactory.pipes(),
 
@@ -50,6 +51,10 @@ export default new Vuex.Store({
         setTemplates(state, templates) {
             state.templates = templates
         },
+
+        setTemplate(state, file) {
+            state.templates[file.name] = file.content
+        },        
 
         setPreferences(state, preferences) {
             state.preferences = preferences
@@ -117,6 +122,10 @@ export default new Vuex.Store({
             fetch('/skeleton/api/templates').then(result => result.json()).then(templates => 
                 context.commit('setTemplates', templates)
             )            
+        },
+
+        setTemplate(context, file) {
+            context.commit('setTemplate', file)
         }
     },
     getters: {

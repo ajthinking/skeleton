@@ -1,4 +1,39 @@
 <template>
+    <div class="h-full mt-8 mx-auto">
+        <workspace-tab-navigation 
+            :availableTabs="availableTabs"
+            :namespace="'review'"
+        ></workspace-tab-navigation>
+        <div :is="activeTabComponent"></div>
+    </div>
+</template>
+
+<script>
+    export default {
+        data() {
+            return {
+                availableTabs: ['files']
+            }
+        },
+
+        computed: {
+            activeTab() {
+                return this.$store.state.navigation.review
+            },
+
+            activeTabComponent() {
+                return this.activeTab.toLowerCase().replace(/\s/g,"-") + "-tab"
+            },
+        }            
+    }
+</script>
+
+
+
+
+
+<!--
+<template>
     <div class="flex mx-auto text-sm">
         <div class="flex flex-col bg-grey-lighter text-xs border">
             <div v-for="file in $store.state.reviewFiles"
@@ -10,10 +45,6 @@
             </div>
         </div>
         <div class="flex flex-1 bg-grey-lighter p-2">
-            <!--<resizable-textarea class="mt-4" ref="resizableTextarea">
-                <textarea class="flex flex-1">{{ activeFileContent }}</textarea>
-            </resizable-textarea>
-            -->
             <pre v-highlightjs="activeFileContent"><code class="php"></code></pre>
         </div>
     </div>
@@ -45,3 +76,5 @@
         },                          
     }
 </script>
+
+-->
