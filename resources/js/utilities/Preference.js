@@ -6,9 +6,6 @@ import store from '../store'
 
 let defaultSchema = Config.FileFactory.defaultSchema()
 
-
-
-
 export default class Preference {
     static has(path) {
         return !(this.get(path) instanceof Error)
@@ -29,10 +26,10 @@ export default class Preference {
     static getInitialData() {
         return store.getters.preferences
 
-        return mergeJSON(
-            defaultSchema,
-            Storage.get('objectModel') ? Storage.get('objectModel') : {}
-        )
+        // return mergeJSON(
+        //     defaultSchema,
+        //     Storage.get('objectModel') ? Storage.get('objectModel') : {}
+        // )
     }
 
     /* Default driver is localstorage but could also be something like a gist */
@@ -45,19 +42,3 @@ export default class Preference {
         )
     }
 }
-
-
-
-
-
-
-
-
-// let result = Storage.get('objectModel') ? Storage.get('objectModel') : {}
-        
-// recursiveJSONIterator(data, [], (stack, value) => {
-//     stack.reduce((branch, key) => {
-//         if(!branch)
-//         branch[key] = value
-//     }, result)
-// })

@@ -19,7 +19,7 @@ export default {
 
         style() {
             let defaultStyle = "info"
-            let commonStyle = "flex p-4 justify-center items-center text-center rounded text-sm font-semibold"
+            let commonStyle = "flex p-2 justify-center items-center text-center rounded text-sm font-semibold"
             return [
                 commonStyle,
                 this.styles()[this.type ? this.type : defaultStyle]

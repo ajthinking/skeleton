@@ -10,7 +10,19 @@
             </div>
         </div>
         <div class="flex flex-1 bg-grey-lighter p-2" v-if="hasFiles">
-            <pre v-highlightjs="activeFileContent"><code class="php"></code></pre>
+            <div class="w-full"
+                @dblclick="isInEditMode = !isInEditMode"
+            >
+                <textarea-autosize
+                    v-if="isInEditMode"
+                    class="w-full bg-grey-lightest rounded p-2 text-sm"
+                    placeholder="No data yet..."
+                    ref="someName"
+                    v-model="activeFileContent"
+                    :min-height="400"
+                ></textarea-autosize>
+                <pre v-else v-highlightjs="activeFileContent"><code class="php"></code></pre>
+            </div>
         </div>
         <notification-card v-else
             :type="'warning'"
@@ -21,6 +33,12 @@
 
 <script>
     export default {
+        data() {
+            return {
+                isInEditMode: false
+            }
+        },
+
         computed: {
             activeFileContent() {
                 let activeFile = this.$store.state.reviewFiles.find(

@@ -13,10 +13,19 @@ import store from './store'
 // Tell Vue.js to use vue-highlightjs
 import VueHighlightJS from 'vue-highlightjs'
 Vue.use(VueHighlightJS)
+import 'highlight.js/styles/github.css'
 
 import VueTextareaAutosize from 'vue-textarea-autosize'
 
 Vue.use(VueTextareaAutosize)
+
+Vue.directive('focus', {
+    // When the bound element is inserted into the DOM...
+    inserted: function (el) {
+      // Focus the element
+      el.focus()
+    }
+  })
 
 /**
  * The following block of code may be used to automatically register your

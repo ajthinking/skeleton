@@ -2,6 +2,7 @@
     <div class="flex max-w-3xl mx-auto px-8 bg-white pt-4">
         <div class="flex-1 mr-2">           
             <textarea-autosize
+                v-focus
                 class="w-full bg-grey-lightest rounded p-2 text-sm"
                 placeholder="Start typing here..."
                 ref="someName"
@@ -16,14 +17,16 @@
             </div>             
 
         </div>
-        <div class="flex-1 ml-2">            
-            <textarea-autosize
-                class="w-full bg-grey-lightest rounded p-2 text-sm"
-                placeholder="No data yet..."
-                ref="someName"
-                v-model="schema"
-                :min-height="400"
-            ></textarea-autosize>
+        <div class="flex-1 ml-2">
+            
+                <textarea-autosize
+                    class="w-full bg-grey-lightest rounded p-2 text-sm"
+                    placeholder="No data yet..."
+                    ref="someName"
+                    v-model="schema"
+                    :min-height="400"
+                ></textarea-autosize>
+            
             <div class="mt-1">
                 <button :class="buttonStyle">+ some action</button>
             </div>                        
