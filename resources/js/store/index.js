@@ -68,6 +68,7 @@ export default new Vuex.Store({
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
             context.dispatch('compileSchema', objectModelNotes)
+
         },
 
         setSchema(context, schema) {
@@ -99,10 +100,12 @@ export default new Vuex.Store({
         },
         
         compileSchema(context, objectModelNotes) {
+            var t0 = performance.now();            
             let schema = ObjectModelCollection.fromEntities(
                 Parser.parse(objectModelNotes).segment()
             ).serializeSchema()
-            
+            var t1 = performance.now();
+            console.log(t1 - t0);
             context.dispatch('setSchema', schema)
         },
 

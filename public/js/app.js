@@ -68592,21 +68592,6 @@ function () {
 
     this.entities = Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
     this.attachRelationships();
-    /*
-        this.attachIntelligentAttributes() ???
-         an IntelligentAttribute has:
-            name // color, user_id    
-            datatype // string, unsignedInteger
-            flaggor // nullable(), default(v), hidden, fillable, casts
-        
-        Do that info really belong there? Or should it be created in the pipes?
-        Is it generic enough to describe a objectModelCollection implementable by any framework?
-    */
-
-    /*
-        Another approach: do a special treatment check for table users and password_resets
-        to manage them induvidually?
-    */
   }
 
   _createClass(ObjectModelCollection, [{
@@ -68722,8 +68707,7 @@ function () {
   }, {
     key: "attachRelationships",
     value: function attachRelationships() {
-      var _this3 = this;
-
+      var iterations = 0;
       this.entities.mapWithRemaining(function (model, remaining) {
         //HasOne/HasMany
         model.hasManyRelationships = remaining.filter(function (candidate) {
@@ -68732,15 +68716,17 @@ function () {
 
         model.belongsToRelationships = remaining.filter(function (candidate) {
           return !candidate.attributeNames().includes(model.asForeignKey()) && model.attributeNames().includes(candidate.asForeignKey());
-        }); //BelongsToMany
-
-        model.belongsToManyRelationships = remaining.filter(function (candidate) {
-          return _this3.manyToManys().filter(function (manyToManyEntity) {
-            var parts = _this3.manyToManyAssociatedModels(manyToManyEntity);
-
-            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
-          }).items.length > 0;
-        });
+        }); // //BelongsToMany
+        // model.belongsToManyRelationships = remaining.filter(candidate => {
+        //     return this.manyToManys().filter(manyToManyEntity => {
+        //         let parts = this.manyToManyAssociatedModels(manyToManyEntity)
+        //         return parts.includes(
+        //                 F.snakeCase(model.heading)
+        //             ) && parts.includes(
+        //                 F.snakeCase(candidate.heading)
+        //             )
+        //     }).items.length > 0 
+        // })            
       });
     }
   }, {
@@ -69361,7 +69347,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       context.commit('setReviewFiles', files);
     },
     compileSchema: function compileSchema(context, objectModelNotes) {
+      var t0 = performance.now();
       var schema = _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment()).serializeSchema();
+      var t1 = performance.now();
+      console.log(t1 - t0);
       context.dispatch('setSchema', schema);
     },
     setTemplates: function setTemplates(context) {

@@ -5,22 +5,6 @@ export default class ObjectModelCollection {
     constructor(entities) {
         this.entities = collect(entities)
         this.attachRelationships()
-        /*
-            this.attachIntelligentAttributes() ???
-
-            an IntelligentAttribute has:
-                name // color, user_id    
-                datatype // string, unsignedInteger
-                flaggor // nullable(), default(v), hidden, fillable, casts
-            
-            Do that info really belong there? Or should it be created in the pipes?
-            Is it generic enough to describe a objectModelCollection implementable by any framework?
-        */
-
-        /*
-            Another approach: do a special treatment check for table users and password_resets
-            to manage them induvidually?
-        */
     }
 
     isManyToMany(candidate) {
@@ -108,6 +92,7 @@ export default class ObjectModelCollection {
     }
     
     attachRelationships() {
+        let iterations = 0
         this.entities.mapWithRemaining((model, remaining) => {
             //HasOne/HasMany
             model.hasManyRelationships = remaining.filter(candidate => {
@@ -121,17 +106,17 @@ export default class ObjectModelCollection {
                     && model.attributeNames().includes(candidate.asForeignKey())
             })
             
-            //BelongsToMany
-            model.belongsToManyRelationships = remaining.filter(candidate => {
-                return this.manyToManys().filter(manyToManyEntity => {
-                    let parts = this.manyToManyAssociatedModels(manyToManyEntity)
-                    return parts.includes(
-                            F.snakeCase(model.heading)
-                        ) && parts.includes(
-                            F.snakeCase(candidate.heading)
-                        )
-                }).items.length > 0 
-            })            
+            // //BelongsToMany
+            // model.belongsToManyRelationships = remaining.filter(candidate => {
+            //     return this.manyToManys().filter(manyToManyEntity => {
+            //         let parts = this.manyToManyAssociatedModels(manyToManyEntity)
+            //         return parts.includes(
+            //                 F.snakeCase(model.heading)
+            //             ) && parts.includes(
+            //                 F.snakeCase(candidate.heading)
+            //             )
+            //     }).items.length > 0 
+            // })            
         })
     }
 
