@@ -15,9 +15,14 @@ export default new Vuex.Store({
         // Keep track of active tabs in each section
         navigation: {
             workspace: "Design",
+            
             design: "Object model",
+            template: "",
+            
             review: "files",
-            template: ""
+            reviewFile: "",
+            
+            build: "finish",
         },
         availablePipes: Config.FileFactory.pipes(),
 
@@ -67,7 +72,6 @@ export default new Vuex.Store({
 
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
-            //context.dispatch('compile', objectModelNotes)
             context.dispatch('compileSchema', objectModelNotes)
         },
 
@@ -75,6 +79,7 @@ export default new Vuex.Store({
             context.commit('setSchema', schema)
             Preference.persist(schema)
             context.dispatch('setPreferences', schema)
+            context.dispatch('compileFiles')
         },  
         
         setPreferences(context, schema) {
@@ -86,28 +91,16 @@ export default new Vuex.Store({
             )            
         },          
         
-        compile(context, objectModelNotes) {
+        compileFiles(context) {
             let files = Config.FileFactory.from(
                 ObjectModelCollection.fromEntities(
-                    Parser.parse(objectModelNotes).segment()
+                    Parser.parse(context.state.objectModelNotes).segment()
                 )                   
             ).withPipes(
                 context.state.availablePipes
             ).calculateFiles()
 
             context.commit('setReviewFiles', files)
-
-            
-            // Set the highlighted file in the review list
-            // This part need to be refactored...
-            if(context.state.navigation.review == "" && context.state.reviewFiles.length){
-                context.commit('navigate', {
-                    namespace: "review",
-                    tab: context.state.reviewFiles[0].path
-                })
-            }
-
-        
         },
         
         compileSchema(context, objectModelNotes) {
@@ -133,3 +126,16 @@ export default new Vuex.Store({
         preferences: state => state.preferences,
     },    
 })
+
+/*
+
+            // Set the highlighted file in the review list
+            // This part need to be refactored...
+            if(context.state.navigation.review == "" && context.state.reviewFiles.length){
+                context.commit('navigate', {
+                    namespace: "review",
+                    tab: context.state.reviewFiles[0].path
+                })
+            }
+
+*/

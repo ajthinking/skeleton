@@ -50,15 +50,6 @@
                 }
             },
 
-            message: {
-                get () {
-                    return this.$store.state.obj.message
-                },
-                set (value) {
-                this.$store.commit('updateMessage', value)
-                }
-            },
-
             schema: {
                 get() {
                     return JSON.stringify(this.$store.state.schema, null, 4)

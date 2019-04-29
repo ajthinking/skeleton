@@ -14,7 +14,7 @@
                 <!-- <pre v-highlightjs="activeFileContent"><code class="php"></code></pre> -->
                 <textarea-autosize
                     class="w-full bg-grey-lightest rounded p-2 text-sm"
-                    placeholder="No data yet..."
+                    placeholder="Select a template"
                     ref="someName"
                     v-model="activeFileContent"
                     :min-height="400"
@@ -38,7 +38,6 @@
 
             activeFileContent: {
                 get() {
-                    console.log(this.templates)
                     let activeFile = this.templates.find(
                         file => this.isActiveFile(file)
                     )

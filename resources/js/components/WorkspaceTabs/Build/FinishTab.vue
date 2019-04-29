@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col h-full mt-8 mx-8 border shadow-lg p-8 mb-32 max-w-xl mx-auto">
+    <div class="flex flex-col max-w-2xl mx-auto px-8 bg-white pt-4">
         <div class="flex flex-col text-sm mb-4">
             <div><input type="checkbox" checked class="mr-2">Revert the latest build</div>
             <div><input type="checkbox" checked class="mr-2">Use Sandbox</div>
@@ -7,9 +7,8 @@
 
         <button v-if="!isBuilding" @click="build()" class="border bg-white p-2 rounded">Build!</button>
         <div v-if="isBuilding">LOADING</div>
-        <h3 v-if="message">{{message}}</h3>
-
-    </div>
+        <h3 v-if="message">{{message}}</h3>       
+    </div>  
 </template>
 
 <script>
