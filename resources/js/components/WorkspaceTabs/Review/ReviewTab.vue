@@ -1,57 +1,25 @@
 <template>
-    <div class="h-full mt-8 mx-auto">
-        <workspace-tab-navigation 
-            :availableTabs="availableTabs"
-            :namespace="'review'"
-        ></workspace-tab-navigation>
-        <div :is="activeTabComponent"></div>
-    </div>
-</template>
-
-<script>
-    export default {
-        data() {
-            return {
-                availableTabs: ['files']
-            }
-        },
-
-        computed: {
-            activeTab() {
-                return this.$store.state.navigation.review
-            },
-
-            activeTabComponent() {
-                return this.activeTab.toLowerCase().replace(/\s/g,"-") + "-tab"
-            },
-        }            
-    }
-</script>
-
-
-
-
-
-<!--
-<template>
-    <div class="flex mx-auto text-sm">
-        <div class="flex flex-col bg-grey-lighter text-xs border">
-            <div v-for="file in $store.state.reviewFiles"
+    <div class="flex max-w-2xl mx-auto px-8 bg-white pt-4 mt-8 h-full justify-center">
+        <div class="flex flex-col bg-grey-lighter text-xs border" v-if="hasFiles">
+            <div v-for="file in $store.state.reviewFiles" 
                 :key="file.path"
                 :class="style(file) + 'flex'"
-                @click="tab = file.path; $store.dispatch('navigate', {namespace: 'review', tab})"
+                @click="tab = file.path; $store.dispatch('navigate', {namespace: 'reviewFile', tab})"
             >
                 {{ file.path }}
             </div>
         </div>
-        <div class="flex flex-1 bg-grey-lighter p-2">
+        <div class="flex flex-1 bg-grey-lighter p-2" v-if="hasFiles">
             <pre v-highlightjs="activeFileContent"><code class="php"></code></pre>
         </div>
-    </div>
+        <notification-card v-else
+            :type="'warning'"
+            :message="'No files to create yet! Go back to the design tab to fix that'"
+        ></notification-card>        
+    </div>  
 </template>
 
 <script>
-
     export default {
         computed: {
             activeFileContent() {
@@ -60,12 +28,18 @@
                 )
 
                 return activeFile ? activeFile.content : ""
+            },
+
+            hasFiles() {
+                return this.$store.state.reviewFiles.length > 0
             }
+
+
         },
 
         methods: {
             isActiveFile(file) {
-                return file.path == this.$store.state.navigation.review
+                return file.path == this.$store.state.navigation.reviewFile
             },
 
             style(file) {
@@ -73,8 +47,6 @@
                 (this.isActiveFile(file) ? "bg-grey-light bg-grey-darker" : "bg-grey-lighter hover:bg-white")
                 return class_
             },
-        },                          
+        }, 
     }
 </script>
-
--->

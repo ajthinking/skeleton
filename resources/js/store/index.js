@@ -15,14 +15,9 @@ export default new Vuex.Store({
         // Keep track of active tabs in each section
         navigation: {
             workspace: "Design",
-            
             design: "Object model",
             template: "",
-            
-            review: "files",
             reviewFile: "",
-            
-            build: "finish",
         },
         availablePipes: Config.FileFactory.pipes(),
 
