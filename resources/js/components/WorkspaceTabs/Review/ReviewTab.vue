@@ -40,12 +40,18 @@
         },
 
         computed: {
-            activeFileContent() {
-                let activeFile = this.$store.state.reviewFiles.find(
-                    file => this.isActiveFile(file)
-                )
+            activeFileContent: {
+                get() {
+                    let activeFile = this.$store.state.reviewFiles.find(
+                        file => this.isActiveFile(file)
+                    )
 
-                return activeFile ? activeFile.content : ""
+                    return activeFile ? activeFile.content : ""
+                },
+
+                set() {
+                    //TODO
+                }
             },
 
             hasFiles() {

@@ -73,9 +73,11 @@ export default new Vuex.Store({
 
         setSchema(context, schema) {
             context.commit('setSchema', schema)
-            Preference.persist(schema)
-            context.dispatch('setPreferences', schema)
             context.dispatch('compileFiles')
+            
+            // TO BE SOLVED! Get and Set the Preferences in a good way (async)
+            //Preference.persist(schema)
+            //context.dispatch('setPreferences', schema)
         },  
         
         setPreferences(context, schema) {
@@ -100,12 +102,9 @@ export default new Vuex.Store({
         },
         
         compileSchema(context, objectModelNotes) {
-            var t0 = performance.now();            
             let schema = ObjectModelCollection.fromEntities(
                 Parser.parse(objectModelNotes).segment()
             ).serializeSchema()
-            var t1 = performance.now();
-            console.log(t1 - t0);
             context.dispatch('setSchema', schema)
         },
 

@@ -1,14 +1,10 @@
 <?php
 
-use Illuminate\Support\Str;
+use App\___MODEL___;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Faker\Factory as Faker;
 
 class ___MODEL___Seeder extends Seeder
 {
-    $faker = Faker::create(1337);
-
     /**
      * Run the database seeds.
      *
@@ -16,8 +12,6 @@ class ___MODEL___Seeder extends Seeder
      */
     public function run()
     {
-        DB::table('___TABLE___')->insert([
-            ___COLUMNS_BLOCK___
-        ]);
+        factory(___MODEL___::class, 10)->create();
     }
 }

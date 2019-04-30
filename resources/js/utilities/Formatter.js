@@ -16,5 +16,9 @@ export default class Formatter {
 
     static pascalCase(word) {
         return changeCase.pascal(word)
-    }    
+    }
+    
+    static singleQuotePad(word) {
+        return "'" + word + "'"
+    }
 }

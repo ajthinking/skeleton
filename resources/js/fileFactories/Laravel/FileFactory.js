@@ -5,6 +5,7 @@ import ControllerPipe from './pipes/ControllerPipe'
 import APIControllerPipe from './pipes/APIControllerPipe'
 import SeederPipe from './pipes/SeederPipe'
 import APIRoutesPipe from './pipes/APIRoutesPipe'
+import FactoryPipe from './pipes/FactoryPipe'
 
 import defaultSchema from './defaultSchema'
 
@@ -19,11 +20,12 @@ export default class FileFactory {
         return [
             UserPipe,
             ModelPipe,
-            //MigrationPipe,
+            MigrationPipe,
             ControllerPipe,
             APIControllerPipe,
-            //SeederPipe,
-            APIRoutesPipe,
+            SeederPipe,
+            FactoryPipe,
+            //APIRoutesPipe,
         ]
     }
 

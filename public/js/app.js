@@ -2305,13 +2305,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    activeFileContent: function activeFileContent() {
-      var _this = this;
+    activeFileContent: {
+      get: function get() {
+        var _this = this;
 
-      var activeFile = this.$store.state.reviewFiles.find(function (file) {
-        return _this.isActiveFile(file);
-      });
-      return activeFile ? activeFile.content : "";
+        var activeFile = this.$store.state.reviewFiles.find(function (file) {
+          return _this.isActiveFile(file);
+        });
+        return activeFile ? activeFile.content : "";
+      },
+      set: function set() {//TODO
+      }
     },
     hasFiles: function hasFiles() {
       return this.$store.state.reviewFiles.length > 0;
@@ -67573,14 +67577,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pipes/APIControllerPipe */ "./resources/js/fileFactories/Laravel/pipes/APIControllerPipe.js");
 /* harmony import */ var _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pipes/SeederPipe */ "./resources/js/fileFactories/Laravel/pipes/SeederPipe.js");
 /* harmony import */ var _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pipes/APIRoutesPipe */ "./resources/js/fileFactories/Laravel/pipes/APIRoutesPipe.js");
-/* harmony import */ var _defaultSchema__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./defaultSchema */ "./resources/js/fileFactories/Laravel/defaultSchema.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _pipes_FactoryPipe__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pipes/FactoryPipe */ "./resources/js/fileFactories/Laravel/pipes/FactoryPipe.js");
+/* harmony import */ var _defaultSchema__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./defaultSchema */ "./resources/js/fileFactories/Laravel/defaultSchema.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
+/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_9__);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -67612,7 +67618,7 @@ function () {
     value: function calculateFiles() {
       var _this = this;
 
-      return collect_js__WEBPACK_IMPORTED_MODULE_8___default()(this.pipes.map(function (pipe) {
+      return collect_js__WEBPACK_IMPORTED_MODULE_9___default()(this.pipes.map(function (pipe) {
         return pipe["with"](_this.omc).calculateFiles(_this.omc);
       }).reduce(function (pipeFileList, allFiles) {
         return allFiles.concat(pipeFileList);
@@ -67621,14 +67627,12 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], //MigrationPipe,
-      _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], //SeederPipe,
-      _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__["default"], _pipes_FactoryPipe__WEBPACK_IMPORTED_MODULE_7__["default"]];
     }
   }, {
     key: "defaultSchema",
     value: function defaultSchema() {
-      return _defaultSchema__WEBPACK_IMPORTED_MODULE_7__["default"];
+      return _defaultSchema__WEBPACK_IMPORTED_MODULE_8__["default"];
     }
   }, {
     key: "from",
@@ -67932,6 +67936,7 @@ function (_ModelPipe) {
           path: "app/Http/Controllers/" + model.className() + "Controller.php",
           content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Controller').replace({
             ___HIDDEN___: _this.hiddenAttributes(model),
+            ___MODEL___: _this.className(model),
             ___FILLABLE___: _this.fillableAttributes(model),
             ___CASTS___: _this.casts(model),
             ___RELATIONSHIP_METHODS_BLOCK___: _this.relationshipMethods(model)
@@ -67942,6 +67947,114 @@ function (_ModelPipe) {
   }]);
 
   return ControllerPipe;
+}(_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/fileFactories/Laravel/pipes/FactoryPipe.js":
+/*!*****************************************************************!*\
+  !*** ./resources/js/fileFactories/Laravel/pipes/FactoryPipe.js ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FactoryPipe; });
+/* harmony import */ var _utilities_Template__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../utilities/Template */ "./resources/js/utilities/Template.js");
+/* harmony import */ var _ModelPipe__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModelPipe */ "./resources/js/fileFactories/Laravel/pipes/ModelPipe.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+var FactoryPipe =
+/*#__PURE__*/
+function (_ModelPipe) {
+  _inherits(FactoryPipe, _ModelPipe);
+
+  function FactoryPipe() {
+    _classCallCheck(this, FactoryPipe);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(FactoryPipe).apply(this, arguments));
+  }
+
+  _createClass(FactoryPipe, [{
+    key: "calculateFiles",
+    value: function calculateFiles() {
+      var omc = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ObjectModelCollection;
+      return _toConsumableArray(this.factoryFiles());
+    }
+  }, {
+    key: "factoryFiles",
+    value: function factoryFiles() {
+      var _this = this;
+
+      return this.omc.modelsIncludingUser().map(function (model) {
+        return {
+          path: "database/factories/" + model.className() + "Factory.php",
+          content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Factory').replace({
+            ___MODEL___: model.className(),
+            ___COLUMNS_BLOCK___: _this.columnsBlock(model)
+          })
+        };
+      }).toArray();
+    }
+  }, {
+    key: "columnsBlock",
+    value: function columnsBlock(model) {
+      var _this2 = this;
+
+      return model.attributes.filter(function (attribute) {
+        return !['id', 'created_at', 'updated_at'].includes(attribute.name);
+      }).map(function (attribute) {
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].singleQuotePad(attribute.name) + " => " + _this2.seedStatement(attribute);
+      }).join("\n");
+    }
+  }, {
+    key: "typeMap",
+    value: function typeMap(dataType) {
+      return {
+        string: "$faker->sentence()",
+        timestamp: "Carbon::now()->format('Y-m-d H:i:s')"
+      }[dataType];
+    }
+  }, {
+    key: "seedStatement",
+    value: function seedStatement(attribute) {
+      return this.typeMap(attribute.dataType);
+    }
+  }]);
+
+  return FactoryPipe;
 }(_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
@@ -68275,7 +68388,6 @@ function (_ModelPipe) {
           path: "database/seeds/" + model.className() + "Seeder.php",
           content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('Seeder').replace({
             ___MODEL___: model.className(),
-            ___TABLE___: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].camelCase(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].pluralize(model.className())),
             ___COLUMNS_BLOCK___: _this.columnsBlock(model)
           })
         };
@@ -68284,12 +68396,12 @@ function (_ModelPipe) {
   }, {
     key: "databaseSeeder",
     value: function databaseSeeder() {
-      return [{
+      return this.omc.hasModels() ? [{
         path: "database/seeds/DatabaseSeeder.php",
         content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('DatabaseSeeder').replace({
           ___DATABASE_SEEDERS_BLOCK___: this.databaseSeedersBlock()
         })
-      }];
+      }] : [];
     }
   }, {
     key: "databaseSeedersBlock",
@@ -68301,11 +68413,26 @@ function (_ModelPipe) {
   }, {
     key: "columnsBlock",
     value: function columnsBlock(model) {
+      var _this2 = this;
+
       return model.attributes.filter(function (attribute) {
-        return !['id', 'created_at', 'updated_at'].includes(attribute);
+        return !['id', 'created_at', 'updated_at'].includes(attribute.name);
       }).map(function (attribute) {
-        return "'" + attribute + "' => $faker->sentence()";
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].singleQuotePad(attribute.name) + " => " + _this2.seedStatement(attribute);
       }).join("\n");
+    }
+  }, {
+    key: "typeMap",
+    value: function typeMap(dataType) {
+      return {
+        string: "$faker->sentence()",
+        timestamp: "Carbon::now()->format('Y-m-d H:i:s')"
+      }[dataType];
+    }
+  }, {
+    key: "seedStatement",
+    value: function seedStatement(attribute) {
+      return this.typeMap(attribute.dataType);
     }
   }]);
 
@@ -68625,6 +68752,11 @@ function () {
       return this.userModels().items.length > 0;
     }
   }, {
+    key: "hasModels",
+    value: function hasModels() {
+      return this.modelsIncludingUser().items.length > 0;
+    }
+  }, {
     key: "userModel",
     value: function userModel() {
       return this.userModels().first();
@@ -68707,26 +68839,30 @@ function () {
   }, {
     key: "attachRelationships",
     value: function attachRelationships() {
-      var iterations = 0;
+      var _this3 = this;
+
+      // Prepare this in order to prevent geometric growth
+      var manyToManys_ = this.manyToManys();
+      var manyToManyAssociatedModels_ = {};
+      manyToManys_.each(function (entity) {
+        manyToManyAssociatedModels_[entity.heading] = _this3.manyToManyAssociatedModels(entity);
+      });
       this.entities.mapWithRemaining(function (model, remaining) {
-        //HasOne/HasMany
+        // HasOne/HasMany
         model.hasManyRelationships = remaining.filter(function (candidate) {
           return candidate.attributeNames().includes(model.asForeignKey()) && !model.attributeNames().includes(candidate.asForeignKey());
-        }); //BelongsTo
+        }); // BelongsTo
 
         model.belongsToRelationships = remaining.filter(function (candidate) {
           return !candidate.attributeNames().includes(model.asForeignKey()) && model.attributeNames().includes(candidate.asForeignKey());
-        }); // //BelongsToMany
-        // model.belongsToManyRelationships = remaining.filter(candidate => {
-        //     return this.manyToManys().filter(manyToManyEntity => {
-        //         let parts = this.manyToManyAssociatedModels(manyToManyEntity)
-        //         return parts.includes(
-        //                 F.snakeCase(model.heading)
-        //             ) && parts.includes(
-        //                 F.snakeCase(candidate.heading)
-        //             )
-        //     }).items.length > 0 
-        // })            
+        }); // BelongsToMany
+
+        model.belongsToManyRelationships = remaining.filter(function (candidate) {
+          return manyToManys_.filter(function (manyToManyEntity) {
+            var parts = manyToManyAssociatedModels_[manyToManyEntity];
+            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
+          }).items.length > 0;
+        });
       });
     }
   }, {
@@ -68745,6 +68881,22 @@ function () {
 
   return ObjectModelCollection;
 }();
+/* ORIGINAL MANY TO MANY 
+
+            //BelongsToMany
+            model.belongsToManyRelationships = remaining.filter(candidate => {
+                return this.manyToManys().filter(manyToManyEntity => {
+                    let parts = this.manyToManyAssociatedModels(manyToManyEntity)
+                    return parts.includes(
+                            F.snakeCase(model.heading)
+                        ) && parts.includes(
+                            F.snakeCase(candidate.heading)
+                        )
+                }).items.length > 0 
+            }) 
+
+*/
+
 
 
 
@@ -69335,9 +69487,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     },
     setSchema: function setSchema(context, schema) {
       context.commit('setSchema', schema);
-      _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__["default"].persist(schema);
-      context.dispatch('setPreferences', schema);
-      context.dispatch('compileFiles');
+      context.dispatch('compileFiles'); // TO BE SOLVED! Get and Set the Preferences in a good way (async)
+      //Preference.persist(schema)
+      //context.dispatch('setPreferences', schema)
     },
     setPreferences: function setPreferences(context, schema) {
       context.commit('setPreferences', mergeJSON(_utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel') ? _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel') : {}, schema));
@@ -69347,10 +69499,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       context.commit('setReviewFiles', files);
     },
     compileSchema: function compileSchema(context, objectModelNotes) {
-      var t0 = performance.now();
       var schema = _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment()).serializeSchema();
-      var t1 = performance.now();
-      console.log(t1 - t0);
       context.dispatch('setSchema', schema);
     },
     setTemplates: function setTemplates(context) {
@@ -69473,6 +69622,11 @@ function () {
     key: "pascalCase",
     value: function pascalCase(word) {
       return changeCase.pascal(word);
+    }
+  }, {
+    key: "singleQuotePad",
+    value: function singleQuotePad(word) {
+      return "'" + word + "'";
     }
   }]);
 

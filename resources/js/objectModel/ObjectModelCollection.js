@@ -38,6 +38,10 @@ export default class ObjectModelCollection {
         return this.userModels().items.length > 0
     }
 
+    hasModels() {
+        return this.modelsIncludingUser().items.length > 0
+    }
+
     userModel() {
         return this.userModels().first()
     }
@@ -92,31 +96,37 @@ export default class ObjectModelCollection {
     }
     
     attachRelationships() {
-        let iterations = 0
+        // Prepare this in order to prevent geometric growth
+        let manyToManys_ = this.manyToManys()
+        let manyToManyAssociatedModels_ = {}
+        manyToManys_.each(entity => {
+            manyToManyAssociatedModels_[entity.heading] = this.manyToManyAssociatedModels(entity)
+        })
+
         this.entities.mapWithRemaining((model, remaining) => {
-            //HasOne/HasMany
+            // HasOne/HasMany
             model.hasManyRelationships = remaining.filter(candidate => {
                 return candidate.attributeNames().includes(model.asForeignKey())
                     && !model.attributeNames().includes(candidate.asForeignKey())
             })
 
-            //BelongsTo
+            // BelongsTo
             model.belongsToRelationships = remaining.filter(candidate => {
                 return !candidate.attributeNames().includes(model.asForeignKey())
                     && model.attributeNames().includes(candidate.asForeignKey())
             })
             
-            // //BelongsToMany
-            // model.belongsToManyRelationships = remaining.filter(candidate => {
-            //     return this.manyToManys().filter(manyToManyEntity => {
-            //         let parts = this.manyToManyAssociatedModels(manyToManyEntity)
-            //         return parts.includes(
-            //                 F.snakeCase(model.heading)
-            //             ) && parts.includes(
-            //                 F.snakeCase(candidate.heading)
-            //             )
-            //     }).items.length > 0 
-            // })            
+            // BelongsToMany
+            model.belongsToManyRelationships = remaining.filter(candidate => {
+                return manyToManys_.filter(manyToManyEntity => {
+                    let parts = manyToManyAssociatedModels_[manyToManyEntity]
+                    return parts.includes(
+                            F.snakeCase(model.heading)
+                        ) && parts.includes(
+                            F.snakeCase(candidate.heading)
+                        )
+                }).items.length > 0 
+            })            
         })
     }
 
@@ -129,3 +139,19 @@ export default class ObjectModelCollection {
         }, {})
     }   
 }
+
+/* ORIGINAL MANY TO MANY 
+
+            //BelongsToMany
+            model.belongsToManyRelationships = remaining.filter(candidate => {
+                return this.manyToManys().filter(manyToManyEntity => {
+                    let parts = this.manyToManyAssociatedModels(manyToManyEntity)
+                    return parts.includes(
+                            F.snakeCase(model.heading)
+                        ) && parts.includes(
+                            F.snakeCase(candidate.heading)
+                        )
+                }).items.length > 0 
+            }) 
+
+*/
