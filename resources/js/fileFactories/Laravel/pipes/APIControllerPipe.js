@@ -10,9 +10,25 @@ export default class APIControllerPipe extends ModelPipe {
                 content: Template.for('APIController').replace({
                     ___MODEL___: model.className(),
                     ___MODEL_INSTANCE___: F.camelCase(model.className()),
-                    ___WITH_RELATIONSHIPS___: ""
+                    ___WITH_RELATIONSHIPS___: this.withRelationships(model)
                 })
             }
         }).toArray()
+    }
+
+    withRelationships(model) {
+        return "with([" + [
+            ... model.hasManyRelationships.map(target => {
+                return F.singleQuotePad(F.camelCase(F.pluralize(target.heading)))
+            }),
+
+            ... model.belongsToRelationships.map(target => {
+                return F.singleQuotePad(F.camelCase(target.heading))
+            }),
+            
+            ... model.belongsToManyRelationships.map(target => {
+                return F.singleQuotePad(F.camelCase(F.pluralize(target.heading)))
+            }),
+        ].join(", ") + "])->"
     }
 }

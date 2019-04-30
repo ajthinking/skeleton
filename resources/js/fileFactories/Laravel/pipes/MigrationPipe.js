@@ -40,7 +40,7 @@ export default class MigrationPipe extends BasePipe {
 
     statementsFor(attribute) {
         return [
-            `$table->${attribute.dataType}('${attribute.name}')${this.chainings(attribute)};` 
+            `$table->${attribute.dataType}('${attribute.name}')${this.chainings(attribute)};`, 
         ].join("\n")
     }
 

@@ -2,6 +2,7 @@ import Template from '../../../utilities/Template'
 import ModelPipe from './ModelPipe'
 
 import F from '../../../utilities/Formatter'
+import { random } from 'node-forge';
 
 export default class FactoryPipe extends ModelPipe {
     calculateFiles(omc = ObjectModelCollection) {
@@ -33,7 +34,8 @@ export default class FactoryPipe extends ModelPipe {
     typeMap(dataType) {
         return {
             string: "$faker->sentence()",
-            timestamp: "Carbon::now()->format('Y-m-d H:i:s')"
+            timestamp: "Carbon::now()->format('Y-m-d H:i:s')",
+            unsignedInteger: "rand(1,10)"
         }[dataType]
     }
 

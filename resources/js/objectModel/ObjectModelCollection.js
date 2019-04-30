@@ -1,10 +1,12 @@
 import collect from '../utilities/Collection'
 import F from '../utilities/Formatter'
+import Attribute from './Attribute'
 
 export default class ObjectModelCollection {
     constructor(entities) {
         this.entities = collect(entities)
         this.attachRelationships()
+        this.attachPivotAttributes()
     }
 
     isManyToMany(candidate) {
@@ -119,7 +121,7 @@ export default class ObjectModelCollection {
             // BelongsToMany
             model.belongsToManyRelationships = remaining.filter(candidate => {
                 return manyToManys_.filter(manyToManyEntity => {
-                    let parts = manyToManyAssociatedModels_[manyToManyEntity]
+                    let parts = manyToManyAssociatedModels_[manyToManyEntity.heading]
                     return parts.includes(
                             F.snakeCase(model.heading)
                         ) && parts.includes(
@@ -127,6 +129,25 @@ export default class ObjectModelCollection {
                         )
                 }).items.length > 0 
             })            
+        })
+    }
+
+    attachPivotAttributes() {
+        this.manyToManys().each(entity => {
+            this.manyToManyAssociatedModels(entity).forEach(modelName => {
+                entity.attributes.push(
+                    new Attribute(
+                        {
+                            name: F.snakeCase(modelName) + "_id",
+                            parent: entity,
+                            dataType: "unsignedInteger",
+                            fillable: false,
+                            hidden: false,
+                            nullable: false,
+                        }
+                    )                
+                )
+            })
         })
     }
 

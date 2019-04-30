@@ -74,7 +74,7 @@ export default class AttributeFactory {
     }
 
     getNullable() {
-        return false
+        return this.getForeign() ? true : false
     }
 
     /* ATTRIBUTE PREFERENCES ***************************************************************/
