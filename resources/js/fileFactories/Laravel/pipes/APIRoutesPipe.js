@@ -4,12 +4,12 @@ import F from '../../../utilities/Formatter.js'
 
 export default class APIRoutesPipe extends BasePipe {
     calculateFiles() {        
-        return [{
+        return this.omc.hasModels() ? [{
             path: "routes/api.php",
             content: Template.for('api').replace({
-                //___API_ROUTES_BLOCK___: this.apiRoutes(),
+                ___API_ROUTES_BLOCK___: this.apiRoutes(),
             })
-        }]
+        }] : []
     }
 
     apiRoutes() {

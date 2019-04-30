@@ -27,7 +27,7 @@ export default class FactoryPipe extends ModelPipe {
             return !['id', 'created_at', 'updated_at'].includes(attribute.name)
         }).map(attribute => {
             return F.singleQuotePad(attribute.name) + " => " + this.seedStatement(attribute)
-        }).join("\n")
+        }).join(",\n")
     }
 
     typeMap(dataType) {

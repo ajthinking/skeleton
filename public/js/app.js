@@ -67627,7 +67627,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__["default"], _pipes_FactoryPipe__WEBPACK_IMPORTED_MODULE_7__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__["default"], _pipes_FactoryPipe__WEBPACK_IMPORTED_MODULE_7__["default"], _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__["default"]];
     }
   }, {
     key: "defaultSchema",
@@ -67804,11 +67804,12 @@ function (_BasePipe) {
   _createClass(APIRoutesPipe, [{
     key: "calculateFiles",
     value: function calculateFiles() {
-      return [{
+      return this.omc.hasModels() ? [{
         path: "routes/api.php",
-        content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('api').replace({//___API_ROUTES_BLOCK___: this.apiRoutes(),
+        content: _utilities_Template__WEBPACK_IMPORTED_MODULE_0__["default"]["for"]('api').replace({
+          ___API_ROUTES_BLOCK___: this.apiRoutes()
         })
-      }];
+      }] : [];
     }
   }, {
     key: "apiRoutes",
@@ -68037,7 +68038,7 @@ function (_ModelPipe) {
         return !['id', 'created_at', 'updated_at'].includes(attribute.name);
       }).map(function (attribute) {
         return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_2__["default"].singleQuotePad(attribute.name) + " => " + _this2.seedStatement(attribute);
-      }).join("\n");
+      }).join(",\n");
     }
   }, {
     key: "typeMap",

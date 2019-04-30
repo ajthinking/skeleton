@@ -25,7 +25,7 @@ export default class FileFactory {
             APIControllerPipe,
             SeederPipe,
             FactoryPipe,
-            //APIRoutesPipe,
+            APIRoutesPipe,
         ]
     }
 
