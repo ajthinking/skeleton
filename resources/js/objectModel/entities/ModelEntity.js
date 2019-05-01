@@ -1,5 +1,5 @@
-import ObjectModelEntity from "../ObjectModelEntity"
+import TableEntity from "./TableEntity"
 
-export default class ModelEntity extends ObjectModelEntity {
+export default class ModelEntity extends TableEntity {
     //    
 }

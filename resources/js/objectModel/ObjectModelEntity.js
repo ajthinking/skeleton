@@ -4,22 +4,17 @@ import AttributeFactory from './AttributeFactory.js';
 import Preference from '../utilities/Preference'
 
 export default class ObjectModelEntity {
-    constructor(chunk) {
-        this.parts = chunk.split('\n')
-        this.heading = this.parts[0]
+    constructor(segment) {
+        this.heading = segment.heading
         // Sort and only keep unique attributes
-        this.attributeRows = [
+        let attributeRows = [
             ... new Set([
                 ... this.injectColumns(['id']),
-                ... this.parts.slice(1),
+                ... segment.attributes,
                 ... this.injectColumns(['created_at', 'updated_at']),
             ])
         ]
-        this.attributes = this.attributeRows.map(name => AttributeFactory.make(name, this))
-    }
-
-    static fromText(chunk) {
-        return new this(chunk)
+        this.attributes = attributeRows.map(name => AttributeFactory.make(name, this))
     }
 
     attributeNames() {

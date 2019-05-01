@@ -19,13 +19,13 @@ export default class FileFactory {
     static pipes() {
         return [
             UserPipe,
-            ModelPipe,
-            MigrationPipe,
-            ControllerPipe,
-            APIControllerPipe,
-            SeederPipe,
-            FactoryPipe,
-            APIRoutesPipe,
+            //ModelPipe,
+            //MigrationPipe,
+            //ControllerPipe,
+            //APIControllerPipe,
+            //SeederPipe,
+            //FactoryPipe,
+            //APIRoutesPipe,
         ]
     }
 

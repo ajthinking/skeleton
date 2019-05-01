@@ -1,13 +1,17 @@
-import collect from '../utilities/Collection'
 import F from '../utilities/Formatter'
 import Attribute from './Attribute'
 
 export default class ObjectModelCollection {
-    constructor(entities) {
-        this.entities = collect(entities)
-        this.attachRelationships()
-        this.attachPivotAttributes()
+    constructor() {
+        //this.attachRelationships()
+        //this.attachPivotAttributes()
     }
+
+    static fromEntities(entities) {
+        let omc = new this
+        omc.entities = entities
+        return omc
+    } 
 
     isManyToMany(candidate) {
         var models = this.modelsIncludingUser().map((item) => {
@@ -31,10 +35,6 @@ export default class ObjectModelCollection {
         var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
         return [matches[1], matches[2]];
     }    
-
-    static fromEntities(entities) {
-        return new this(entities)
-    }
 
     hasUserModel() {
         return this.userModels().items.length > 0
@@ -152,6 +152,10 @@ export default class ObjectModelCollection {
     }
 
     serializeSchema() {
+        return {
+            status: "This schema is not ready yet"
+        }
+
         return this.entities.reduce((result, entity) => {
             return {
                 ... result,
@@ -160,19 +164,3 @@ export default class ObjectModelCollection {
         }, {})
     }   
 }
-
-/* ORIGINAL MANY TO MANY 
-
-            //BelongsToMany
-            model.belongsToManyRelationships = remaining.filter(candidate => {
-                return this.manyToManys().filter(manyToManyEntity => {
-                    let parts = this.manyToManyAssociatedModels(manyToManyEntity)
-                    return parts.includes(
-                            F.snakeCase(model.heading)
-                        ) && parts.includes(
-                            F.snakeCase(candidate.heading)
-                        )
-                }).items.length > 0 
-            }) 
-
-*/

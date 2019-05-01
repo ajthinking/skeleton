@@ -1,4 +1,4 @@
-import ObjectModelEntityFactory from './ObjectModelEntityFactory'
+import Segment from './Segment'
 
 export default class ObjectModelNoteParser {
     constructor(text) {
@@ -31,8 +31,8 @@ export default class ObjectModelNoteParser {
         return this;
     }
 
-    /* returns an array with items of type ObjectModelEntity */
+    /* returns an array with items of type Segment */
     segment() {
-        return !this.text ? [] : this.text.split(/\n\s*\n/).map((chunk) => ObjectModelEntityFactory.fromText(chunk))
+        return !this.text ? [] : this.text.split(/\n\s*\n/).map((chunk) => Segment.fromText(chunk))
     }        
 }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Parser from '../objectModel/ObjectModelNotesParser'
 import ObjectModelCollection from '../objectModel/ObjectModelCollection'
+import ObjectModelEntityFactory from '../objectModel/ObjectModelEntityFactory'
 import Config from '../Config'
 import Preference from '../utilities/Preference'
 import Storage from '../utilities/Storage'
@@ -73,7 +74,7 @@ export default new Vuex.Store({
 
         setSchema(context, schema) {
             context.commit('setSchema', schema)
-            context.dispatch('compileFiles')
+            //context.dispatch('compileFiles')
             
             // TO BE SOLVED! Get and Set the Preferences in a good way (async)
             //Preference.persist(schema)
@@ -91,7 +92,7 @@ export default new Vuex.Store({
         
         compileFiles(context) {
             let files = Config.FileFactory.from(
-                ObjectModelCollection.fromEntities(
+                ObjectModelCollection.fromSegments(
                     Parser.parse(context.state.objectModelNotes).segment()
                 )                   
             ).withPipes(
@@ -102,9 +103,17 @@ export default new Vuex.Store({
         },
         
         compileSchema(context, objectModelNotes) {
-            let schema = ObjectModelCollection.fromEntities(
+            ObjectModelEntityFactory.fromSegments(
                 Parser.parse(objectModelNotes).segment()
+            )
+            return;
+
+            let schema = ObjectModelCollection.fromEntities(
+                ObjectModelEntityFactory.fromSegments(
+                    Parser.parse(objectModelNotes).segment()
+                )
             ).serializeSchema()
+
             context.dispatch('setSchema', schema)
         },
 
@@ -123,16 +132,3 @@ export default new Vuex.Store({
         preferences: state => state.preferences,
     },    
 })
-
-/*
-
-            // Set the highlighted file in the review list
-            // This part need to be refactored...
-            if(context.state.navigation.review == "" && context.state.reviewFiles.length){
-                context.commit('navigate', {
-                    namespace: "review",
-                    tab: context.state.reviewFiles[0].path
-                })
-            }
-
-*/

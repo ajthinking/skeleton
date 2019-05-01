@@ -98041,11 +98041,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highlight.js/styles/github.css */ "./node_modules/highlight.js/styles/github.css");
 /* harmony import */ var highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highlight_js_styles_github_css__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var vue_textarea_autosize__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-textarea-autosize */ "./node_modules/vue-textarea-autosize/index.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+Array.prototype.mapWithRemaining = function (callback) {
+  var _this = this;
+
+  var items = this.map(function (item, key) {
+    var remaining = _toConsumableArray(_this);
+
+    remaining.splice(remaining.indexOf(item), 1);
+    return callback(item, remaining);
+  });
+  return items;
+};
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -99031,7 +99052,7 @@ function () {
   }], [{
     key: "pipes",
     value: function pipes() {
-      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"], _pipes_ModelPipe__WEBPACK_IMPORTED_MODULE_1__["default"], _pipes_MigrationPipe__WEBPACK_IMPORTED_MODULE_2__["default"], _pipes_ControllerPipe__WEBPACK_IMPORTED_MODULE_3__["default"], _pipes_APIControllerPipe__WEBPACK_IMPORTED_MODULE_4__["default"], _pipes_SeederPipe__WEBPACK_IMPORTED_MODULE_5__["default"], _pipes_FactoryPipe__WEBPACK_IMPORTED_MODULE_7__["default"], _pipes_APIRoutesPipe__WEBPACK_IMPORTED_MODULE_6__["default"]];
+      return [_pipes_UserPipe__WEBPACK_IMPORTED_MODULE_0__["default"]];
     }
   }, {
     key: "defaultSchema",
@@ -100126,9 +100147,8 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelCollection; });
-/* harmony import */ var _utilities_Collection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Collection */ "./resources/js/utilities/Collection.js");
-/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
-/* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Attribute */ "./resources/js/objectModel/Attribute.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+/* harmony import */ var _Attribute__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Attribute */ "./resources/js/objectModel/Attribute.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -100142,23 +100162,20 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-
 var ObjectModelCollection =
 /*#__PURE__*/
 function () {
-  function ObjectModelCollection(entities) {
-    _classCallCheck(this, ObjectModelCollection);
+  function ObjectModelCollection() {//this.attachRelationships()
+    //this.attachPivotAttributes()
 
-    this.entities = Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(entities);
-    this.attachRelationships();
-    this.attachPivotAttributes();
+    _classCallCheck(this, ObjectModelCollection);
   }
 
   _createClass(ObjectModelCollection, [{
     key: "isManyToMany",
     value: function isManyToMany(candidate) {
       var models = this.modelsIncludingUser().map(function (item) {
-        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(item.heading).toLowerCase();
       }).toArray().join("|");
       var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
       var matches = manyToManyRegExp.exec(candidate.heading);
@@ -100173,7 +100190,7 @@ function () {
     key: "manyToManyAssociatedModels",
     value: function manyToManyAssociatedModels(manyToManyEntity) {
       var models = this.modelsIncludingUser().map(function (item) {
-        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(item.heading).toLowerCase();
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(item.heading).toLowerCase();
       }).toArray().join("|");
       var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");
       var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
@@ -100227,7 +100244,7 @@ function () {
   }, {
     key: "modelsIncludingUser",
     value: function modelsIncludingUser() {
-      return Object(_utilities_Collection__WEBPACK_IMPORTED_MODULE_0__["default"])(this.models().items.concat(this.userModels().items));
+      return collect(this.models().items.concat(this.userModels().items));
     }
   }, {
     key: "modelsExceptUser",
@@ -100293,7 +100310,7 @@ function () {
         model.belongsToManyRelationships = remaining.filter(function (candidate) {
           return manyToManys_.filter(function (manyToManyEntity) {
             var parts = manyToManyAssociatedModels_[manyToManyEntity.heading];
-            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(candidate.heading));
+            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(candidate.heading));
           }).items.length > 0;
         });
       });
@@ -100305,8 +100322,8 @@ function () {
 
       this.manyToManys().each(function (entity) {
         _this4.manyToManyAssociatedModels(entity).forEach(function (modelName) {
-          entity.attributes.push(new _Attribute__WEBPACK_IMPORTED_MODULE_2__["default"]({
-            name: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_1__["default"].snakeCase(modelName) + "_id",
+          entity.attributes.push(new _Attribute__WEBPACK_IMPORTED_MODULE_1__["default"]({
+            name: _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__["default"].snakeCase(modelName) + "_id",
             parent: entity,
             dataType: "unsignedInteger",
             fillable: false,
@@ -100319,6 +100336,9 @@ function () {
   }, {
     key: "serializeSchema",
     value: function serializeSchema() {
+      return {
+        status: "This schema is not ready yet"
+      };
       return this.entities.reduce(function (result, entity) {
         return _objectSpread({}, result, _defineProperty({}, entity.heading, entity.serialize()));
       }, {});
@@ -100326,28 +100346,14 @@ function () {
   }], [{
     key: "fromEntities",
     value: function fromEntities(entities) {
-      return new this(entities);
+      var omc = new this();
+      omc.entities = entities;
+      return omc;
     }
   }]);
 
   return ObjectModelCollection;
 }();
-/* ORIGINAL MANY TO MANY 
-
-            //BelongsToMany
-            model.belongsToManyRelationships = remaining.filter(candidate => {
-                return this.manyToManys().filter(manyToManyEntity => {
-                    let parts = this.manyToManyAssociatedModels(manyToManyEntity)
-                    return parts.includes(
-                            F.snakeCase(model.heading)
-                        ) && parts.includes(
-                            F.snakeCase(candidate.heading)
-                        )
-                }).items.length > 0 
-            }) 
-
-*/
-
 
 
 
@@ -100393,16 +100399,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var ObjectModelEntity =
 /*#__PURE__*/
 function () {
-  function ObjectModelEntity(chunk) {
+  function ObjectModelEntity(segment) {
     var _this = this;
 
     _classCallCheck(this, ObjectModelEntity);
 
-    this.parts = chunk.split('\n');
-    this.heading = this.parts[0]; // Sort and only keep unique attributes
+    this.heading = segment.heading; // Sort and only keep unique attributes
 
-    this.attributeRows = _toConsumableArray(new Set([].concat(_toConsumableArray(this.injectColumns(['id'])), _toConsumableArray(this.parts.slice(1)), _toConsumableArray(this.injectColumns(['created_at', 'updated_at'])))));
-    this.attributes = this.attributeRows.map(function (name) {
+    var attributeRows = _toConsumableArray(new Set([].concat(_toConsumableArray(this.injectColumns(['id'])), _toConsumableArray(segment.attributes), _toConsumableArray(this.injectColumns(['created_at', 'updated_at'])))));
+
+    this.attributes = attributeRows.map(function (name) {
       return _AttributeFactory_js__WEBPACK_IMPORTED_MODULE_2__["default"].make(name, _this);
     });
   }
@@ -100457,11 +100463,6 @@ function () {
         return _objectSpread({}, result, _defineProperty({}, attribute.name, attribute.serialize()));
       }, {});
     }
-  }], [{
-    key: "fromText",
-    value: function fromText(chunk) {
-      return new this(chunk);
-    }
   }]);
 
   return ObjectModelEntity;
@@ -100484,6 +100485,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./entities/UserEntity */ "./resources/js/objectModel/entities/UserEntity.js");
 /* harmony import */ var _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./entities/ModelEntity */ "./resources/js/objectModel/entities/ModelEntity.js");
 /* harmony import */ var _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./entities/TableEntity */ "./resources/js/objectModel/entities/TableEntity.js");
+/* harmony import */ var _entities_PivotTableEntity__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./entities/PivotTableEntity */ "./resources/js/objectModel/entities/PivotTableEntity.js");
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -100494,33 +100497,92 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
+
 var ObjectModelEntityFactory =
 /*#__PURE__*/
 function () {
-  function ObjectModelEntityFactory(chunk) {
+  function ObjectModelEntityFactory(segments) {
     _classCallCheck(this, ObjectModelEntityFactory);
 
-    this.heading = chunk.split('\n')[0];
+    this.segments = segments; // gradually build the entities
+
+    this.entities = this.buildEntities();
+    this.attachRelationships();
+    console.log(this.entities);
   }
 
   _createClass(ObjectModelEntityFactory, [{
-    key: "hasModel",
-    value: function hasModel() {
-      // a Model is indicated by capital first letter
-      return this.heading[0] == this.heading[0].toUpperCase();
+    key: "buildEntities",
+    value: function buildEntities() {
+      var _this = this;
+
+      return this.segments.map(function (segment) {
+        if (segment.hasUserModel()) return new _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__["default"](segment);
+        if (segment.hasModel()) return new _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__["default"](segment);
+        if (_this.isPivotTableEntity(segment)) return new _entities_PivotTableEntity__WEBPACK_IMPORTED_MODULE_3__["default"](segment); // default
+
+        return new _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__["default"](segment);
+      });
     }
   }, {
-    key: "isUserModel",
-    value: function isUserModel() {
-      return this.heading == "User";
+    key: "isPivotTableEntity",
+    value: function isPivotTableEntity(segment) {
+      return !!this.pivotTableHeadingsPair(segment);
+    }
+  }, {
+    key: "pivotTableHeadingsPair",
+    value: function pivotTableHeadingsPair(segment) {
+      var tableNameParts = this.segments.filter(function (segment) {
+        return segment.hasModel();
+      }).map(function (segment) {
+        return _utilities_Formatter__WEBPACK_IMPORTED_MODULE_4__["default"].snakeCase(segment.heading).toLowerCase();
+      }).join("|");
+      var manyToManyRegExp = new RegExp("^(" + tableNameParts + ")_(" + tableNameParts + ")$");
+      var matches = manyToManyRegExp.exec(segment.heading);
+      return matches ? [matches[1], matches[2]] : false;
+    }
+  }, {
+    key: "getEntities",
+    value: function getEntities() {
+      return this.entities;
+    }
+  }, {
+    key: "attachRelationships",
+    value: function attachRelationships() {
+      var _this2 = this;
+
+      // Prepare this in order to prevent geometric growth
+      var manyToManys_ = this.entities.filter(function (entity) {
+        return _this2.isPivotTableEntity(entity);
+      });
+      var manyToManyAssociatedModels_ = {};
+      manyToManys_.forEach(function (entity) {
+        manyToManyAssociatedModels_[entity.heading] = _this2.pivotTableHeadingsPair(entity);
+      });
+      this.entities.mapWithRemaining(function (model, remaining) {
+        // HasOne/HasMany
+        model.hasManyRelationships = remaining.filter(function (candidate) {
+          return candidate.attributeNames().includes(model.asForeignKey()) && !model.attributeNames().includes(candidate.asForeignKey());
+        }); // BelongsTo
+
+        model.belongsToRelationships = remaining.filter(function (candidate) {
+          return !candidate.attributeNames().includes(model.asForeignKey()) && model.attributeNames().includes(candidate.asForeignKey());
+        }); // BelongsToMany
+
+        model.belongsToManyRelationships = remaining.filter(function (candidate) {
+          return manyToManys_.filter(function (manyToManyEntity) {
+            var parts = manyToManyAssociatedModels_[manyToManyEntity.heading];
+            return parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_4__["default"].snakeCase(model.heading)) && parts.includes(_utilities_Formatter__WEBPACK_IMPORTED_MODULE_4__["default"].snakeCase(candidate.heading));
+          }).length > 0;
+        });
+      });
     }
   }], [{
-    key: "fromText",
-    value: function fromText(chunk) {
-      var factory = new this(chunk);
-      if (factory.isUserModel()) return new _entities_UserEntity__WEBPACK_IMPORTED_MODULE_0__["default"](chunk);
-      if (factory.hasModel()) return new _entities_ModelEntity__WEBPACK_IMPORTED_MODULE_1__["default"](chunk);
-      return new _entities_TableEntity__WEBPACK_IMPORTED_MODULE_2__["default"](chunk);
+    key: "fromSegments",
+    value: function fromSegments(segments) {
+      var factory = new this(segments);
+      return factory.getEntities();
     }
   }]);
 
@@ -100541,7 +100603,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ObjectModelNoteParser; });
-/* harmony import */ var _ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ObjectModelEntityFactory */ "./resources/js/objectModel/ObjectModelEntityFactory.js");
+/* harmony import */ var _Segment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Segment */ "./resources/js/objectModel/Segment.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -100571,13 +100633,13 @@ function () {
       .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "");
       return this;
     }
-    /* returns an array with items of type ObjectModelEntity */
+    /* returns an array with items of type Segment */
 
   }, {
     key: "segment",
     value: function segment() {
       return !this.text ? [] : this.text.split(/\n\s*\n/).map(function (chunk) {
-        return _ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_0__["default"].fromText(chunk);
+        return _Segment__WEBPACK_IMPORTED_MODULE_0__["default"].fromText(chunk);
       });
     }
   }], [{
@@ -100599,6 +100661,61 @@ function () {
 
 /***/ }),
 
+/***/ "./resources/js/objectModel/Segment.js":
+/*!*********************************************!*\
+  !*** ./resources/js/objectModel/Segment.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Segment; });
+/* harmony import */ var _utilities_Formatter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/Formatter */ "./resources/js/utilities/Formatter.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var Segment =
+/*#__PURE__*/
+function () {
+  function Segment(chunk) {
+    _classCallCheck(this, Segment);
+
+    var parts = chunk.split('\n');
+    this.heading = parts[0];
+    this.attributes = parts.slice(1);
+  }
+
+  _createClass(Segment, [{
+    key: "hasModel",
+    value: function hasModel() {
+      // a Model is indicated by capital first letter
+      return this.heading[0] == this.heading[0].toUpperCase();
+    }
+  }, {
+    key: "hasUserModel",
+    value: function hasUserModel() {
+      return this.heading == "User";
+    }
+  }], [{
+    key: "fromText",
+    value: function fromText(chunk) {
+      return new this(chunk);
+    }
+  }]);
+
+  return Segment;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/objectModel/entities/ModelEntity.js":
 /*!**********************************************************!*\
   !*** ./resources/js/objectModel/entities/ModelEntity.js ***!
@@ -100609,7 +100726,7 @@ function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ModelEntity; });
-/* harmony import */ var _ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ObjectModelEntity */ "./resources/js/objectModel/ObjectModelEntity.js");
+/* harmony import */ var _TableEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableEntity */ "./resources/js/objectModel/entities/TableEntity.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -100628,8 +100745,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var ModelEntity =
 /*#__PURE__*/
-function (_ObjectModelEntity) {
-  _inherits(ModelEntity, _ObjectModelEntity);
+function (_TableEntity) {
+  _inherits(ModelEntity, _TableEntity);
 
   function ModelEntity() {
     _classCallCheck(this, ModelEntity);
@@ -100638,7 +100755,52 @@ function (_ObjectModelEntity) {
   }
 
   return ModelEntity;
-}(_ObjectModelEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
+}(_TableEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/objectModel/entities/PivotTableEntity.js":
+/*!***************************************************************!*\
+  !*** ./resources/js/objectModel/entities/PivotTableEntity.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PivotTableEntity; });
+/* harmony import */ var _TableEntity__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableEntity */ "./resources/js/objectModel/entities/TableEntity.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var PivotTableEntity =
+/*#__PURE__*/
+function (_TableEntity) {
+  _inherits(PivotTableEntity, _TableEntity);
+
+  function PivotTableEntity() {
+    _classCallCheck(this, PivotTableEntity);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(PivotTableEntity).apply(this, arguments));
+  }
+
+  return PivotTableEntity;
+}(_TableEntity__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 
@@ -100872,9 +101034,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../objectModel/ObjectModelNotesParser */ "./resources/js/objectModel/ObjectModelNotesParser.js");
 /* harmony import */ var _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../objectModel/ObjectModelCollection */ "./resources/js/objectModel/ObjectModelCollection.js");
-/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
-/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
-/* harmony import */ var _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utilities/Storage */ "./resources/js/utilities/Storage.js");
+/* harmony import */ var _objectModel_ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../objectModel/ObjectModelEntityFactory */ "./resources/js/objectModel/ObjectModelEntityFactory.js");
+/* harmony import */ var _Config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Config */ "./resources/js/Config.js");
+/* harmony import */ var _utilities_Preference__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utilities/Preference */ "./resources/js/utilities/Preference.js");
+/* harmony import */ var _utilities_Storage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utilities/Storage */ "./resources/js/utilities/Storage.js");
+
 
 
 
@@ -100896,12 +101060,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       template: "",
       reviewFile: ""
     },
-    availablePipes: _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.pipes(),
+    availablePipes: _Config__WEBPACK_IMPORTED_MODULE_5__["default"].FileFactory.pipes(),
     objectModelNotes: "",
     reviewFiles: [],
     templates: {},
     schema: {},
-    preferences: _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel')
+    preferences: _utilities_Storage__WEBPACK_IMPORTED_MODULE_7__["default"].get('objectModel')
   },
   mutations: {
     navigate: function navigate(state, _ref) {
@@ -100937,20 +101101,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
       context.dispatch('compileSchema', objectModelNotes);
     },
     setSchema: function setSchema(context, schema) {
-      context.commit('setSchema', schema);
-      context.dispatch('compileFiles'); // TO BE SOLVED! Get and Set the Preferences in a good way (async)
+      context.commit('setSchema', schema); //context.dispatch('compileFiles')
+      // TO BE SOLVED! Get and Set the Preferences in a good way (async)
       //Preference.persist(schema)
       //context.dispatch('setPreferences', schema)
     },
     setPreferences: function setPreferences(context, schema) {
-      context.commit('setPreferences', mergeJSON(_utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel') ? _utilities_Storage__WEBPACK_IMPORTED_MODULE_6__["default"].get('objectModel') : {}, schema));
+      context.commit('setPreferences', mergeJSON(_utilities_Storage__WEBPACK_IMPORTED_MODULE_7__["default"].get('objectModel') ? _utilities_Storage__WEBPACK_IMPORTED_MODULE_7__["default"].get('objectModel') : {}, schema));
     },
     compileFiles: function compileFiles(context) {
-      var files = _Config__WEBPACK_IMPORTED_MODULE_4__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(context.state.objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
+      var files = _Config__WEBPACK_IMPORTED_MODULE_5__["default"].FileFactory.from(_objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromSegments(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(context.state.objectModelNotes).segment())).withPipes(context.state.availablePipes).calculateFiles();
       context.commit('setReviewFiles', files);
     },
     compileSchema: function compileSchema(context, objectModelNotes) {
-      var schema = _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment()).serializeSchema();
+      _objectModel_ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_4__["default"].fromSegments(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment());
+      return;
+      var schema = _objectModel_ObjectModelCollection__WEBPACK_IMPORTED_MODULE_3__["default"].fromEntities(_objectModel_ObjectModelEntityFactory__WEBPACK_IMPORTED_MODULE_4__["default"].fromSegments(_objectModel_ObjectModelNotesParser__WEBPACK_IMPORTED_MODULE_2__["default"].parse(objectModelNotes).segment())).serializeSchema();
       context.dispatch('setSchema', schema);
     },
     setTemplates: function setTemplates(context) {
@@ -100973,54 +101139,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.debug = true;
     }
   }
 }));
-/*
-
-            // Set the highlighted file in the review list
-            // This part need to be refactored...
-            if(context.state.navigation.review == "" && context.state.reviewFiles.length){
-                context.commit('navigate', {
-                    namespace: "review",
-                    tab: context.state.reviewFiles[0].path
-                })
-            }
-
-*/
-
-/***/ }),
-
-/***/ "./resources/js/utilities/Collection.js":
-/*!**********************************************!*\
-  !*** ./resources/js/utilities/Collection.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! collect.js */ "./node_modules/collect.js/dist/index.js");
-/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_0__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-
-collect_js__WEBPACK_IMPORTED_MODULE_0___default()().macro("mapWithRemaining", function (callback) {
-  var _this = this;
-
-  var keys = Object.keys(this.items);
-  var items = this.items.map(function (item, key) {
-    var remaining = _toConsumableArray(_this.items);
-
-    remaining.splice(remaining.indexOf(item), 1);
-    return callback(item, remaining);
-  });
-  return collect_js__WEBPACK_IMPORTED_MODULE_0___default()(items);
-});
-/* harmony default export */ __webpack_exports__["default"] = (collect_js__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 /***/ }),
 

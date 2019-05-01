@@ -1,3 +1,15 @@
+Array.prototype.mapWithRemaining = function(callback) {
+    let items = this.map((item, key) => {
+        let remaining = [...this]
+        remaining.splice(
+            remaining.indexOf(item), 1
+        )
+        
+        return callback(item, remaining)
+    })
+
+    return items
+}
 
 /**
  * First we will load all of this project's JavaScript dependencies which

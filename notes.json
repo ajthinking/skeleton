@@ -1,0 +1,30 @@
+{
+    "entityTypes": {
+        "TableEntity": {
+            "ModelEntity": {
+                "UserEntity": {
+
+                },
+                "PivotModel": {
+
+                }
+            },
+
+            "PivotTable": {
+
+            }
+        }
+    },
+
+    "explanation": [
+        "TableEntity has a table, and so does every extension of it.",
+        "PivotTable extends TableEntity only",
+        "UserEntity extends ModelEntity",
+        "PivotModel is not supported in this version"
+    ],
+
+    "furthermore": [
+        "It will not support relationships between TableEntities, only extensions of it"
+    ]
+}
+
