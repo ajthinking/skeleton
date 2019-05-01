@@ -12,12 +12,11 @@ export default class ObjectModelEntityFactory {
         // gradually build the entities
         this.entities = this.buildEntities()
         this.attachRelationships()
-        console.log(this.entities)
     }
 
     static fromSegments(segments) {
         let factory = new this(segments)
-        return factory.getEntities()
+        return factory.entities
     }
 
     buildEntities() {
@@ -49,10 +48,6 @@ export default class ObjectModelEntityFactory {
         ] : false;
     }
 
-    getEntities() {
-        return this.entities
-    }
-
     attachRelationships() {
         // Prepare this in order to prevent geometric growth
         let manyToManys_ = this.entities.filter(entity => this.isPivotTableEntity(entity))
@@ -62,7 +57,7 @@ export default class ObjectModelEntityFactory {
         })
 
         this.entities.mapWithRemaining((model, remaining) => {
-            // HasOne/HasMany
+            // HasOne/HasMany -------- HasOneOrMany
             model.hasManyRelationships = remaining.filter(candidate => {
                 return candidate.attributeNames().includes(model.asForeignKey())
                     && !model.attributeNames().includes(candidate.asForeignKey())

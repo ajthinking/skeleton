@@ -100509,7 +100509,6 @@ function () {
 
     this.entities = this.buildEntities();
     this.attachRelationships();
-    console.log(this.entities);
   }
 
   _createClass(ObjectModelEntityFactory, [{
@@ -100543,11 +100542,6 @@ function () {
       return matches ? [matches[1], matches[2]] : false;
     }
   }, {
-    key: "getEntities",
-    value: function getEntities() {
-      return this.entities;
-    }
-  }, {
     key: "attachRelationships",
     value: function attachRelationships() {
       var _this2 = this;
@@ -100561,7 +100555,7 @@ function () {
         manyToManyAssociatedModels_[entity.heading] = _this2.pivotTableHeadingsPair(entity);
       });
       this.entities.mapWithRemaining(function (model, remaining) {
-        // HasOne/HasMany
+        // HasOne/HasMany -------- HasOneOrMany
         model.hasManyRelationships = remaining.filter(function (candidate) {
           return candidate.attributeNames().includes(model.asForeignKey()) && !model.attributeNames().includes(candidate.asForeignKey());
         }); // BelongsTo
@@ -100582,7 +100576,7 @@ function () {
     key: "fromSegments",
     value: function fromSegments(segments) {
       var factory = new this(segments);
-      return factory.getEntities();
+      return factory.entities;
     }
   }]);
 
