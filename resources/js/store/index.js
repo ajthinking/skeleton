@@ -20,6 +20,9 @@ export default new Vuex.Store({
             template: "",
             reviewFile: "",
         },
+
+        finalSettings: "Some nice text...",
+
         availablePipes: Config.FileFactory.pipes(),
 
         objectModelNotes: "",

@@ -7,6 +7,12 @@
 
         <button v-if="!isBuilding" @click="build()" class="bg-blue text-white border bg-white p-2 rounded">Build!</button>
         <div v-if="isBuilding">LOADING</div>
+        
+        <simple-code-editor
+            lang="php"
+            storeKey="finalSettings"
+        ></simple-code-editor>
+        
         <notification-card v-if="message"
             :type="'success'"
             :message="message"
@@ -20,6 +26,11 @@
             return {
                 isBuilding: false,
                 message: false,
+                content: "yea",
+                options: {
+                    minLines: 5,
+                    maxLines: 1000,
+                }
             }
         },
 
@@ -42,7 +53,16 @@
 
                     this.message = content.message
                 })();
-            }
+            },
+
+            editorInit() {
+                require('brace/ext/language_tools') //language extension prerequsite...
+                require('brace/mode/html')                
+                require('brace/mode/javascript')    //language
+                require('brace/mode/less')
+                require('brace/theme/chrome')
+                require('brace/snippets/javascript') //snippet
+            }            
         }
     }
 </script>
