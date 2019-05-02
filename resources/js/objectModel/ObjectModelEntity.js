@@ -50,11 +50,16 @@ export default class ObjectModelEntity {
     }
 
     serialize() {
-        return this.attributes.reduce((result, attribute) => {
-            return {
-                ... result,
-                [attribute.name]: attribute.serialize()
+        return {
+            name: this.heading,
+            type: this.constructor.name,
+            attributes: this.attributes.map(attribute => attribute.serialize()),
+            relationships: {
+                hasOne: [].map(target => target.heading),
+                hasMany: this.hasManyRelationships.map(target => target.heading),
+                belongsTo: this.belongsToRelationships.map(target => target.heading),
+                belongsToMany: this.belongsToManyRelationships.map(target => target.heading)
             }
-        }, {})
+        }
     }
 }

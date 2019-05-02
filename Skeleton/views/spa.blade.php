@@ -17,6 +17,8 @@
     <div id="app">
         <app-header></app-header>
         <app-workspace></app-workspace>
+        <!-- VIEW ONCE WITH LINKS AND DEMO VIDEO -->
+        <!--<app-splash></app-splash>-->
     </div>
     <script src="{{ mix('js/app.js') }}"></script>
 </body>

@@ -23,7 +23,7 @@ export default new Vuex.Store({
 
         availablePipes: Config.FileFactory.pipes(),
 
-        objectModelNotes: "1",
+        objectModelNotes: "",
 
         reviewFiles: [],
 
@@ -69,7 +69,7 @@ export default new Vuex.Store({
 
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
-            //context.dispatch('compileSchema', objectModelNotes)
+            context.dispatch('compileSchema', objectModelNotes)
 
         },
 
@@ -104,11 +104,6 @@ export default new Vuex.Store({
         },
         
         compileSchema(context, objectModelNotes) {
-            ObjectModelEntityFactory.fromSegments(
-                Parser.parse(objectModelNotes).segment()
-            )
-            return;
-
             let schema = ObjectModelCollection.fromEntities(
                 ObjectModelEntityFactory.fromSegments(
                     Parser.parse(objectModelNotes).segment()

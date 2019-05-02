@@ -152,15 +152,6 @@ export default class ObjectModelCollection {
     }
 
     serializeSchema() {
-        return {
-            status: "This schema is not ready yet"
-        }
-
-        return this.entities.reduce((result, entity) => {
-            return {
-                ... result,
-                [entity.heading]: entity.serialize()
-            }
-        }, {})
+        return this.entities.map(entity => entity.serialize())
     }   
 }

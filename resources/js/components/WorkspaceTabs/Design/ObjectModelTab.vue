@@ -5,7 +5,7 @@
             <code-editor
                 class="w-full bg-grey-lightest rounded p-2 text-sm border" 
                 v-model="objectModelNotes"
-                lang="text"
+                lang="json"
             ></code-editor>
             <div class="mt-1">
                 <button @click="addUserSystem()" :class="buttonStyle">+ user system</button>
@@ -27,6 +27,9 @@
 </template>
 
 <script>
+
+    import Config from '../../../Config'
+
     export default {
         data() {
             return {
@@ -37,12 +40,10 @@
         computed: {
             objectModelNotes: {
                 get() {
-                    console.log("get")
                     return this.$store.state.objectModelNotes            
                 },
 
                 set(value) {
-                    console.log("set", value, typeof value)
                     this.$store.dispatch('setObjectModelNotes', value)
                 }
             },
@@ -66,7 +67,9 @@
 
         methods: {
             addUserSystem() {
-                this.$store.dispatch('setObjectModelNotes', "2")
+                this.$store.dispatch('setObjectModelNotes', 
+                    this.objectModelNotes + Config.FileFactory.defaultSketch()
+                )
             }
         }
     }

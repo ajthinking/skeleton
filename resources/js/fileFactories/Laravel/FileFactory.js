@@ -8,6 +8,7 @@ import APIRoutesPipe from './pipes/APIRoutesPipe'
 import FactoryPipe from './pipes/FactoryPipe'
 
 import defaultSchema from './defaultSchema'
+import defaultSketch from './defaultSketch'
 
 import collect from 'collect.js'
 
@@ -32,6 +33,10 @@ export default class FileFactory {
     static defaultSchema() {
         return defaultSchema;
     }
+
+    static defaultSketch() {
+        return defaultSketch;
+    }    
 
     static from(objectModelCollection) {
         return new this(objectModelCollection)
