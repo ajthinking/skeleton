@@ -21,8 +21,6 @@ export default new Vuex.Store({
             reviewFile: "",
         },
 
-        finalSettings: "Some nice text...",
-
         availablePipes: Config.FileFactory.pipes(),
 
         objectModelNotes: "",
@@ -62,7 +60,7 @@ export default new Vuex.Store({
 
         setPreferences(state, preferences) {
             state.preferences = preferences
-        }        
+        }
     },
     actions: {
         navigate(context, payload) {

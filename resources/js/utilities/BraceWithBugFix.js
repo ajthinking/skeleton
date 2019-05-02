@@ -18000,7 +18000,8 @@
             acequire.toUrl = acequire.nameToUrl;
         
         if (config.get("packaged") || !acequire.toUrl) {
-            workerUrl = workerUrl || config.moduleUrl(mod, "worker");
+            
+            workerUrl = workerUrl || config.moduleUrl(mod.id ? mod.id : mod, "worker");
         } else {
             var normalizePath = this.$normalizePath;
             workerUrl = workerUrl || normalizePath(acequire.toUrl("ace/worker/worker.js", null, "_"));

@@ -1,3 +1,11 @@
+<!--
+    vue2-ace-editor (https://github.com/chairuosen/vue2-ace-editor)
+    uses brace. There is a bug not allowing php highlighting ( and 50+ issues and unanswered PR:s at brace...) 
+    To temporary solve this BraceWithBugFix.js is introduced. 
+    Its a copy of brace/index.js with this fix:
+    https://github.com/thlorenz/brace/issues/55
+-->
+
 <script>
 
 var ace = require('./BraceWithBugFix');
@@ -74,10 +82,12 @@ module.exports = {
         var theme = this.theme||'chrome';
 
         require('brace/ext/emmet');
-
+        require('brace/theme/chrome')
+        require('brace/ext/language_tools') //language extension prerequsite...        
+        require('brace/mode/' + lang)    
         var editor = vm.editor = ace.edit(this.$el);
 
-        this.$emit('init',editor);
+        this.$emit('init',editor);                
         
         editor.$blockScrolling = Infinity;
         //editor.setOption("enableEmmet", true);
@@ -91,8 +101,15 @@ module.exports = {
             vm.$emit('input',content);
             vm.contentBackup = content;
         });
-        if(vm.options)
-            editor.setOptions(vm.options);
+        
+        editor.setOptions({
+            minLines: 20,
+            maxLines: 1000,  
+            showLineNumbers: false,
+            showGutter: false,
+            highlightActiveLine: false,              
+            ...(vm.options ? vm.options : {})
+        });
     }
 }
 
