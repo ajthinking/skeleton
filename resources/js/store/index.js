@@ -23,7 +23,7 @@ export default new Vuex.Store({
 
         availablePipes: Config.FileFactory.pipes(),
 
-        objectModelNotes: "",
+        objectModelNotes: "1",
 
         reviewFiles: [],
 
@@ -69,7 +69,7 @@ export default new Vuex.Store({
 
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
-            context.dispatch('compileSchema', objectModelNotes)
+            //context.dispatch('compileSchema', objectModelNotes)
 
         },
 

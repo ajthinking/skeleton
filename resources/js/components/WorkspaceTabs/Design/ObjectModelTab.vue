@@ -9,9 +9,6 @@
             ></code-editor>
             <div class="mt-1">
                 <button @click="addUserSystem()" :class="buttonStyle">+ user system</button>
-                <button :class="buttonStyle">+ sample app</button>
-                <button :class="buttonStyle">+ random app</button>
-                <button :class="buttonStyle">syntax</button>
             </div>             
 
         </div>
@@ -40,10 +37,12 @@
         computed: {
             objectModelNotes: {
                 get() {
+                    console.log("get")
                     return this.$store.state.objectModelNotes            
                 },
 
                 set(value) {
+                    console.log("set", value, typeof value)
                     this.$store.dispatch('setObjectModelNotes', value)
                 }
             },
@@ -67,11 +66,7 @@
 
         methods: {
             addUserSystem() {
-                this.objectModelNotes += "User\nname\nemail\nemail_verified_at\npassword\nremember_token\n\npassword_resets\nemail\ntoken\n\nCar\ncolor"
-
-                // resizable textarea does not register the changes since it uses the 'input' event
-                // resort to forceUpdate (BUGGED OUT ...)
-                //this.$refs.resizableTextarea.forceRerender()
+                this.$store.dispatch('setObjectModelNotes', "2")
             }
         }
     }

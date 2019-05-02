@@ -12,6 +12,7 @@ export default class ObjectModelEntityFactory {
         // gradually build the entities
         this.entities = this.buildEntities()
         this.attachRelationships()
+        console.log(this.entities)
     }
 
     static fromSegments(segments) {
