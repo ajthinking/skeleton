@@ -4,17 +4,32 @@ import AttributeFactory from './AttributeFactory.js';
 import Preference from '../utilities/Preference'
 
 export default class ObjectModelEntity {
-    constructor(segment) {
-        this.heading = segment.heading
+    static fromSegment(segment) {
+        let entity = new this()
+        entity.heading = segment.heading
         // Sort and only keep unique attributes
         let attributeRows = [
             ... new Set([
-                ... this.injectColumns(['id']),
+                ... entity.injectColumns(['id']),
                 ... segment.attributes,
-                ... this.injectColumns(['created_at', 'updated_at']),
+                ... entity.injectColumns(['created_at', 'updated_at']),
             ])
         ]
-        this.attributes = attributeRows.map(name => AttributeFactory.make(name, this))
+        entity.attributes = attributeRows.map(name => AttributeFactory.make(name, entity))        
+        return entity
+    }
+
+    static deserialize(data) {
+        let entity = new this()
+        entity.heading = data.name
+        let attributeRows = [
+            ... new Set([
+                ... entity.injectColumns(['id']),
+                ... entity.injectColumns(['created_at', 'updated_at']),
+            ])
+        ]
+        entity.attributes = attributeRows.map(name => AttributeFactory.make(name, entity))        
+        return entity        
     }
 
     attributeNames() {

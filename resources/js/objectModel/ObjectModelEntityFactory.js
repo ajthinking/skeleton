@@ -2,31 +2,46 @@ import UserEntity from './entities/UserEntity'
 import ModelEntity from './entities/ModelEntity'
 import TableEntity from './entities/TableEntity'
 import PivotTableEntity from './entities/PivotTableEntity'
+const EntityTypes = { UserEntity, ModelEntity, TableEntity, PivotTableEntity};
+
 
 import F from '../utilities/Formatter'
 
 export default class ObjectModelEntityFactory {
-    constructor(segments) {
-        this.segments = segments
-        
-        // gradually build the entities
-        this.entities = this.buildEntities()
-        this.attachRelationships()
+    constructor() {
+
     }
 
     static fromSegments(segments) {
-        let factory = new this(segments)
+        let factory = new this()
+        factory.segments = segments
+        factory.entities = factory.buildEntities()
+        factory.attachRelationships()
         return factory.entities
     }
 
+    static fromSchema(schema) {
+        let factory = new this()
+        
+        factory.entities = schema.map(entity => {
+            entity = EntityTypes[entity.type].deserialize(entity)
+            entity.hasManyRelationships = []
+            entity.belongsToRelationships = []
+            entity.belongsToManyRelationships = []
+            return entity            
+        })
+
+        return factory.entities
+    }    
+
     buildEntities() {
         return this.segments.map(segment => {
-            if(segment.hasUserModel()) return new UserEntity(segment)
-            if(segment.hasModel()) return new ModelEntity(segment)
-            if(this.isPivotTableEntity(segment)) return new PivotTableEntity(segment)
+            if(segment.hasUserModel()) return UserEntity.fromSegment(segment)
+            if(segment.hasModel()) return ModelEntity.fromSegment(segment)
+            if(this.isPivotTableEntity(segment)) return PivotTableEntity.fromSegment(segment)
 
             // default
-            return new TableEntity(segment)
+            return TableEntity.fromSegment(segment)
         })
     }
 

@@ -1,5 +1,6 @@
 import F from '../utilities/Formatter'
 import Attribute from './Attribute'
+import ObjectModelEntityFactory from './ObjectModelEntityFactory'
 
 export default class ObjectModelCollection {
     constructor() {
@@ -11,7 +12,13 @@ export default class ObjectModelCollection {
         let omc = new this
         omc.entities = entities
         return omc
-    } 
+    }
+    
+    static fromSchema(schema) {
+        let omc = new this
+        omc.entities = ObjectModelEntityFactory.fromSchema(schema)
+        return omc
+    }    
 
     isManyToMany(candidate) {
         var models = this.modelsIncludingUser().map((item) => {
@@ -37,7 +44,7 @@ export default class ObjectModelCollection {
     }    
 
     hasUserModel() {
-        return this.userModels().items.length > 0
+        return this.userModels().length > 0
     }
 
     hasModels() {
@@ -153,5 +160,5 @@ export default class ObjectModelCollection {
 
     serializeSchema() {
         return this.entities.map(entity => entity.serialize())
-    }   
+    }
 }

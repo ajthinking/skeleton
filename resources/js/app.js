@@ -11,6 +11,10 @@ Array.prototype.mapWithRemaining = function(callback) {
     return items
 }
 
+Array.prototype.first = function() {
+    return this[0]
+}
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when

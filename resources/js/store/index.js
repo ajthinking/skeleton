@@ -75,7 +75,7 @@ export default new Vuex.Store({
 
         setSchema(context, schema) {
             context.commit('setSchema', schema)
-            //context.dispatch('compileFiles')
+            context.dispatch('compileFiles', schema)
             
             // TO BE SOLVED! Get and Set the Preferences in a good way (async)
             //Preference.persist(schema)
@@ -91,11 +91,9 @@ export default new Vuex.Store({
             )            
         },          
         
-        compileFiles(context) {
+        compileFiles(context, schema) {
             let files = Config.FileFactory.from(
-                ObjectModelCollection.fromSegments(
-                    Parser.parse(context.state.objectModelNotes).segment()
-                )                   
+                ObjectModelCollection.fromSchema(schema)                   
             ).withPipes(
                 context.state.availablePipes
             ).calculateFiles()
