@@ -47,7 +47,7 @@ export default class ModelPipe extends BasePipe {
     
     relationshipMethods(model) {
         return [
-            model.hasManyRelationships.map(target => {
+            model.relationships.hasMany.map(target => {
                 return Template.for('HasManyRelationship').replace({
                     ___TARGET_CLASS___: target.className(),                    
                     ___TARGET_CLASS_PLURAL___: F.pluralize(target.className()),
@@ -61,7 +61,7 @@ export default class ModelPipe extends BasePipe {
                 })
             }).join("\n\n"),
 
-            model.belongsToRelationships.map(target => {
+            model.relationships.belongsTo.map(target => {
                 return Template.for('BelongsToRelationship').replace({
                     ___TARGET_CLASS___: target.className(),
                     ___THIS_CLASS___: model.className(),
@@ -69,7 +69,7 @@ export default class ModelPipe extends BasePipe {
                 })
             }).join("\n\n"),
 
-            model.belongsToManyRelationships.map(target => {
+            model.relationships.belongsToMany.map(target => {
                 return Template.for('BelongsToManyRelationship').replace({
                     ___TARGET_CLASS___: target.className(),                    
                     ___TARGET_CLASS_PLURAL___: F.pluralize(target.className()),

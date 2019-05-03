@@ -92,13 +92,17 @@ export default new Vuex.Store({
         },          
         
         compileFiles(context, schema) {
+            
+            ObjectModelCollection.fromSchema(schema)
+            return
+
             let files = Config.FileFactory.from(
                 ObjectModelCollection.fromSchema(schema)                   
             ).withPipes(
                 context.state.availablePipes
             ).calculateFiles()
 
-            context.commit('setReviewFiles', files)
+            //context.commit('setReviewFiles', files)
         },
         
         compileSchema(context, objectModelNotes) {
@@ -107,6 +111,7 @@ export default new Vuex.Store({
                     Parser.parse(objectModelNotes).segment()
                 )
             ).serializeSchema()
+
 
             context.dispatch('setSchema', schema)
         },

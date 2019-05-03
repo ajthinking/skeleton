@@ -18,15 +18,15 @@ export default class APIControllerPipe extends ModelPipe {
 
     withRelationships(model) {
         return "with([" + [
-            ... model.hasManyRelationships.map(target => {
+            ... model.relationships.hasMany.map(target => {
                 return F.singleQuotePad(F.camelCase(F.pluralize(target.heading)))
             }),
 
-            ... model.belongsToRelationships.map(target => {
+            ... model.relationships.belongsTo.map(target => {
                 return F.singleQuotePad(F.camelCase(target.heading))
             }),
             
-            ... model.belongsToManyRelationships.map(target => {
+            ... model.relationships.belongsToMany.map(target => {
                 return F.singleQuotePad(F.camelCase(F.pluralize(target.heading)))
             }),
         ].join(", ") + "])->"

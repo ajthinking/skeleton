@@ -23,12 +23,42 @@ export default class ObjectModelEntityFactory {
     static fromSchema(schema) {
         let factory = new this()
         
-        factory.entities = schema.map(entity => {
-            entity = EntityTypes[entity.type].deserialize(entity)
-            entity.hasManyRelationships = []
-            entity.belongsToRelationships = []
-            entity.belongsToManyRelationships = []
+        factory.entities = schema.map(schemaEntity => {
+            let entity = EntityTypes[schemaEntity.type].deserialize(schemaEntity)            
             return entity            
+        })
+
+        factory.entities = factory.entities.map(entity => {
+            // Object.keys(entity.relationships).forEach(key => {
+            //     entity.relationships[key] = entity.relationships[key].map(targetName => {
+            //         return factory.entities.find(candidate => {
+            //             return candidate.heading == targetName
+            //         })
+            //     })
+            // })
+            entity.relationships.hasOne = entity.relationships.hasOne.map(targetName => {
+                return factory.entities.filter(candidate => {
+                    return candidate.heading == targetName
+                })
+            })
+            entity.relationships.hasMany = entity.relationships.hasMany.map(targetName => {
+                return factory.entities.filter(candidate => {
+                    return candidate.heading == targetName
+                })
+            })
+            entity.relationships.belongsTo = entity.relationships.belongsTo.map(targetName => {
+                return factory.entities.filter(candidate => {
+                    return candidate.heading == targetName
+                })
+            })
+
+            entity.relationships.belongsToMany = entity.relationships.belongsToMany.map(targetName => {
+                return factory.entities.filter(candidate => {
+                    return candidate.heading == targetName
+                })
+            })
+
+            return entity
         })
 
         return factory.entities
@@ -73,19 +103,19 @@ export default class ObjectModelEntityFactory {
 
         this.entities.mapWithRemaining((model, remaining) => {
             // HasOne/HasMany -------- HasOneOrMany
-            model.hasManyRelationships = remaining.filter(candidate => {
+            model.relationships.hasMany = remaining.filter(candidate => {
                 return candidate.attributeNames().includes(model.asForeignKey())
                     && !model.attributeNames().includes(candidate.asForeignKey())
             })
 
             // BelongsTo
-            model.belongsToRelationships = remaining.filter(candidate => {
+            model.relationships.belongsTo = remaining.filter(candidate => {
                 return !candidate.attributeNames().includes(model.asForeignKey())
                     && model.attributeNames().includes(candidate.asForeignKey())
             })
             
             // BelongsToMany
-            model.belongsToManyRelationships = remaining.filter(candidate => {
+            model.relationships.belongsToMany = remaining.filter(candidate => {
                 return manyToManys_.filter(manyToManyEntity => {
                     let parts = manyToManyAssociatedModels_[manyToManyEntity.heading]
                     return parts.includes(

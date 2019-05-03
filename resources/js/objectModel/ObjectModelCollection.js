@@ -48,7 +48,7 @@ export default class ObjectModelCollection {
     }
 
     hasModels() {
-        return this.modelsIncludingUser().items.length > 0
+        return this.modelsIncludingUser().length > 0
     }
 
     userModel() {
@@ -72,7 +72,7 @@ export default class ObjectModelCollection {
     }    
 
     modelsIncludingUser() {
-        return collect(this.models().items.concat(this.userModels().items))
+        return this.models().concat(this.userModels())
     }
 
     modelsExceptUser() {
@@ -100,45 +100,10 @@ export default class ObjectModelCollection {
             if(entity.isTableEntity() && this.isManyToMany(entity)) {
                 return 2
             }
-            return entity.belongsToRelationships.length
+            return entity.relationships.belongsTo.length
         })
     }
-    
-    attachRelationships() {
-        // Prepare this in order to prevent geometric growth
-        let manyToManys_ = this.manyToManys()
-        let manyToManyAssociatedModels_ = {}
-        manyToManys_.each(entity => {
-            manyToManyAssociatedModels_[entity.heading] = this.manyToManyAssociatedModels(entity)
-        })
-
-        this.entities.mapWithRemaining((model, remaining) => {
-            // HasOne/HasMany
-            model.hasManyRelationships = remaining.filter(candidate => {
-                return candidate.attributeNames().includes(model.asForeignKey())
-                    && !model.attributeNames().includes(candidate.asForeignKey())
-            })
-
-            // BelongsTo
-            model.belongsToRelationships = remaining.filter(candidate => {
-                return !candidate.attributeNames().includes(model.asForeignKey())
-                    && model.attributeNames().includes(candidate.asForeignKey())
-            })
-            
-            // BelongsToMany
-            model.belongsToManyRelationships = remaining.filter(candidate => {
-                return manyToManys_.filter(manyToManyEntity => {
-                    let parts = manyToManyAssociatedModels_[manyToManyEntity.heading]
-                    return parts.includes(
-                            F.snakeCase(model.heading)
-                        ) && parts.includes(
-                            F.snakeCase(candidate.heading)
-                        )
-                }).items.length > 0 
-            })            
-        })
-    }
-
+   
     attachPivotAttributes() {
         this.manyToManys().each(entity => {
             this.manyToManyAssociatedModels(entity).forEach(modelName => {

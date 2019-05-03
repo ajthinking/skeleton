@@ -4,6 +4,10 @@ import AttributeFactory from './AttributeFactory.js';
 import Preference from '../utilities/Preference'
 
 export default class ObjectModelEntity {
+    constructor() {
+        this.relationships = {}
+    }
+
     static fromSegment(segment) {
         let entity = new this()
         entity.heading = segment.heading
@@ -22,13 +26,8 @@ export default class ObjectModelEntity {
     static deserialize(data) {
         let entity = new this()
         entity.heading = data.name
-        let attributeRows = [
-            ... new Set([
-                ... entity.injectColumns(['id']),
-                ... entity.injectColumns(['created_at', 'updated_at']),
-            ])
-        ]
-        entity.attributes = attributeRows.map(name => AttributeFactory.make(name, entity))        
+        entity.attributes = data.attributes.map(attributeData => new Attribute(attributeData))
+        entity.relationships = data.relationships
         return entity        
     }
 
@@ -65,16 +64,18 @@ export default class ObjectModelEntity {
     }
 
     serialize() {
-        return {
+        const serialize_results = {
             name: this.heading,
             type: this.constructor.name,
             attributes: this.attributes.map(attribute => attribute.serialize()),
             relationships: {
                 hasOne: [].map(target => target.heading),
-                hasMany: this.hasManyRelationships.map(target => target.heading),
-                belongsTo: this.belongsToRelationships.map(target => target.heading),
-                belongsToMany: this.belongsToManyRelationships.map(target => target.heading)
+                hasMany: this.relationships.hasMany.map(target => target.heading),
+                belongsTo: this.relationships.belongsTo.map(target => target.heading),
+                belongsToMany: this.relationships.belongsToMany.map(target => target.heading)
             }
         }
+        
+        return  serialize_results; 
     }
 }
