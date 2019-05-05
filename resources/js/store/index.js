@@ -92,22 +92,16 @@ export default new Vuex.Store({
         },          
         
         compileFiles(context, schema) {
+            // Make deep copy of schema to detach any previous bindings
             schema = JSON.parse(JSON.stringify(schema))
-            console.log(schema)
-            // let files = Config.FileFactory.from(
-            //     ObjectModelCollection.fromSchema(schema)                   
-            // ).withPipes(
-            //     context.state.availablePipes
-            // ).calculateFiles()
 
-            // CHECK OUT THE DIFFERENCE BETWEEN THE ITERATIONS HERE!!!!!
-            console.log(
-                Config.FileFactory.from(
-                    ObjectModelCollection.fromSchema(schema)                   
-                )            
-            )
-            
-            //context.commit('setReviewFiles', files)
+            let files = Config.FileFactory.from(
+                ObjectModelCollection.fromSchema(schema)                   
+            ).withPipes(
+                     context.state.availablePipes
+            ).calculateFiles()
+
+            context.commit('setReviewFiles', files)
         },
         
         compileSchema(context, objectModelNotes) {

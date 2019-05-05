@@ -22,10 +22,9 @@ export default class ObjectModelEntityFactory {
 
     static fromSchema(schema) {
         let factory = new this()
-        
+
         factory.entities = schema.map(schemaEntity => {
-            let entity = EntityTypes[schemaEntity.type].deserialize(schemaEntity)            
-            return entity            
+            return EntityTypes[schemaEntity.type].deserialize(schemaEntity)
         })
 
         factory.entities = factory.entities.map(entity => {
@@ -37,23 +36,24 @@ export default class ObjectModelEntityFactory {
             //     })
             // })
             entity.relationships.hasOne = entity.relationships.hasOne.map(targetName => {
-                return factory.entities.filter(candidate => {
+                return factory.entities.find(candidate => {
                     return candidate.heading == targetName
                 })
             })
             entity.relationships.hasMany = entity.relationships.hasMany.map(targetName => {
-                return factory.entities.filter(candidate => {
+                return factory.entities.find(candidate => {
                     return candidate.heading == targetName
                 })
             })
+
             entity.relationships.belongsTo = entity.relationships.belongsTo.map(targetName => {
-                return factory.entities.filter(candidate => {
+                return factory.entities.find(candidate => {
                     return candidate.heading == targetName
                 })
             })
 
             entity.relationships.belongsToMany = entity.relationships.belongsToMany.map(targetName => {
-                return factory.entities.filter(candidate => {
+                return factory.entities.find(candidate => {
                     return candidate.heading == targetName
                 })
             })

@@ -10,19 +10,11 @@
             </div>
         </div>
         <div class="flex flex-1 bg-grey-lighter p-2" v-if="hasFiles">
-            <div class="w-full"
-                @dblclick="isInEditMode = !isInEditMode"
-            >
-                <textarea-autosize
-                    v-if="isInEditMode"
-                    class="w-full bg-grey-lightest rounded p-2 text-sm"
-                    placeholder="No data yet..."
-                    ref="someName"
+                <code-editor
+                    class="w-full bg-grey-lightest rounded p-2 text-sm border" 
                     v-model="activeFileContent"
-                    :min-height="400"
-                ></textarea-autosize>
-                <pre v-else v-highlightjs="activeFileContent"><code class="php"></code></pre>
-            </div>
+                    lang="php"
+                ></code-editor>                
         </div>
         <notification-card v-else
             :type="'warning'"
