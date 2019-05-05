@@ -108,7 +108,7 @@ module.exports = {
             showLineNumbers: false,
             showGutter: false,
             highlightActiveLine: false,   
-            inline: true,
+            //inline: true,
             showPrintMargin: false,
             ...(vm.options ? vm.options : {})
         });
