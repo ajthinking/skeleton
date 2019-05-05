@@ -1,7 +1,7 @@
 <template>
     <div class="flex mx-auto max-w-3xl px-8 bg-white pt-4">
         <div class="flex flex-1 mx-auto text-sm">
-            <div class="flex flex-col bg-grey-lightest text-xs border">
+            <div class="flex flex-col bg-white text-xs border">
                 <div v-for="file in templates"
                     :key="file.name"
                     :class="listingStyleFor(file)"
@@ -10,15 +10,12 @@
                     {{ file.name }}
                 </div>
             </div>
-            <div class="flex flex-1 bg-grey-lightest p-2">
-                <!-- <pre v-highlightjs="activeFileContent"><code class="php"></code></pre> -->
-                <textarea-autosize
-                    class="w-full bg-grey-lightest rounded p-2 text-sm"
-                    placeholder="Select a template"
-                    ref="someName"
+            <div class="flex flex-col flex-1 bg-white p-2">
+                <code-editor
+                    class="w-full bg-white rounded p-2 text-sm border" 
                     v-model="activeFileContent"
-                    :min-height="400"
-                ></textarea-autosize>
+                    lang="php"
+                ></code-editor>
             </div>
         </div>
     </div>  
@@ -67,9 +64,9 @@
             },
 
             listingStyleFor(file) {
-                let common = 'px-2 py-2 flex hover:bg-white '
-                let passive = 'bg-grey-lighter'
-                let active = 'bg-grey-light'
+                let common = 'px-2 py-2 flex hover:bg-grey-lighter '
+                let passive = 'bg-white'
+                let active = 'bg-blue text-white hover:bg-blue'
                 return this.isActiveFile(file) ? common + active : common + passive
             }
         }        

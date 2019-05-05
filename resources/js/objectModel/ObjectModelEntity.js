@@ -28,7 +28,6 @@ export default class ObjectModelEntity {
         entity.heading = data.name
         entity.attributes = data.attributes.map(attributeData => new Attribute(attributeData))
         entity.relationships = data.relationships
-        //if(entity.heading == "User") console.log();
         return entity        
     }
 

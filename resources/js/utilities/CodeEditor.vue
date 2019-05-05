@@ -107,7 +107,9 @@ module.exports = {
             maxLines: 1000,  
             showLineNumbers: false,
             showGutter: false,
-            highlightActiveLine: false,              
+            highlightActiveLine: false,   
+            inline: true,
+            showPrintMargin: false,
             ...(vm.options ? vm.options : {})
         });
     }
