@@ -12,7 +12,7 @@ Array.prototype.mapWithRemaining = function(callback) {
 }
 
 Array.prototype.first = function() {
-    return this[0]
+    return this.length ? this[0] : null;
 }
 
 /**

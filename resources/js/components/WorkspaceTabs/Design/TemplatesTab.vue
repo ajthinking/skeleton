@@ -39,6 +39,14 @@
                         file => this.isActiveFile(file)
                     )
 
+                    if(!activeFile) {
+                        activeFile = this.templates[0]
+                        this.$store.dispatch('navigate', {
+                            namespace: 'template', 
+                            tab: activeFile.name
+                        })
+                    }
+
                     return activeFile ? activeFile.content : ""
                 },
 
@@ -55,8 +63,8 @@
         methods: {
             activeFile() {
                 return this.templates.find(
-                        file => this.isActiveFile(file)
-                    )
+                    file => this.isActiveFile(file)
+                )
             },
 
             isActiveFile(file) {
