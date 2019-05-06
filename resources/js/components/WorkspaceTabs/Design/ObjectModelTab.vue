@@ -13,7 +13,7 @@
 
         </div>
         <div class="flex-1 ml-2">
-            <div class="flex h-8 bg-grey-lighter border text-center justify-center items-center text-sm">schema</div>
+            <div class="flex h-8 bg-grey-lighter border text-center justify-center items-center text-sm">entities</div>
             <code-editor
                 class="w-full bg-grey-lightest rounded p-2 text-sm border" 
                 v-model="schema"
