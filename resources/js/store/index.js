@@ -123,6 +123,7 @@ export default new Vuex.Store({
 
         setTemplate(context, file) {
             context.commit('setTemplate', file)
+            context.dispatch('compileFiles', context.state.schema)
         }
     },
     getters: {
