@@ -1,68 +1,80 @@
 <template>
-    <div class="flex max-w-2xl mx-auto px-8 bg-white pt-4 mt-8 h-full justify-center">
-        <div class="flex flex-col bg-grey-lighter text-xs border" v-if="hasFiles">
-            <div v-for="file in $store.state.reviewFiles" 
-                :key="file.path"
-                :class="style(file) + 'flex'"
-                @click="tab = file.path; $store.dispatch('navigate', {namespace: 'reviewFile', tab})"
-            >
-                {{ file.path }}
+    <div class="flex mx-auto max-w-3xl px-8 bg-white pt-4">
+        <div class="flex flex-1 mx-auto text-sm" v-if="reviewFiles.length">
+            <div class="flex flex-col bg-white text-xs border">
+                <div v-for="file in reviewFiles"
+                    :key="file.path"
+                    :class="listingStyleFor(file)"
+                    @click="tab = file.path; $store.dispatch('navigate', {namespace: 'review', tab})"
+                >
+                    {{ file.path }}
+                </div>
             </div>
-        </div>
-        <div class="flex flex-1 bg-grey-lighter p-2" v-if="hasFiles">
+            <div class="flex flex-col flex-1 bg-white ml-2 border p-2">
                 <code-editor
-                    class="w-full bg-grey-lightest rounded p-2 text-sm border" 
+                    class="w-full bg-white rounded text-sm" 
                     v-model="activeFileContent"
                     lang="php"
-                ></code-editor>                
+                ></code-editor>
+            </div>
         </div>
-        <notification-card v-else
-            :type="'warning'"
-            :message="'No files to create yet! Go back to the design tab to fix that'"
-        ></notification-card>        
+        <div v-else>
+            No files dude!
+        </div>
     </div>  
 </template>
 
 <script>
     export default {
-        data() {
-            return {
-                isInEditMode: false
-            }
-        },
-
         computed: {
+            reviewFiles() {
+                return this.$store.state.reviewFiles
+            },
+
             activeFileContent: {
                 get() {
-                    let activeFile = this.$store.state.reviewFiles.find(
+                    let activeFile = this.reviewFiles.find(
                         file => this.isActiveFile(file)
                     )
+
+                    if(!activeFile) {
+                        activeFile = this.reviewFiles[0]
+                        this.$store.dispatch('navigate', {
+                            namespace: 'review', 
+                            tab: activeFile.path
+                        })
+                    }
 
                     return activeFile ? activeFile.content : ""
                 },
 
-                set() {
-                    //TODO
+                set(content) {
+                    if(!this.activeFile()) return;
+                    this.$store.dispatch('setReviewFile', {
+                        path: this.activeFile().path,
+                        content: content
+                    })
                 }
-            },
-
-            hasFiles() {
-                return this.$store.state.reviewFiles.length > 0
-            }
-
-
+            }            
         },
 
         methods: {
-            isActiveFile(file) {
-                return file.path == this.$store.state.navigation.reviewFile
+            activeFile() {
+                return this.reviewFiles.find(
+                    file => this.isActiveFile(file)
+                )
             },
 
-            style(file) {
-                let class_ = "px-2 py-2 " +
-                (this.isActiveFile(file) ? "bg-grey-light bg-grey-darker" : "bg-grey-lighter hover:bg-white")
-                return class_
+            isActiveFile(file) {
+                return file.path == this.$store.state.navigation.review
             },
-        }, 
+
+            listingStyleFor(file) {
+                let common = 'px-2 py-2 flex hover:bg-grey-lighter '
+                let passive = 'bg-white'
+                let active = 'bg-blue text-white hover:bg-blue'
+                return this.isActiveFile(file) ? common + active : common + passive
+            }
+        },
     }
 </script>

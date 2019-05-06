@@ -49,6 +49,12 @@ export default new Vuex.Store({
         setReviewFiles(state, files) {
             state.reviewFiles = files
         },
+
+        setReviewFile(state, file) {
+            state.reviewFiles = state.reviewFiles.map(original => {
+                return original.path == file.path ? file : original
+            })
+        },
         
         setTemplates(state, templates) {
             state.templates = templates
@@ -124,7 +130,12 @@ export default new Vuex.Store({
         setTemplate(context, file) {
             context.commit('setTemplate', file)
             context.dispatch('compileFiles', context.state.schema)
-        }
+        },
+
+        setReviewFile(context, file) {
+            context.commit('setReviewFile', file)
+            // set flag for modification
+        }        
     },
     getters: {
         templates: state => state.templates,
