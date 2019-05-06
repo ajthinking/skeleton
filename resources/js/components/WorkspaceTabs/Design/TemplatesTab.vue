@@ -10,9 +10,9 @@
                     {{ file.name }}
                 </div>
             </div>
-            <div class="flex flex-col flex-1 bg-white p-2">
+            <div class="flex flex-col flex-1 bg-white ml-2 border p-2">
                 <code-editor
-                    class="w-full bg-white rounded p-2 text-sm border" 
+                    class="w-full bg-white rounded text-sm" 
                     v-model="activeFileContent"
                     lang="php"
                 ></code-editor>
