@@ -38,7 +38,7 @@ export default [
             },
             {
                 "name": "email_verified_at",
-                "cast": null,
+                "cast": "datetime",
                 "dataType": "timestamp",
                 "fillable": false,
                 "hidden": false,

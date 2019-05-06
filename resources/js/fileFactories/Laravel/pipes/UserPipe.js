@@ -10,7 +10,7 @@ export default class UserPipe extends ModelPipe {
             content: Template.for('User').replace({
                 ___HIDDEN___: this.hiddenAttributes(user),
                 ___FILLABLE___: this.fillableAttributes(user),
-                ___CASTS_BLOCK___: this.casts(user),
+                ___CASTS_BLOCK___: this.casts(user) ? this.casts(user) : "//",
                 ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(user),
             })
         }]

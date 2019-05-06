@@ -59,8 +59,7 @@ export default class AttributeFactory {
     }    
 
     getHidden() {
-        return this.hasPreference('hidden') ? this.getPreference('hidden') :
-            ['password', 'remember_token'].includes(this.name)
+        return ['password', 'remember_token'].includes(this.name)
     }
 
     getFillable() {

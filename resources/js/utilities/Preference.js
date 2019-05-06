@@ -25,11 +25,11 @@ export default class Preference {
 
     static getInitialData() {
         return store.getters.preferences
-
-        // return mergeJSON(
-        //     defaultSchema,
-        //     Storage.get('objectModel') ? Storage.get('objectModel') : {}
-        // )
+        
+        return mergeJSON(
+            defaultSchema,
+            Storage.get('objectModel') ? Storage.get('objectModel') : {}
+        )
     }
 
     /* Default driver is localstorage but could also be something like a gist */

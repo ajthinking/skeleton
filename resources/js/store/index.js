@@ -65,6 +65,7 @@ export default new Vuex.Store({
         },        
 
         setPreferences(state, preferences) {
+
             state.preferences = preferences
         }
     },
@@ -85,7 +86,7 @@ export default new Vuex.Store({
             
             // TO BE SOLVED! Get and Set the Preferences in a good way (async)
             //Preference.persist(schema)
-            //context.dispatch('setPreferences', schema)
+            context.dispatch('setPreferences', schema)
         },  
         
         setPreferences(context, schema) {
