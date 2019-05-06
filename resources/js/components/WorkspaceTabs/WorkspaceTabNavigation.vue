@@ -15,7 +15,8 @@
 
         data: function() {
             return {
-                activeTab: this.availableTabs[0],
+                activeTab: this.$store.state.navigation[this.namespace] ?
+                    this.$store.state.navigation[this.namespace] : this.availableTabs[0],
             }
         },
 
