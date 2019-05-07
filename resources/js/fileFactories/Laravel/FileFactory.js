@@ -1,16 +1,8 @@
-import UserPipe from './pipes/UserPipe'
-import ModelPipe from './pipes/ModelPipe'
-import MigrationPipe from './pipes/MigrationPipe'
-import ControllerPipe from './pipes/ControllerPipe'
-import APIControllerPipe from './pipes/APIControllerPipe'
-import SeederPipe from './pipes/SeederPipe'
-import APIRoutesPipe from './pipes/APIRoutesPipe'
-import FactoryPipe from './pipes/FactoryPipe'
 
 import defaultSchema from './defaultSchema'
 import defaultSketch from './defaultSketch'
-
 import collect from 'collect.js'
+const pipes = require.context('./pipes', false, /\.js$/);
 
 export default class FileFactory {
     constructor(objectModelCollection) {
@@ -19,7 +11,8 @@ export default class FileFactory {
 
     static pipes() {
         return [
-            UserPipe,
+            pipes("./UserPipe.js").default,
+            pipes("./ModelPipe.js").default,
             //ModelPipe,
             //MigrationPipe,
             //ControllerPipe,

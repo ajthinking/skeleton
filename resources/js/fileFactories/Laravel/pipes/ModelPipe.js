@@ -15,7 +15,7 @@ export default class ModelPipe extends BasePipe {
                     ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),                
                 })
             }
-        }).toArray()
+        })
     }
 
     hiddenAttributes(model) {

@@ -17,7 +17,7 @@ export default new Vuex.Store({
             workspace: "Design",
             design: "Object model",
             template: "",
-            reviewFile: "",
+            review: "",
         },
 
         availablePipes: Config.FileFactory.pipes(),
