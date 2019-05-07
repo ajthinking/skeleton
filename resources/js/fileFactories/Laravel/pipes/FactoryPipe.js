@@ -20,7 +20,7 @@ export default class FactoryPipe extends ModelPipe {
                     ___COLUMNS_BLOCK___: this.columnsBlock(model),
                 })
             }
-        }).toArray()
+        })
     }
 
     columnsBlock(model) {
