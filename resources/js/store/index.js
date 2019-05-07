@@ -5,7 +5,6 @@ import ObjectModelCollection from '../objectModel/ObjectModelCollection'
 import ObjectModelEntityFactory from '../objectModel/ObjectModelEntityFactory'
 import Config from '../Config'
 import Preference from '../utilities/Preference'
-import Storage from '../utilities/Storage'
 const mergeJSON = require('deepmerge')
 
 Vue.use(Vuex)
@@ -65,7 +64,6 @@ export default new Vuex.Store({
         },        
 
         setPreferences(state, preferences) {
-
             state.preferences = preferences
         }
     },
@@ -82,9 +80,6 @@ export default new Vuex.Store({
         setSchema(context, schema) {
             context.commit('setSchema', schema)
             context.dispatch('compileFiles', schema)
-            
-            // TO BE SOLVED! Get and Set the Preferences in a good way (async)
-            //Preference.persist(schema)
             context.dispatch('setPreferences', schema)
         },  
         

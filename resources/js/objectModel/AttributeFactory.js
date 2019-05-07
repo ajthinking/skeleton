@@ -83,21 +83,24 @@ export default class AttributeFactory {
     /* ATTRIBUTE PREFERENCES ***************************************************************/
 
     hasPreference(setting) {
-        return Preference.has([
-            this.parent.heading,
-            "attributes",
-            this.name,            
-            setting
-        ])
+        return Preference.has(
+            this.preferencePathFor(setting)
+        )
     }
 
     /* Exception from the get<Key> pattern! */
     getPreference(setting) {
-        return Preference.get([
+        return Preference.get(
+            this.preferencePathFor(setting)
+        )
+    }
+
+    preferencePathFor(setting) {
+        return [
             this.parent.heading,
             "attributes",
             this.name,
             setting
-        ])
+        ]
     }
 }
