@@ -8,12 +8,16 @@ export default class MigrationPipe extends BasePipe {
             return {
                 path: this.migrationFilePath(entity, index),
                 content: Template.for('Migration').replace({
-                    ___CLASS_NAME___: this.className(entity),
+                    ___CLASS_NAME___: this.migrationFileClassName(entity),
                     ___TABLE___: this.tableName(entity),
                     ___COLUMNS_BLOCK___: this.columns(entity),
                 })
             }
-        }).toArray()
+        })
+    }
+
+    migrationFileClassName(entity) {
+        return "Create" + F.pluralize(this.className(entity)) + "Table"
     }
 
     migrationFilePath(entity, index) {

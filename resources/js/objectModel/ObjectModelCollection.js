@@ -1,6 +1,7 @@
 import F from '../utilities/Formatter'
 import Attribute from './Attribute'
 import ObjectModelEntityFactory from './ObjectModelEntityFactory'
+import collect from 'collect.js'
 
 export default class ObjectModelCollection {
     constructor() {
@@ -23,7 +24,7 @@ export default class ObjectModelCollection {
     isManyToMany(candidate) {
         var models = this.modelsIncludingUser().map((item) => {
             return F.snakeCase(item.name).toLowerCase();
-        }).toArray().join("|");
+        }).join("|");
         var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");        
         var matches = manyToManyRegExp.exec(candidate.name);
         
@@ -96,12 +97,12 @@ export default class ObjectModelCollection {
     }
 
     inOptimalMigrationOrder() {
-        return this.entities.sortBy((entity) => {
+        return collect(this.entities).sortBy((entity) => {
             if(entity.isTableEntity() && this.isManyToMany(entity)) {
                 return 2
             }
             return entity.relationships.belongsTo.length
-        })
+        }).toArray()
     }
    
     attachPivotAttributes() {

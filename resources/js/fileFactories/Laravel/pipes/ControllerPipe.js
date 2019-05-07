@@ -14,6 +14,6 @@ export default class ControllerPipe extends ModelPipe {
                     ___RELATIONSHIP_METHODS_BLOCK___: this.relationshipMethods(model),
                 })
             }
-        }).toArray()
+        })
     }
 }

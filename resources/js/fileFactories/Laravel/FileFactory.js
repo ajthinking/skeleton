@@ -13,10 +13,9 @@ export default class FileFactory {
         return [
             pipes("./UserPipe.js").default,
             pipes("./ModelPipe.js").default,
-            //ModelPipe,
-            //MigrationPipe,
-            //ControllerPipe,
-            //APIControllerPipe,
+            pipes("./MigrationPipe.js").default,
+            pipes("./ControllerPipe.js").default,
+            pipes("./APIControllerPipe.js").default,
             //SeederPipe,
             //FactoryPipe,
             //APIRoutesPipe,

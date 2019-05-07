@@ -13,7 +13,7 @@ export default class APIControllerPipe extends ModelPipe {
                     ___WITH_RELATIONSHIPS___: this.withRelationships(model)
                 })
             }
-        }).toArray()
+        })
     }
 
     withRelationships(model) {
