@@ -32,30 +32,30 @@ export default class ObjectModelEntityFactory {
             // Object.keys(entity.relationships).forEach(key => {
             //     entity.relationships[key] = entity.relationships[key].map(targetName => {
             //         return factory.entities.find(candidate => {
-            //             return candidate.heading == targetName
+            //             return candidate.name == targetName
             //         })
             //     })
             // })
             entity.relationships.hasOne = entity.relationships.hasOne.map(targetName => {
                 return factory.entities.find(candidate => {
-                    return candidate.heading == targetName
+                    return candidate.name == targetName
                 })
             })
             entity.relationships.hasMany = entity.relationships.hasMany.map(targetName => {
                 return factory.entities.find(candidate => {
-                    return candidate.heading == targetName
+                    return candidate.name == targetName
                 })
             })
 
             entity.relationships.belongsTo = entity.relationships.belongsTo.map(targetName => {
                 return factory.entities.find(candidate => {
-                    return candidate.heading == targetName
+                    return candidate.name == targetName
                 })
             })
 
             entity.relationships.belongsToMany = entity.relationships.belongsToMany.map(targetName => {
                 return factory.entities.find(candidate => {
-                    return candidate.heading == targetName
+                    return candidate.name == targetName
                 })
             })
 
@@ -77,16 +77,16 @@ export default class ObjectModelEntityFactory {
     }
 
     isPivotTableEntity(segment) {
-        return !!this.pivotTableHeadingsPair(segment)        
+        return !!this.pivotTablenamesPair(segment)        
     }
 
-    pivotTableHeadingsPair(segment) {
+    pivotTablenamesPair(segment) {
         let tableNameParts = this.segments.filter(segment => segment.hasModel())
             .map((segment) => {
-                return F.snakeCase(segment.heading).toLowerCase();
+                return F.snakeCase(segment.name).toLowerCase();
         }).join("|");
         let manyToManyRegExp = new RegExp("^(" + tableNameParts + ")_(" + tableNameParts + ")$");        
-        let matches = manyToManyRegExp.exec(segment.heading);
+        let matches = manyToManyRegExp.exec(segment.name);
         
         return matches ? [
             matches[1],
@@ -99,7 +99,7 @@ export default class ObjectModelEntityFactory {
         let manyToManys_ = this.entities.filter(entity => this.isPivotTableEntity(entity))
         let manyToManyAssociatedModels_ = {}
         manyToManys_.forEach(entity => {
-            manyToManyAssociatedModels_[entity.heading] = this.pivotTableHeadingsPair(entity)
+            manyToManyAssociatedModels_[entity.name] = this.pivotTablenamesPair(entity)
         })
 
         this.entities.mapWithRemaining((model, remaining) => {
@@ -118,11 +118,11 @@ export default class ObjectModelEntityFactory {
             // BelongsToMany
             model.relationships.belongsToMany = remaining.filter(candidate => {
                 return manyToManys_.filter(manyToManyEntity => {
-                    let parts = manyToManyAssociatedModels_[manyToManyEntity.heading]
+                    let parts = manyToManyAssociatedModels_[manyToManyEntity.name]
                     return parts.includes(
-                            F.snakeCase(model.heading)
+                            F.snakeCase(model.name)
                         ) && parts.includes(
-                            F.snakeCase(candidate.heading)
+                            F.snakeCase(candidate.name)
                         )
                 }).length > 0 
             })            

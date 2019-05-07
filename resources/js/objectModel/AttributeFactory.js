@@ -97,7 +97,7 @@ export default class AttributeFactory {
 
     preferencePathFor(setting) {
         return [
-            this.parent.heading,
+            this.parent.name,
             "attributes",
             this.name,
             setting

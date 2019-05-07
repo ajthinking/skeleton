@@ -3,7 +3,7 @@ import F from '../utilities/Formatter'
 export default class Segment {
     constructor(chunk) {
         let parts = chunk.split('\n')
-        this.heading = parts[0]
+        this.name = parts[0]
         this.attributes = parts.slice(1)
     }
 
@@ -13,10 +13,10 @@ export default class Segment {
 
     hasModel() {
         // a Model is indicated by capital first letter
-        return this.heading[0] == this.heading[0].toUpperCase()
+        return this.name[0] == this.name[0].toUpperCase()
     }
 
     hasUserModel() {
-        return this.heading == "User"
+        return this.name == "User"
     }    
 }

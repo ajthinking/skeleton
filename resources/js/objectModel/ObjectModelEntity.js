@@ -10,7 +10,7 @@ export default class ObjectModelEntity {
 
     static fromSegment(segment) {
         let entity = new this()
-        entity.heading = segment.heading
+        entity.name = segment.name
         // Sort and only keep unique attributes
         let attributeRows = [
             ... new Set([
@@ -25,7 +25,7 @@ export default class ObjectModelEntity {
 
     static deserialize(data) {
         let entity = new this()
-        entity.heading = data.name
+        entity.name = data.name
         entity.attributes = Object.keys(data.attributes).map(key => {
             return new Attribute(data.attributes[key])
         })
@@ -39,14 +39,14 @@ export default class ObjectModelEntity {
 
     injectColumns(columns) {
         return columns.filter(column => {
-            let path = ['objectModel', this.heading, column]
+            let path = ['objectModel', this.name, column]
             // Check if it is excluded in preferences
             return !(Preference.has(path) && (Preference.get(path) === false))
         })
     }
 
     className() {
-        return this.heading
+        return this.name
     }
 
     isUserEntity() {
@@ -62,12 +62,12 @@ export default class ObjectModelEntity {
     }
     
     asForeignKey() {
-        return F.snakeCase(this.heading) + "_id";       
+        return F.snakeCase(this.name) + "_id";       
     }
 
     serialize() {
         const serialize_results = {
-            name: this.heading,
+            name: this.name,
             type: this.constructor.name,
             //attributes: this.attributes.map(attribute => attribute.serialize()),
             attributes: this.attributes.reduce((carry, attribute) => {
@@ -75,10 +75,10 @@ export default class ObjectModelEntity {
                 return carry
             }, {}),
             relationships: {
-                hasOne: [].map(target => target.heading),
-                hasMany: this.relationships.hasMany.map(target => target.heading),
-                belongsTo: this.relationships.belongsTo.map(target => target.heading),
-                belongsToMany: this.relationships.belongsToMany.map(target => target.heading)
+                hasOne: [].map(target => target.name),
+                hasMany: this.relationships.hasMany.map(target => target.name),
+                belongsTo: this.relationships.belongsTo.map(target => target.name),
+                belongsToMany: this.relationships.belongsToMany.map(target => target.name)
             }
         }
         

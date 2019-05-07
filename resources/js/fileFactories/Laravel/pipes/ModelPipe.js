@@ -42,7 +42,7 @@ export default class ModelPipe extends BasePipe {
     }
 
     className(model) {
-        return model.heading
+        return model.name
     }
     
     relationshipMethods(model) {

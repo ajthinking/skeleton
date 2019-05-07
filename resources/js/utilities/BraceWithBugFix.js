@@ -19597,7 +19597,7 @@
     .ace-tm .ace_entity.ace_name.ace_function {\
     color: #0000A2;\
     }\
-    .ace-tm .ace_heading {\
+    .ace-tm .ace_headinX {\
     color: rgb(12, 7, 255);\
     }\
     .ace-tm .ace_list {\

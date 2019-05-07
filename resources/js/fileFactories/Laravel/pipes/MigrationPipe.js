@@ -26,10 +26,10 @@ export default class MigrationPipe extends BasePipe {
 
     tableName(entity) {
         if(entity.isTableEntity()) {
-            return entity.heading
+            return entity.name
         }
 
-        return F.snakeCase(F.pluralize(entity.heading))
+        return F.snakeCase(F.pluralize(entity.name))
     }
 
     columns(entity) {

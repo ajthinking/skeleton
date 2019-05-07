@@ -22,10 +22,10 @@ export default class ObjectModelCollection {
 
     isManyToMany(candidate) {
         var models = this.modelsIncludingUser().map((item) => {
-            return F.snakeCase(item.heading).toLowerCase();
+            return F.snakeCase(item.name).toLowerCase();
         }).toArray().join("|");
         var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");        
-        var matches = manyToManyRegExp.exec(candidate.heading);
+        var matches = manyToManyRegExp.exec(candidate.name);
         
         if(matches) {
             return [matches[1], matches[2]];
@@ -36,10 +36,10 @@ export default class ObjectModelCollection {
     
     manyToManyAssociatedModels(manyToManyEntity) {
         var models = this.modelsIncludingUser().map((item) => {
-            return F.snakeCase(item.heading).toLowerCase();
+            return F.snakeCase(item.name).toLowerCase();
         }).toArray().join("|");
         var manyToManyRegExp = new RegExp("^(" + models + ")_(" + models + ")$");        
-        var matches = manyToManyRegExp.exec(manyToManyEntity.heading);
+        var matches = manyToManyRegExp.exec(manyToManyEntity.name);
         return [matches[1], matches[2]];
     }    
 
@@ -64,7 +64,7 @@ export default class ObjectModelCollection {
     }
 
     tablesOnly() {
-        return this.entities.filter(entity => entity.heading == entity.heading.toLowerCase())
+        return this.entities.filter(entity => entity.name == entity.name.toLowerCase())
     }
     
     manyToManys() {
@@ -126,7 +126,7 @@ export default class ObjectModelCollection {
     serializeSchema() {
         //return this.entities.map(entity => entity.serialize())
         return this.entities.reduce((carry,entity) => {
-            carry[entity.heading] = entity.serialize()
+            carry[entity.name] = entity.serialize()
             return carry
         }, {})
     }
