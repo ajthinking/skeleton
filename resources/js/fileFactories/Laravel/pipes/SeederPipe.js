@@ -20,7 +20,7 @@ export default class SeederPipe extends ModelPipe {
                     ___COLUMNS_BLOCK___: this.columnsBlock(model),
                 })
             }
-        }).toArray()
+        })
     }
 
     databaseSeeder() {
@@ -35,7 +35,7 @@ export default class SeederPipe extends ModelPipe {
     databaseSeedersBlock() {
         return this.omc.modelsIncludingUser().map(model => {
             return "$this->call(" + model.className() + "Seeder::class);"
-        }).toArray().join("\n")        
+        }).join("\n")        
     }
 
     columnsBlock(model) {

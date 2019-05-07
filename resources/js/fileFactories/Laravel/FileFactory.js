@@ -16,6 +16,7 @@ export default class FileFactory {
             pipes("./MigrationPipe.js").default,
             pipes("./ControllerPipe.js").default,
             pipes("./APIControllerPipe.js").default,
+            pipes("./SeederPipe.js").default,            
             //SeederPipe,
             //FactoryPipe,
             //APIRoutesPipe,
