@@ -1,6 +1,8 @@
 <template>
     <div class="flex flex-col max-w-md mx-auto px-8 bg-white pt-4 mt-8 h-full">
-        <div class="flex flex-col text-sm mb-4">
+        <HintBox message="Hint: Here we write the files listed in the Review tab. By default we will revert your last build (if any) to eliminate conflicts.">
+        </HintBox>        
+        <div class="flex flex-col text-sm mb-4 mt-8">
             <div><input type="checkbox" checked class="mr-2">Revert the latest build</div>
             <div><input type="checkbox" checked class="mr-2">Use Sandbox</div>
         </div>

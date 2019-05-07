@@ -1,26 +1,30 @@
 <template>
-    <div class="flex mx-auto max-w-3xl px-8 bg-white pt-4">
-        <div class="flex flex-1 mx-auto text-sm" v-if="reviewFiles.length">
-            <div class="flex flex-col bg-white text-xs border">
-                <div v-for="file in reviewFiles"
-                    :key="file.path"
-                    :class="listingStyleFor(file)"
-                    @click="tab = file.path; $store.dispatch('navigate', {namespace: 'review', tab})"
-                >
-                    {{ file.path }}
+    <div class="flex flex-col mx-auto max-w-3xl px-8 bg-white pt-4 items-center">
+        <HintBox message="Hint: Here you can do any finishing touches. Remember - further changes in the Design tab will overwrite your edits">
+        </HintBox>
+            <div class="flex mx-auto w-full">
+                <div class="flex flex-1 mx-auto text-sm" v-if="reviewFiles.length">
+                    <div class="flex flex-col bg-white text-xs border">
+                        <div v-for="file in reviewFiles"
+                            :key="file.path"
+                            :class="listingStyleFor(file)"
+                            @click="tab = file.path; $store.dispatch('navigate', {namespace: 'review', tab})"
+                        >
+                            {{ file.path }}
+                        </div>
+                    </div>
+                    <div class="flex flex-col flex-1 bg-white ml-2 border p-2">
+                        <code-editor
+                            class="w-full bg-white rounded text-sm" 
+                            v-model="activeFileContent"
+                            lang="php"
+                        ></code-editor>
+                    </div>
+                </div>
+                <div v-else>
+                    No files dude!
                 </div>
             </div>
-            <div class="flex flex-col flex-1 bg-white ml-2 border p-2">
-                <code-editor
-                    class="w-full bg-white rounded text-sm" 
-                    v-model="activeFileContent"
-                    lang="php"
-                ></code-editor>
-            </div>
-        </div>
-        <div v-else>
-            No files dude!
-        </div>
     </div>  
 </template>
 
