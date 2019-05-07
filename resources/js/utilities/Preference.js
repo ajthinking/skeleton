@@ -25,7 +25,7 @@ export default class Preference {
 
     static getInitialData() {
         return store.getters.preferences
-        
+
         return mergeJSON(
             defaultSchema,
             Storage.get('objectModel') ? Storage.get('objectModel') : {}

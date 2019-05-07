@@ -26,7 +26,9 @@ export default class ObjectModelEntity {
     static deserialize(data) {
         let entity = new this()
         entity.heading = data.name
-        entity.attributes = data.attributes.map(attributeData => new Attribute(attributeData))
+        entity.attributes = Object.keys(data.attributes).map(key => {
+            return new Attribute(data.attributes[key])
+        })
         entity.relationships = data.relationships
         return entity        
     }
@@ -67,7 +69,11 @@ export default class ObjectModelEntity {
         const serialize_results = {
             name: this.heading,
             type: this.constructor.name,
-            attributes: this.attributes.map(attribute => attribute.serialize()),
+            //attributes: this.attributes.map(attribute => attribute.serialize()),
+            attributes: this.attributes.reduce((carry, attribute) => {
+                carry[attribute.name] = attribute.serialize()
+                return carry
+            }, {}),
             relationships: {
                 hasOne: [].map(target => target.heading),
                 hasMany: this.relationships.hasMany.map(target => target.heading),

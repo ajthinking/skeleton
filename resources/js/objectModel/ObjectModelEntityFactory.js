@@ -23,7 +23,8 @@ export default class ObjectModelEntityFactory {
     static fromSchema(schema) {
         let factory = new this()
 
-        factory.entities = schema.map(schemaEntity => {
+        factory.entities = Object.keys(schema).map(key => {
+            let schemaEntity = schema[key]
             return EntityTypes[schemaEntity.type].deserialize(schemaEntity)
         })
 

@@ -124,6 +124,10 @@ export default class ObjectModelCollection {
     }
 
     serializeSchema() {
-        return this.entities.map(entity => entity.serialize())
+        //return this.entities.map(entity => entity.serialize())
+        return this.entities.reduce((carry,entity) => {
+            carry[entity.heading] = entity.serialize()
+            return carry
+        }, {})
     }
 }

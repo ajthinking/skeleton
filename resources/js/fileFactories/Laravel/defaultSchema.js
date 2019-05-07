@@ -1,20 +1,9 @@
-export default [
-    {
+export default {
+    "User": {
         "name": "User",
         "type": "UserEntity",
-        "attributes": [
-            {
-                "name": "id",
-                "cast": null,
-                "dataType": "bigIncrements",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
+        "attributes": {
+            "name": {
                 "name": "name",
                 "cast": null,
                 "dataType": "string",
@@ -25,7 +14,7 @@ export default [
                 "unique": false,
                 "foreign": null
             },
-            {
+            "email": {
                 "name": "email",
                 "cast": null,
                 "dataType": "string",
@@ -36,7 +25,7 @@ export default [
                 "unique": false,
                 "foreign": null
             },
-            {
+            "email_verified_at": {
                 "name": "email_verified_at",
                 "cast": "datetime",
                 "dataType": "timestamp",
@@ -47,7 +36,7 @@ export default [
                 "unique": false,
                 "foreign": null
             },
-            {
+            "password": {
                 "name": "password",
                 "cast": null,
                 "dataType": "string",
@@ -58,7 +47,7 @@ export default [
                 "unique": false,
                 "foreign": null
             },
-            {
+            "remember_token": {
                 "name": "remember_token",
                 "cast": null,
                 "dataType": "string",
@@ -68,30 +57,8 @@ export default [
                 "nullable": false,
                 "unique": false,
                 "foreign": null
-            },
-            {
-                "name": "created_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
-                "name": "updated_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
             }
-        ],
+        },
         "relationships": {
             "hasOne": [],
             "hasMany": [
@@ -101,22 +68,11 @@ export default [
             "belongsToMany": []
         }
     },
-    {
+    "password_resets": {
         "name": "password_resets",
         "type": "TableEntity",
-        "attributes": [
-            {
-                "name": "id",
-                "cast": null,
-                "dataType": "bigIncrements",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
+        "attributes": {
+            "email": {
                 "name": "email",
                 "cast": null,
                 "dataType": "string",
@@ -127,7 +83,7 @@ export default [
                 "unique": false,
                 "foreign": null
             },
-            {
+            "token": {
                 "name": "token",
                 "cast": null,
                 "dataType": "string",
@@ -137,30 +93,8 @@ export default [
                 "nullable": false,
                 "unique": false,
                 "foreign": null
-            },
-            {
-                "name": "created_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
-                "name": "updated_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
             }
-        ],
+        },
         "relationships": {
             "hasOne": [],
             "hasMany": [],
@@ -168,22 +102,11 @@ export default [
             "belongsToMany": []
         }
     },
-    {
+    "Car": {
         "name": "Car",
         "type": "ModelEntity",
-        "attributes": [
-            {
-                "name": "id",
-                "cast": null,
-                "dataType": "bigIncrements",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
+        "attributes": {
+            "color": {
                 "name": "color",
                 "cast": null,
                 "dataType": "string",
@@ -194,7 +117,7 @@ export default [
                 "unique": false,
                 "foreign": null
             },
-            {
+            "user_id": {
                 "name": "user_id",
                 "cast": null,
                 "dataType": "unsignedInteger",
@@ -204,30 +127,8 @@ export default [
                 "nullable": true,
                 "unique": false,
                 "foreign": "user"
-            },
-            {
-                "name": "created_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
-                "name": "updated_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
             }
-        ],
+        },
         "relationships": {
             "hasOne": [],
             "hasMany": [],
@@ -239,22 +140,11 @@ export default [
             ]
         }
     },
-    {
+    "Garage": {
         "name": "Garage",
         "type": "ModelEntity",
-        "attributes": [
-            {
-                "name": "id",
-                "cast": null,
-                "dataType": "bigIncrements",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
+        "attributes": {
+            "location": {
                 "name": "location",
                 "cast": null,
                 "dataType": "string",
@@ -264,30 +154,8 @@ export default [
                 "nullable": false,
                 "unique": false,
                 "foreign": null
-            },
-            {
-                "name": "created_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
-                "name": "updated_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
             }
-        ],
+        },
         "relationships": {
             "hasOne": [],
             "hasMany": [],
@@ -297,44 +165,10 @@ export default [
             ]
         }
     },
-    {
+    "car_garage": {
         "name": "car_garage",
         "type": "PivotTableEntity",
-        "attributes": [
-            {
-                "name": "id",
-                "cast": null,
-                "dataType": "bigIncrements",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
-                "name": "created_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            {
-                "name": "updated_at",
-                "cast": null,
-                "dataType": "timestamp",
-                "fillable": false,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            }
-        ],
+        "attributes": {},
         "relationships": {
             "hasOne": [],
             "hasMany": [],
@@ -342,4 +176,4 @@ export default [
             "belongsToMany": []
         }
     }
-]
+}

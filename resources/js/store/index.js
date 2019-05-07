@@ -31,7 +31,7 @@ export default new Vuex.Store({
 
         schema: [],
 
-        preferences: Storage.get('objectModel')
+        preferences: Config.FileFactory.defaultSchema()
     },
     mutations: {
         navigate(state, {namespace, tab}) {
@@ -77,7 +77,6 @@ export default new Vuex.Store({
         setObjectModelNotes(context, objectModelNotes) {
             context.commit('setObjectModelNotes', objectModelNotes)
             context.dispatch('compileSchema', objectModelNotes)
-
         },
 
         setSchema(context, schema) {
@@ -92,7 +91,7 @@ export default new Vuex.Store({
         setPreferences(context, schema) {
             context.commit('setPreferences',
                 mergeJSON(
-                    Storage.get('objectModel') ? Storage.get('objectModel') : {},
+                    context.state.preferences,
                     schema
                 )
             )            
@@ -117,6 +116,9 @@ export default new Vuex.Store({
                     Parser.parse(objectModelNotes).segment()
                 )
             ).serializeSchema()
+
+            //console.log(schema);
+            //console.log(context.state.preferences);            
 
 
             context.dispatch('setSchema', schema)

@@ -31,8 +31,12 @@ export default class AttributeFactory {
     /* If there is a preference available use that, else refer to dedicated get method */
     property(key) {
         return {
-            [key]: this.hasPreference(key) ? this.getPreference(key) : this[F.camelCase(`get_${key}`)]()
+            [key]: this.hasPreference(key) ? this.getPreference(key) : this.bestGuessFor(key)
         }
+    }
+
+    bestGuessFor(key) {
+        return this[F.camelCase(`get_${key}`)]()
     }
 
     /* GETTERS ***************************************************************/
@@ -81,6 +85,7 @@ export default class AttributeFactory {
     hasPreference(setting) {
         return Preference.has([
             this.parent.heading,
+            "attributes",
             this.name,            
             setting
         ])
@@ -90,6 +95,7 @@ export default class AttributeFactory {
     getPreference(setting) {
         return Preference.get([
             this.parent.heading,
+            "attributes",
             this.name,
             setting
         ])
