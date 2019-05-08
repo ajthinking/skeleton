@@ -36,7 +36,7 @@ export default class SeederPipe extends ModelPipe {
     databaseSeedersBlock() {
         return this.omc.inOptimalMigrationOrder().filter(entity => (entity instanceof ModelEntity)).map(model => {
             return "$this->call(" + model.className() + "Seeder::class);"
-        }).join("\n")        
+        }).join(___SINGLE_LINE_BREAK___)        
     }
 
     columnsBlock(model) {
@@ -44,7 +44,7 @@ export default class SeederPipe extends ModelPipe {
             return !['id', 'created_at', 'updated_at'].includes(attribute.name)
         }).map(attribute => {
             return F.singleQuotePad(attribute.name) + " => " + this.seedStatement(attribute)
-        }).join("\n")
+        }).join(___SINGLE_LINE_BREAK___)
     }
 
     typeMap(dataType) {

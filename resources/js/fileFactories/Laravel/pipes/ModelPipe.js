@@ -59,7 +59,7 @@ export default class ModelPipe extends BasePipe {
                     ),
 
                 })
-            }).join("\n\n"),
+            }).join(___DOUBLE_LINE_BREAK___),
 
             model.relationships.belongsTo.map(target => {
                 return Template.for('BelongsToRelationship').replace({
@@ -67,7 +67,7 @@ export default class ModelPipe extends BasePipe {
                     ___THIS_CLASS___: model.className(),
                     ___METHOD_NAME___: F.camelCase(target.className()),
                 })
-            }).join("\n\n"),
+            }).join(___DOUBLE_LINE_BREAK___),
 
             model.relationships.belongsToMany.map(target => {
                 return Template.for('BelongsToManyRelationship').replace({
@@ -81,8 +81,8 @@ export default class ModelPipe extends BasePipe {
                     ),
 
                 })
-            }).join("\n"),
+            }).join(___SINGLE_LINE_BREAK___),
 
-        ].filter(candidate => (candidate != "")).join("\n\n")
+        ].filter(candidate => (candidate != "")).join(___DOUBLE_LINE_BREAK___)
     }
 }

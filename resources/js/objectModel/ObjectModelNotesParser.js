@@ -24,7 +24,7 @@ export default class ObjectModelNoteParser {
             // trim trailing newlines
             .replace(/\n+$/, "")
             // remove exessive newlines
-            .replace(/\n\s+\n/, "\n\n")
+            .replace(/\n\s+\n/, ___DOUBLE_LINE_BREAK___)
             // remove comments
             .replace(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm, "")
         

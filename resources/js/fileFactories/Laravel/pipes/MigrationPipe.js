@@ -36,14 +36,14 @@ export default class MigrationPipe extends BasePipe {
     columns(entity) {
         return entity.attributes.map(attribute => {
             return this.statementsFor(attribute)
-        }).reduce((allStatements, statements) => allStatements.concat(statements), []).join("\n")
+        }).reduce((allStatements, statements) => allStatements.concat(statements), []).join(___SINGLE_LINE_BREAK___)
     }
 
     statementsFor(attribute) {
         return [
             `$table->${attribute.dataType}('${attribute.name}')${this.chainings(attribute)};`,
             ... this.addForeignKeyConstraintFor(attribute) 
-        ].join("\n")
+        ].join(___SINGLE_LINE_BREAK___)
     }
 
     addForeignKeyConstraintFor(attribute) {

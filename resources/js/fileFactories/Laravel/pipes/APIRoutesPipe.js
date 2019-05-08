@@ -18,6 +18,6 @@ export default class APIRoutesPipe extends BasePipe {
                 ___RESOURCE_NAME___: F.camelCase(F.pluralize(model.className())),
                 ___MODEL_NAME___: model.className(),
             })
-        }).join("\n\n")
+        }).join(___DOUBLE_LINE_BREAK___)
     }
 }

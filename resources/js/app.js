@@ -15,6 +15,11 @@ Array.prototype.first = function() {
     return this.length ? this[0] : null;
 }
 
+// omg why??
+const LINE_BREAK = "\n"
+window.___SINGLE_LINE_BREAK___ = LINE_BREAK
+window.___DOUBLE_LINE_BREAK___ = LINE_BREAK.repeat(2)
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
