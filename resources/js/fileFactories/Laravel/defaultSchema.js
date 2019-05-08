@@ -22,7 +22,7 @@ export default {
                 "hidden": false,
                 "index": false,
                 "nullable": false,
-                "unique": false,
+                "unique": true,
                 "foreign": null
             },
             "email_verified_at": {
@@ -32,7 +32,7 @@ export default {
                 "fillable": false,
                 "hidden": false,
                 "index": false,
-                "nullable": false,
+                "nullable": true,
                 "unique": false,
                 "foreign": null
             },
@@ -95,80 +95,6 @@ export default {
                 "foreign": null
             }
         },
-        "relationships": {
-            "hasOne": [],
-            "hasMany": [],
-            "belongsTo": [],
-            "belongsToMany": []
-        }
-    },
-    "Car": {
-        "name": "Car",
-        "type": "ModelEntity",
-        "attributes": {
-            "color": {
-                "name": "color",
-                "cast": null,
-                "dataType": "string",
-                "fillable": true,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            },
-            "user_id": {
-                "name": "user_id",
-                "cast": null,
-                "dataType": "unsignedInteger",
-                "fillable": true,
-                "hidden": false,
-                "index": false,
-                "nullable": true,
-                "unique": false,
-                "foreign": "user"
-            }
-        },
-        "relationships": {
-            "hasOne": [],
-            "hasMany": [],
-            "belongsTo": [
-                "User"
-            ],
-            "belongsToMany": [
-                "Garage"
-            ]
-        }
-    },
-    "Garage": {
-        "name": "Garage",
-        "type": "ModelEntity",
-        "attributes": {
-            "location": {
-                "name": "location",
-                "cast": null,
-                "dataType": "string",
-                "fillable": true,
-                "hidden": false,
-                "index": false,
-                "nullable": false,
-                "unique": false,
-                "foreign": null
-            }
-        },
-        "relationships": {
-            "hasOne": [],
-            "hasMany": [],
-            "belongsTo": [],
-            "belongsToMany": [
-                "Car"
-            ]
-        }
-    },
-    "car_garage": {
-        "name": "car_garage",
-        "type": "PivotTableEntity",
-        "attributes": {},
         "relationships": {
             "hasOne": [],
             "hasMany": [],
