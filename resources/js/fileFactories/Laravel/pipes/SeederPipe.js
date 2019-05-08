@@ -1,5 +1,6 @@
 import Template from '../../../utilities/Template'
 import ModelPipe from './ModelPipe'
+import ModelEntity from '../../../objectModel/entities/ModelEntity'
 
 import F from '../../../utilities/Formatter'
 
@@ -33,7 +34,7 @@ export default class SeederPipe extends ModelPipe {
     }
 
     databaseSeedersBlock() {
-        return this.omc.modelsIncludingUser().map(model => {
+        return this.omc.inOptimalMigrationOrder().filter(entity => (entity instanceof ModelEntity)).map(model => {
             return "$this->call(" + model.className() + "Seeder::class);"
         }).join("\n")        
     }

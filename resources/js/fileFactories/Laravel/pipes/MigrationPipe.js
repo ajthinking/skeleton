@@ -1,6 +1,7 @@
 import Template from '../../../utilities/Template'
 import BasePipe from './BasePipe'
 import F from '../../../utilities/Formatter'
+import ModelEntity from '../../../objectModel/entities/ModelEntity';
 
 export default class MigrationPipe extends BasePipe {
     calculateFiles(omc = ObjectModelCollection) {
@@ -25,9 +26,9 @@ export default class MigrationPipe extends BasePipe {
     }
 
     tableName(entity) {
-        if(entity.isTableEntity()) {
+        if(!(entity instanceof ModelEntity)) {
             return entity.name
-        }
+        }  
 
         return F.snakeCase(F.pluralize(entity.name))
     }

@@ -97,12 +97,15 @@ export default class ObjectModelCollection {
     }
 
     inOptimalMigrationOrder() {
-        return collect(this.entities).sortBy((entity) => {
-            if(entity.isTableEntity() && this.isManyToMany(entity)) {
-                return 2
+        let result =  collect(this.entities).sortBy((entity) => {
+            if(this.isManyToMany(entity)) {
+                // ensure many to many is placed last
+                return 100 + entity.relationships.belongsTo.length
             }
             return entity.relationships.belongsTo.length
         }).toArray()
+
+        return result
     }
    
     attachPivotAttributes() {
