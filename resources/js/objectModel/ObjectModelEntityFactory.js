@@ -28,34 +28,13 @@ export default class ObjectModelEntityFactory {
             return EntityTypes[schemaEntity.type].deserialize(schemaEntity)
         })
 
+        // Attach relationship target entities
         factory.entities = factory.entities.map(entity => {
-            // Object.keys(entity.relationships).forEach(key => {
-            //     entity.relationships[key] = entity.relationships[key].map(targetName => {
-            //         return factory.entities.find(candidate => {
-            //             return candidate.name == targetName
-            //         })
-            //     })
-            // })
-            entity.relationships.hasOne = entity.relationships.hasOne.map(targetName => {
-                return factory.entities.find(candidate => {
-                    return candidate.name == targetName
-                })
-            })
-            entity.relationships.hasMany = entity.relationships.hasMany.map(targetName => {
-                return factory.entities.find(candidate => {
-                    return candidate.name == targetName
-                })
-            })
-
-            entity.relationships.belongsTo = entity.relationships.belongsTo.map(targetName => {
-                return factory.entities.find(candidate => {
-                    return candidate.name == targetName
-                })
-            })
-
-            entity.relationships.belongsToMany = entity.relationships.belongsToMany.map(targetName => {
-                return factory.entities.find(candidate => {
-                    return candidate.name == targetName
+            Object.keys(entity.relationships).forEach(key => {
+                entity.relationships[key] = entity.relationships[key].map(targetName => {
+                    return factory.entities.find(candidate => {
+                        return candidate.name == targetName
+                    })
                 })
             })
 
