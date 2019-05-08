@@ -43,7 +43,7 @@ export default class AttributeFactory {
 
     getForeign() {
         let matches = (new RegExp("^(.*)_id$")).exec(this.name)
-        return matches ? matches[1] : null
+        return matches ? F.snakeCase(F.pluralize(matches[1])) : null
     }
 
     getCast() {

@@ -9,6 +9,7 @@
             ></code-editor>
             <div class="mt-1">
                 <button @click="addUserSystem()" :class="buttonStyle">+ user system</button>
+                <button @click="replaceWithSampleApp()" :class="buttonStyle">sample app</button>
             </div>             
 
         </div>
@@ -68,9 +69,15 @@
         methods: {
             addUserSystem() {
                 this.$store.dispatch('setObjectModelNotes', 
-                    this.objectModelNotes + Config.FileFactory.defaultSketch()
+                    this.objectModelNotes + Config.FileFactory.userSystemSketch()
                 )
-            }
+            },
+
+            replaceWithSampleApp() {
+                this.$store.dispatch('setObjectModelNotes', 
+                    Config.FileFactory.sampleApp()
+                )
+            },            
         }
     }
 </script>

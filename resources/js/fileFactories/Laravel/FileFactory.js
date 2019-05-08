@@ -1,6 +1,7 @@
 
-import defaultSchema from './defaultSchema'
-import defaultSketch from './defaultSketch'
+import defaultSchema from './preferences/defaultSchema'
+import userSystemSketch from './/sketches/userSystemSketch'
+import sampleAppSketch from './/sketches/sampleAppSketch'
 import collect from 'collect.js'
 const pipes = require.context('./pipes', false, /\.js$/);
 
@@ -12,24 +13,28 @@ export default class FileFactory {
     static pipes() {
         return pipes.keys().filter(key => !key.includes('BasePipe')).map(key => pipes(key).default)
 
-        return [
-            pipes("./UserPipe.js").default,
-            pipes("./ModelPipe.js").default,
-            pipes("./MigrationPipe.js").default,
-            pipes("./ControllerPipe.js").default,
-            pipes("./APIControllerPipe.js").default,
-            pipes("./SeederPipe.js").default,            
-            pipes("./FactoryPipe.js").default,                        
-            pipes("./APIRoutesPipe.js").default,            
-        ]
+        // return [
+        //     pipes("./UserPipe.js").default,
+        //     pipes("./ModelPipe.js").default,
+        //     pipes("./MigrationPipe.js").default,
+        //     pipes("./ControllerPipe.js").default,
+        //     pipes("./APIControllerPipe.js").default,
+        //     pipes("./SeederPipe.js").default,            
+        //     pipes("./FactoryPipe.js").default,                        
+        //     pipes("./APIRoutesPipe.js").default,            
+        // ]
     }
 
     static defaultSchema() {
         return defaultSchema;
     }
 
-    static defaultSketch() {
-        return defaultSketch;
+    static userSystemSketch() {
+        return userSystemSketch;
+    }
+    
+    static sampleApp() {
+        return sampleAppSketch;
     }    
 
     static from(objectModelCollection) {

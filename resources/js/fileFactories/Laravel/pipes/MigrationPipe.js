@@ -40,8 +40,15 @@ export default class MigrationPipe extends BasePipe {
 
     statementsFor(attribute) {
         return [
-            `$table->${attribute.dataType}('${attribute.name}')${this.chainings(attribute)};`, 
+            `$table->${attribute.dataType}('${attribute.name}')${this.chainings(attribute)};`,
+            ... this.addForeignKeyConstraintFor(attribute) 
         ].join("\n")
+    }
+
+    addForeignKeyConstraintFor(attribute) {
+        return attribute.foreign ? [
+            `$table->foreign('${attribute.name}')->references('id')->on('${attribute.foreign}');`
+        ] : [];
     }
 
     chainings(attribute) {

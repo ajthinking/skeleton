@@ -27,7 +27,10 @@ export default class ObjectModelEntity {
         let entity = new this()
         entity.name = data.name
         entity.attributes = Object.keys(data.attributes).map(key => {
-            return new Attribute(data.attributes[key])
+            return new Attribute({
+                ...data.attributes[key],
+                ...{ parent: entity }
+            })
         })
         entity.relationships = data.relationships
         return entity        

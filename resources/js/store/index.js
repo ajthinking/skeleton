@@ -112,10 +112,6 @@ export default new Vuex.Store({
                 )
             ).serializeSchema()
 
-            //console.log(schema);
-            //console.log(context.state.preferences);            
-
-
             context.dispatch('setSchema', schema)
         },
 
