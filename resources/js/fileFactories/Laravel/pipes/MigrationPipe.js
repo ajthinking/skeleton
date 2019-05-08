@@ -16,15 +16,11 @@ export default class MigrationPipe extends BasePipe {
         })
     }
 
-    migrationFileClassName(entity) {
-        return "Create" + F.pluralize(this.className(entity)) + "Table"
-    }
-
     migrationFilePath(entity, index) {
         return "database/migrations/" + this.migrationTimeStamp(index) +"_create_" + this.tableName(entity) + "_table.php"
     }
 
-    className(entity) {
+    migrationFileClassName(entity) {
         return "Create" + F.pascalCase(this.tableName(entity)) + "Table"
     }
 
