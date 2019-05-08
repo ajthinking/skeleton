@@ -14,9 +14,9 @@ export default class ObjectModelEntity {
         // Sort and only keep unique attributes
         let attributeRows = [
             ... new Set([
-                ... entity.injectColumns(['id']),
+                ... entity.optionalColumns(['id']),
                 ... segment.attributes,
-                ... entity.injectColumns(['created_at', 'updated_at']),
+                ... entity.optionalColumns(['created_at', 'updated_at']),
             ])
         ]
         entity.attributes = attributeRows.map(name => AttributeFactory.make(name, entity))        
@@ -40,12 +40,21 @@ export default class ObjectModelEntity {
         return this.attributes.map(attribute => attribute.name)
     }
 
-    injectColumns(columns) {
+    optionalColumns(columns) {
         return columns.filter(column => {
             let path = ['objectModel', this.name, column]
             // Check if it is excluded in preferences
             return !(Preference.has(path) && (Preference.get(path) === false))
         })
+    }
+
+    injectAttributes(attributeNames) {
+
+        this.attributes = this.attributes.concat(
+            attributeNames.map(attributeName => {
+                return AttributeFactory.make(attributeName, this)
+            })
+        )
     }
 
     className() {

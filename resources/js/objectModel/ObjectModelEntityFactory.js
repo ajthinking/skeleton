@@ -71,7 +71,7 @@ export default class ObjectModelEntityFactory {
             matches[1],
             matches[2]
         ] : false;
-    }
+    }  
 
     attachRelationships() {
         // Prepare this in order to prevent geometric growth
@@ -105,6 +105,12 @@ export default class ObjectModelEntityFactory {
                         )
                 }).length > 0 
             })            
+        })
+
+        manyToManys_.forEach(manyToManyEntity => {
+            manyToManyEntity.injectAttributes(
+                this.pivotTablenamesPair(manyToManyEntity).map(name => (name+"_id"))
+            )
         })
     }    
 }
