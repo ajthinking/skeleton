@@ -14,9 +14,7 @@ use Illuminate\Http\Request;
 */
 
 /*
-*
-* Snippet for a quick routes reference
-*
+* Snippet for a quick route reference
 */
 Route::get('/', function (Router $router) {
     return collect($router->getRoutes()->getRoutesByMethod()["GET"])->map(function($value, $key) {
